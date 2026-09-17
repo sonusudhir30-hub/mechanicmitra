@@ -3,84 +3,90 @@
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#ff6600">
-<title>MechanicMitra - All Vehicle Service</title>
+<title>MechanicMitra - All Gaadi Service & Charges</title>
 <style>
-body{font-family:Arial;background:#f4f4f4;margin:0;padding:0}
-.header{background:#ff6600;color:white;padding:15px;text-align:center;font-size:22px;font-weight:bold}
-.container{padding:15px}
-.card{background:white;padding:15px;border-radius:10px;margin-bottom:15px;box-shadow:0 2px 5px #ccc}
-select,input,button{width:100%;padding:12px;margin:8px 0;border-radius:8px;border:1px solid #ccc;font-size:16px}
-button{background:#ff6600;color:white;border:none;font-weight:bold}
+body{font-family:Arial;background:#f2f2f2;margin:0}
+.header{background:#ff6600;color:white;padding:12px;display:flex;align-items:center;gap:10px;position:sticky;top:0;z-index:10}
+.header img{width:45px;height:45px;border-radius:50%;background:white;object-fit:cover}
+.container{padding:12px}
+.card{background:white;padding:14px;border-radius:12px;margin-bottom:12px;box-shadow:0 2px 6px #ccc}
 .vehicle-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.vehicle{border:2px solid #ddd;padding:12px;text-align:center;border-radius:8px;cursor:pointer}
-.vehicle.selected{border-color:#ff6600;background:#fff2e6}
+.vehicle{border:2px solid #ddd;padding:12px;text-align:center;border-radius:10px;cursor:pointer}
+.vehicle.selected{border-color:#ff6600;background:#fff2e6;font-weight:bold}
+.charges{display:flex;justify-content:space-between;background:#fff8e1;padding:8px;border-radius:8px;margin:6px 0;font-size:14px}
+.charges b{color:#ff6600}
+input,select,button{width:100%;padding:12px;margin:7px 0;border-radius:8px;border:1px solid #ccc;font-size:16px;box-sizing:border-box}
+button{background:#ff6600;color:white;border:none;font-weight:bold}
+.earn{background:#e8f5e9;border-left:5px solid green;padding:10px;font-size:13px}
 </style>
 </head>
 <body>
-<div class="header">🔧 MechanicMitra - All Gaadi Service</div>
+<div class="header">
+<img src="logo.png" onerror="this.src='https://cdn-icons-png.flaticon.com/512/2962/2962303.png'">
+<div>MechanicMitra<br><small style="font-size:12px">All Gaadi Service - Okhla</small></div>
+</div>
+
 <div class="container">
 <div class="card">
-<h3>1. Gaadi Type Chuno (All Vehicle)</h3>
+<h3>1. Gaadi Chuno</h3>
 <div class="vehicle-grid">
-<div class="vehicle" onclick="selectVehicle(this,'Bike')">🏍️ Bike</div>
-<div class="vehicle" onclick="selectVehicle(this,'Scooty')">🛵 Scooty</div>
-<div class="vehicle" onclick="selectVehicle(this,'Car')">🚗 Car</div>
-<div class="vehicle" onclick="selectVehicle(this,'Auto')">🛺 Auto</div>
-<div class="vehicle" onclick="selectVehicle(this,'E-Rickshaw')">🔋 E-Rickshaw</div>
-<div class="vehicle" onclick="selectVehicle(this,'Truck')">🚚 Truck/Bus</div>
+<div class="vehicle" onclick="selectV(this,'Bike',99)">🏍️ Bike<br><small>Visit ₹99</small></div>
+<div class="vehicle" onclick="selectV(this,'Scooty',99)">🛵 Scooty<br><small>Visit ₹99</small></div>
+<div class="vehicle" onclick="selectV(this,'Car',149)">🚗 Car<br><small>Visit ₹149</small></div>
+<div class="vehicle" onclick="selectV(this,'Auto',120)">🛺 Auto<br><small>Visit ₹120</small></div>
+<div class="vehicle" onclick="selectV(this,'E-Rickshaw',120)">🔋 E-Rickshaw<br><small>Visit ₹120</small></div>
+<div class="vehicle" onclick="selectV(this,'Truck/Bus',199)">🚚 Truck/Bus<br><small>Visit ₹199</small></div>
 </div>
-<input type="hidden" id="vehicleType">
 </div>
+
 <div class="card">
-<h3>2. Service Chuno</h3>
-<select id="service">
-<option>Puncture / Tyre</option>
-<option>Engine Problem</option>
-<option>Battery / Self Start</option>
-<option>Oil Change / Servicing</option>
-<option>Brake Problem</option>
-<option>Towing / Breakdown</option>
-</select>
+<h3>2. Service & Rate Card (Customer ko dikhega)</h3>
+<div id="rateCard">
+<div class="charges"><span>Puncture</span><b>₹100 - ₹200</b></div>
+<div class="charges"><span>Oil Change</span><b>₹300 + Oil</b></div>
+<div class="charges"><span>Battery / Self</span><b>₹150 - ₹400</b></div>
+<div class="charges"><span>Towing (5km)</span><b>₹500</b></div>
+<div class="charges"><span>Full Servicing</span><b>Bike ₹499 | Car ₹1499</b></div>
 </div>
+<select id="service"><option>Puncture / Tyre</option><option>Oil Change / Servicing</option><option>Battery / Self Start</option><option>Engine Problem</option><option>Towing / Breakdown</option><option>Brake Problem</option></select>
+<p style="font-size:12px;color:gray">Note: Visiting charge alag hai, service charge mechanic spot pe batayega.</p>
+</div>
+
+<div class="card earn">
+<b>💰 Aapki Kamai Kaise Hogi (Sirf aap dekho):</b><br>
+• Bike/Scooty: Visit ₹99 me se ₹40 aapka<br>
+• Car/Truck: Visit ₹149/199 me se ₹70 aapka<br>
+• Har Service pe 20% commission mechanic se<br>
+• Din ke 10 kaam = ₹700 - ₹1200 profit daily
+</div>
+
 <div class="card">
-<h3>3. Aapki Details</h3>
-<input id="name" placeholder="Aapka Naam">
-<input id="phone" placeholder="Mobile Number" type="number">
-<input id="location" placeholder="Location - Jaise: Greater Noida, Pari Chowk">
-<button onclick="bookMechanic()">Mechanic Dhoondo</button>
-<p id="result" style="font-weight:bold;color:green;margin-top:10px"></p>
-<button id="installBtn" style="display:none;background:green;margin-top:15px">📲 App Install Karo</button>
+<h3>3. Booking Details</h3>
+<input id="name" placeholder="Naam - Ex: Sudhir Rai">
+<input id="phone" placeholder="Mobile Number" type="tel">
+<input id="location" placeholder="Location - Ex: Okhla Phase 2">
+<button onclick="book()">💳 Pay Visiting Charge & Book on WhatsApp</button>
+<p id="result" style="color:green;font-weight:bold"></p>
 </div>
 </div>
+
 <script>
-let selected = "";
-function selectVehicle(el,type){
+let selV=""; let selCharge=0;
+function selectV(el,type,charge){
  document.querySelectorAll('.vehicle').forEach(v=>v.classList.remove('selected'));
- el.classList.add('selected');
- selected = type;
+ el.classList.add('selected'); selV=type; selCharge=charge;
 }
-function bookMechanic(){
- const v = selected;
- const s = document.getElementById('service').value;
- const n = document.getElementById('name').value;
- const p = document.getElementById('phone').value;
- const l = document.getElementById('location').value;
- if(!v){alert('Pehle Gaadi Type chuno'); return;}
- if(!n || !p || !l){alert('Naam, Phone, Location bharo'); return;}
- document.getElementById('result').innerText = `✅ ${v} ke liye ${s} booking ho gayi! ${n} ji, ${l} par hamara mechanic 30 min me call karega.`;
+function book(){
+ const s=document.getElementById('service').value;
+ const n=document.getElementById('name').value;
+ const p=document.getElementById('phone').value;
+ const l=document.getElementById('location').value;
+ if(!selV){alert('Gaadi Chuno');return;}
+ if(!n||!p||!l){alert('Details bharo');return;}
+ const msg=`*NEW PAID BOOKING*%0A%0A👤${n}%0A📞${p}%0A🚚${selV} (Visit ₹${selCharge})%0A🔧${s}%0A📍${l}%0A%0AVisiting Charge Paid: UPI Check Karo`;
+ window.open(`https://wa.me/918700406006?text=${msg}`,'_blank');
+ document.getElementById('result').innerText=`✅ Booking ho gayi! Customer se ₹${selCharge} Visiting Charge pehle le lena.`;
 }
-// App Install ka code
-let deferredPrompt;
-const installBtn = document.getElementById('installBtn');
-window.addEventListener('beforeinstallprompt', (e) => {
-  e.preventDefault();
-  deferredPrompt = e;
-  installBtn.style.display = 'block';
-});
-installBtn.addEventListener('click', () => {
-  deferredPrompt.prompt();
-});
 </script>
 </body>
 </html>
