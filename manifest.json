@@ -1,0 +1,15 @@
+{
+  "name": "MechanicMitra - All Gaadi Service",
+  "short_name": "MechanicMitra",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#ff6600",
+  "theme_color": "#ff6600",
+  "icons": [
+    {
+      "src": "https://cdn-icons-png.flaticon.com/512/3772/3772306.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
