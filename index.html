@@ -3,69 +3,60 @@
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="manifest" href="manifest.json">
-<title>MechanicMitra - All Gaadi Service & Charges</title>
+<title>MechanicMitra - Sahi Rate, Sahi Service</title>
 <style>
 body{font-family:Arial;background:#f2f2f2;margin:0}
 .header{background:#ff6600;color:white;padding:12px;display:flex;align-items:center;gap:10px;position:sticky;top:0;z-index:10}
-.header img{width:45px;height:45px;border-radius:50%;background:white;object-fit:cover}
+.header img{width:50px;height:50px;border-radius:50%;background:white;object-fit:cover}
 .container{padding:12px}
 .card{background:white;padding:14px;border-radius:12px;margin-bottom:12px;box-shadow:0 2px 6px #ccc}
 .vehicle-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .vehicle{border:2px solid #ddd;padding:12px;text-align:center;border-radius:10px;cursor:pointer}
 .vehicle.selected{border-color:#ff6600;background:#fff2e6;font-weight:bold}
-.charges{display:flex;justify-content:space-between;background:#fff8e1;padding:8px;border-radius:8px;margin:6px 0;font-size:14px}
+.charges{display:flex;justify-content:space-between;background:#fff8e1;padding:10px;border-radius:8px;margin:6px 0;font-size:14px}
 .charges b{color:#ff6600}
-input,select,button{width:100%;padding:12px;margin:7px 0;border-radius:8px;border:1px solid #ccc;font-size:16px;box-sizing:border-box}
-button{background:#ff6600;color:white;border:none;font-weight:bold}
-.earn{background:#e8f5e9;border-left:5px solid green;padding:10px;font-size:13px}
+input,select,button{width:100%;padding:13px;margin:7px 0;border-radius:8px;border:1px solid #ccc;font-size:16px;box-sizing:border-box}
+button{background:#ff6600;color:white;border:none;font-weight:bold;font-size:17px}
+.tag{font-size:11px;background:green;color:white;padding:2px 6px;border-radius:10px}
 </style>
 </head>
 <body>
 <div class="header">
 <img src="logo.png" onerror="this.src='https://cdn-icons-png.flaticon.com/512/2962/2962303.png'">
-<div>MechanicMitra<br><small style="font-size:12px">All Gaadi Service - Okhla</small></div>
+<div>MechanicMitra<br><small style="font-size:12px">Okhla - 30 Min Me Mechanic</small></div>
 </div>
 
 <div class="container">
 <div class="card">
-<h3>1. Gaadi Chuno</h3>
+<h3>1. Gaadi Chuno - Visiting Charge</h3>
 <div class="vehicle-grid">
-<div class="vehicle" onclick="selectV(this,'Bike',99)">🏍️ Bike<br><small>Visit ₹99</small></div>
-<div class="vehicle" onclick="selectV(this,'Scooty',99)">🛵 Scooty<br><small>Visit ₹99</small></div>
-<div class="vehicle" onclick="selectV(this,'Car',149)">🚗 Car<br><small>Visit ₹149</small></div>
-<div class="vehicle" onclick="selectV(this,'Auto',120)">🛺 Auto<br><small>Visit ₹120</small></div>
-<div class="vehicle" onclick="selectV(this,'E-Rickshaw',120)">🔋 E-Rickshaw<br><small>Visit ₹120</small></div>
-<div class="vehicle" onclick="selectV(this,'Truck/Bus',199)">🚚 Truck/Bus<br><small>Visit ₹199</small></div>
+<div class="vehicle" onclick="selectV(this,'Bike',149)">🏍️ Bike<br><b>₹149</b></div>
+<div class="vehicle" onclick="selectV(this,'Scooty',149)">🛵 Scooty<br><b>₹149</b></div>
+<div class="vehicle" onclick="selectV(this,'Auto',199)">🛺 Auto<br><b>₹199</b></div>
+<div class="vehicle" onclick="selectV(this,'E-Rickshaw',199)">🔋 E-Rick<br><b>₹199</b></div>
+<div class="vehicle" onclick="selectV(this,'Car',299)">🚗 Car<br><b>₹299</b></div>
+<div class="vehicle" onclick="selectV(this,'Truck/Bus',499)">🚚 Truck/Bus<br><b>₹499</b></div>
 </div>
-</div>
-
-<div class="card">
-<h3>2. Service & Rate Card (Customer ko dikhega)</h3>
-<div id="rateCard">
-<div class="charges"><span>Puncture</span><b>₹100 - ₹200</b></div>
-<div class="charges"><span>Oil Change</span><b>₹300 + Oil</b></div>
-<div class="charges"><span>Battery / Self</span><b>₹150 - ₹400</b></div>
-<div class="charges"><span>Towing (5km)</span><b>₹500</b></div>
-<div class="charges"><span>Full Servicing</span><b>Bike ₹499 | Car ₹1499</b></div>
-</div>
-<select id="service"><option>Puncture / Tyre</option><option>Oil Change / Servicing</option><option>Battery / Self Start</option><option>Engine Problem</option><option>Towing / Breakdown</option><option>Brake Problem</option></select>
-<p style="font-size:12px;color:gray">Note: Visiting charge alag hai, service charge mechanic spot pe batayega.</p>
-</div>
-
-<div class="card earn">
-<b>💰 Aapki Kamai Kaise Hogi (Sirf aap dekho):</b><br>
-• Bike/Scooty: Visit ₹99 me se ₹40 aapka<br>
-• Car/Truck: Visit ₹149/199 me se ₹70 aapka<br>
-• Har Service pe 20% commission mechanic se<br>
-• Din ke 10 kaam = ₹700 - ₹1200 profit daily
+<small style="color:gray">Visiting charge mechanic aane ka hai, kaam me adjust hoga.</small>
 </div>
 
 <div class="card">
-<h3>3. Booking Details</h3>
-<input id="name" placeholder="Naam - Ex: Sudhir Rai">
+<h3>2. Service Rate Card 2026 <span class="tag">FIX RATE</span></h3>
+<div class="charges"><span>Puncture - Bike</span><b>₹150-250</b></div>
+<div class="charges"><span>Puncture - Car/Truck</span><b>₹300-800</b></div>
+<div class="charges"><span>Oil + Filter Change</span><b>Bike ₹400+ | Car ₹800+</b></div>
+<div class="charges"><span>Full Servicing</span><b>Bike ₹699 | Car ₹2499</b></div>
+<div class="charges"><span>Battery / Self / Brake</span><b>₹300-1500</b></div>
+<div class="charges"><span>Towing (5km)</span><b>Bike ₹600 | Car ₹1200 | Truck ₹3000</b></div>
+<select id="service"><option>Puncture / Tyre</option><option>Oil Change</option><option>Full Servicing</option><option>Battery / Self Start</option><option>Brake Problem</option><option>Towing / Breakdown</option><option>Engine Problem</option></select>
+</div>
+
+<div class="card">
+<h3>3. Booking Karo</h3>
+<input id="name" placeholder="Aapka Naam">
 <input id="phone" placeholder="Mobile Number" type="tel">
 <input id="location" placeholder="Location - Ex: Okhla Phase 2">
-<button onclick="book()">💳 Pay Visiting Charge & Book on WhatsApp</button>
+<button onclick="book()">📲 WhatsApp Pe Booking Bhejo</button>
 <p id="result" style="color:green;font-weight:bold"></p>
 </div>
 </div>
@@ -83,9 +74,9 @@ function book(){
  const l=document.getElementById('location').value;
  if(!selV){alert('Gaadi Chuno');return;}
  if(!n||!p||!l){alert('Details bharo');return;}
- const msg=`*NEW PAID BOOKING*%0A%0A👤${n}%0A📞${p}%0A🚚${selV} (Visit ₹${selCharge})%0A🔧${s}%0A📍${l}%0A%0AVisiting Charge Paid: UPI Check Karo`;
+ const msg=`*NEW BOOKING - MechanicMitra*%0A%0A👤 ${n}%0A📞 ${p}%0A🚚 ${selV} - Visit ₹${selCharge}%0A🔧 ${s}%0A📍 ${l}`;
  window.open(`https://wa.me/918700406006?text=${msg}`,'_blank');
- document.getElementById('result').innerText=`✅ Booking ho gayi! Customer se ₹${selCharge} Visiting Charge pehle le lena.`;
+ document.getElementById('result').innerText=`✅ ${selV} Booking Done! Visiting ₹${selCharge} lagega.`;
 }
 </script>
 </body>
