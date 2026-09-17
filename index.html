@@ -2,6 +2,8 @@
 <html lang="hi">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#ff6600">
 <title>MechanicMitra - All Vehicle Service</title>
 <style>
 body{font-family:Arial;background:#f4f4f4;margin:0;padding:0}
@@ -19,7 +21,7 @@ button{background:#ff6600;color:white;border:none;font-weight:bold}
 <div class="header">🔧 MechanicMitra - All Gaadi Service</div>
 <div class="container">
 <div class="card">
-<h3>1. Gaadi Type Chuno</h3>
+<h3>1. Gaadi Type Chuno (All Vehicle)</h3>
 <div class="vehicle-grid">
 <div class="vehicle" onclick="selectVehicle(this,'Bike')">🏍️ Bike</div>
 <div class="vehicle" onclick="selectVehicle(this,'Scooty')">🛵 Scooty</div>
@@ -30,7 +32,6 @@ button{background:#ff6600;color:white;border:none;font-weight:bold}
 </div>
 <input type="hidden" id="vehicleType">
 </div>
-
 <div class="card">
 <h3>2. Service Chuno</h3>
 <select id="service">
@@ -42,7 +43,6 @@ button{background:#ff6600;color:white;border:none;font-weight:bold}
 <option>Towing / Breakdown</option>
 </select>
 </div>
-
 <div class="card">
 <h3>3. Aapki Details</h3>
 <input id="name" placeholder="Aapka Naam">
@@ -50,27 +50,37 @@ button{background:#ff6600;color:white;border:none;font-weight:bold}
 <input id="location" placeholder="Location - Jaise: Greater Noida, Pari Chowk">
 <button onclick="bookMechanic()">Mechanic Dhoondo</button>
 <p id="result" style="font-weight:bold;color:green;margin-top:10px"></p>
+<button id="installBtn" style="display:none;background:green;margin-top:15px">📲 App Install Karo</button>
 </div>
 </div>
-
 <script>
 let selected = "";
 function selectVehicle(el,type){
  document.querySelectorAll('.vehicle').forEach(v=>v.classList.remove('selected'));
  el.classList.add('selected');
  selected = type;
- document.getElementById('vehicleType').value = type;
 }
 function bookMechanic(){
- const v = selected || document.getElementById('vehicleType').value;
+ const v = selected;
  const s = document.getElementById('service').value;
  const n = document.getElementById('name').value;
  const p = document.getElementById('phone').value;
  const l = document.getElementById('location').value;
- if(!v){alert('Pehle Gaadi Type chuno - Bike, Car etc'); return;}
+ if(!v){alert('Pehle Gaadi Type chuno'); return;}
  if(!n || !p || !l){alert('Naam, Phone, Location bharo'); return;}
- document.getElementById('result').innerText = `✅ ${v} ke liye ${s} booking ho gayi! ${n} ji, ${l} par hamara mechanic 30 min me call karega. Phone: ${p}`;
+ document.getElementById('result').innerText = `✅ ${v} ke liye ${s} booking ho gayi! ${n} ji, ${l} par hamara mechanic 30 min me call karega.`;
 }
+// App Install ka code
+let deferredPrompt;
+const installBtn = document.getElementById('installBtn');
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault();
+  deferredPrompt = e;
+  installBtn.style.display = 'block';
+});
+installBtn.addEventListener('click', () => {
+  deferredPrompt.prompt();
+});
 </script>
 </body>
 </html>
