@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MechanicMitra - All Vehicle Service</title>
+<style>
+body{font-family:Arial;background:#f4f4f4;margin:0;padding:0}
+.header{background:#ff6600;color:white;padding:15px;text-align:center;font-size:22px;font-weight:bold}
+.container{padding:15px}
+.card{background:white;padding:15px;border-radius:10px;margin-bottom:15px;box-shadow:0 2px 5px #ccc}
+select,input,button{width:100%;padding:12px;margin:8px 0;border-radius:8px;border:1px solid #ccc;font-size:16px}
+button{background:#ff6600;color:white;border:none;font-weight:bold}
+.vehicle-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.vehicle{border:2px solid #ddd;padding:12px;text-align:center;border-radius:8px;cursor:pointer}
+.vehicle.selected{border-color:#ff6600;background:#fff2e6}
+</style>
+</head>
+<body>
+<div class="header">🔧 MechanicMitra - All Gaadi Service</div>
+<div class="container">
+<div class="card">
+<h3>1. Gaadi Type Chuno</h3>
+<div class="vehicle-grid">
+<div class="vehicle" onclick="selectVehicle(this,'Bike')">🏍️ Bike</div>
+<div class="vehicle" onclick="selectVehicle(this,'Scooty')">🛵 Scooty</div>
+<div class="vehicle" onclick="selectVehicle(this,'Car')">🚗 Car</div>
+<div class="vehicle" onclick="selectVehicle(this,'Auto')">🛺 Auto</div>
+<div class="vehicle" onclick="selectVehicle(this,'E-Rickshaw')">🔋 E-Rickshaw</div>
+<div class="vehicle" onclick="selectVehicle(this,'Truck')">🚚 Truck/Bus</div>
+</div>
+<input type="hidden" id="vehicleType">
+</div>
+
+<div class="card">
+<h3>2. Service Chuno</h3>
+<select id="service">
+<option>Puncture / Tyre</option>
+<option>Engine Problem</option>
+<option>Battery / Self Start</option>
+<option>Oil Change / Servicing</option>
+<option>Brake Problem</option>
+<option>Towing / Breakdown</option>
+</select>
+</div>
+
+<div class="card">
+<h3>3. Aapki Details</h3>
+<input id="name" placeholder="Aapka Naam">
+<input id="phone" placeholder="Mobile Number" type="number">
+<input id="location" placeholder="Location - Jaise: Greater Noida, Pari Chowk">
+<button onclick="bookMechanic()">Mechanic Dhoondo</button>
+<p id="result" style="font-weight:bold;color:green;margin-top:10px"></p>
+</div>
+</div>
+
+<script>
+let selected = "";
+function selectVehicle(el,type){
+ document.querySelectorAll('.vehicle').forEach(v=>v.classList.remove('selected'));
+ el.classList.add('selected');
+ selected = type;
+ document.getElementById('vehicleType').value = type;
+}
+function bookMechanic(){
+ const v = selected || document.getElementById('vehicleType').value;
+ const s = document.getElementById('service').value;
+ const n = document.getElementById('name').value;
+ const p = document.getElementById('phone').value;
+ const l = document.getElementById('location').value;
+ if(!v){alert('Pehle Gaadi Type chuno - Bike, Car etc'); return;}
+ if(!n || !p || !l){alert('Naam, Phone, Location bharo'); return;}
+ document.getElementById('result').innerText = `✅ ${v} ke liye ${s} booking ho gayi! ${n} ji, ${l} par hamara mechanic 30 min me call karega. Phone: ${p}`;
+}
+</script>
+</body>
+</html>
