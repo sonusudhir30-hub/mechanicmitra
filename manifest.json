@@ -1,15 +1,12 @@
 {
-  "name": "MechanicMitra - All Gaadi Service",
+  "name": "MechanicMitra - Quick Help",
   "short_name": "MechanicMitra",
-  "start_url": ".",
+  "start_url": "./index.html",
   "display": "standalone",
-  "background_color": "#ff6600",
+  "background_color": "#ffcc00",
   "theme_color": "#ff6600",
   "icons": [
-    {
-      "src": "https://cdn-icons-png.flaticon.com/512/3772/3772306.png",
-      "sizes": "512x512",
-      "type": "image/png"
-    }
+    { "src": "IMG-20260918-WA0802.jpg", "sizes": "192x192", "type": "image/jpeg" },
+    { "src": "IMG-20260918-WA0802.jpg", "sizes": "512x512", "type": "image/jpeg" }
   ]
 }
