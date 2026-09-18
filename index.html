@@ -1,68 +1,69 @@
-<!DOCTYPE html>
-<html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>MechanicMitra</title>
+<!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>MechanicMitra</title>
 <style>
 body{margin:0;font-family:sans-serif;background:#ffcc00}
 .screen{position:fixed;inset:0;display:none;background:#ffcc00;overflow:auto}
 .screen.on{display:flex}
 #s1{flex-direction:column;align-items:center;justify-content:center;text-align:center}
-.logo{width:160px;height:160px;background:#fff;border-radius:50%;overflow:hidden;box-shadow:0 8px 20px rgba(0,0,0,.25);display:flex;align-items:center;justify-content:center;font-size:70px}
+.logo{width:150px;height:150px;background:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:60px;box-shadow:0 8px 20px rgba(0,0,0,.2)}
 .logo img{width:100%;height:100%;object-fit:contain}
-.btnM{background:#111;color:#fff;border:0;padding:18px 40px;border-radius:50px;font-weight:800;font-size:18px;margin-top:20px}
-.card{background:#fff;width:92%;max-width:380px;margin:20px auto;border-radius:18px;padding:16px;box-shadow:0 4px 12px rgba(0,0,0,.1)}
-.back{background:#111;color:#fff;border:0;padding:10px 18px;border-radius:25px;margin-bottom:12px;font-weight:bold;display:block}
-input,select{width:100%;padding:14px;border:2px solid #ddd;border-radius:10px;margin:6px 0;box-sizing:border-box}
-.v{border:2px solid #eee;border-radius:12px;padding:14px;text-align:center;font-weight:bold;background:#fff}
+.btnM{background:#111;color:#fff;border:0;padding:16px 36px;border-radius:50px;font-weight:800;margin-top:16px}
+.card{background:#fff;width:92%;max-width:380px;margin:16px auto;border-radius:16px;padding:16px}
+.back{background:#111;color:#fff;border:0;padding:10px 16px;border-radius:20px;font-weight:bold;margin-bottom:10px}
+input,select{width:100%;padding:13px;border:2px solid #ddd;border-radius:10px;margin:6px 0;box-sizing:border-box}
+.v{border:2px solid #eee;border-radius:12px;padding:12px;text-align:center;font-weight:bold}
 .v.sel{border-color:#ff6600;background:#fff3e0}
-.btn{width:100%;padding:14px;background:#ff6600;color:#fff;border:0;border-radius:10px;font-weight:bold;margin-top:8px}
+.btn{width:100%;padding:13px;background:#ff6600;color:#fff;border:0;border-radius:10px;font-weight:bold;margin-top:6px}
 </style></head><body>
 
-<!-- SCREEN 1 -->
 <div id="s1" class="screen on">
 <div class="logo"><img src="logo.jpg" onerror="this.parentElement.innerHTML='🔧'"></div>
-<h1 style="margin-top:14px">MechanicMitra</h1>
-<p>Quick PARTNER - 30 Min</p>
-<button class="btnM" onclick="goNext(2)">GET STARTED →</button>
+<h1 id="t1">MechanicMitra</h1><p id="t2">Quick Partner - 30 Min</p>
+<button class="btnM" onclick="go(2)" id="b1">GET STARTED →</button>
 </div>
 
-<!-- SCREEN 2 LANGUAGE -->
 <div id="s2" class="screen" style="background:#fff;align-items:center;justify-content:center">
 <div class="card">
-<button class="back" onclick="goBack()">← BACK</button>
-<h3>🌐 Language Chuno *</h3>
-<select id="lang"><option value="">-- Chuno --</option><option value="hi">हिन्दी</option><option value="en">English</option><option value="bn">বাংলা</option><option value="mr">मराठी</option></select>
-<button class="btn" onclick="if(!document.getElementById('lang').value){alert('Language chuno!')}else goNext(3)">Continue →</button>
+<button class="back" onclick="goback()">← BACK</button>
+<h3 id="t3">🌐 Language Chuno *</h3>
+<select id="lang" onchange="changeLang(this.value)"><option value="">-- Chuno --</option><option value="hi">हिन्दी</option><option value="en">English</option><option value="mr">मराठी</option><option value="bn">বাংলা</option></select>
+<button class="btn" onclick="next2()" id="b2">Continue →</button>
 </div></div>
 
-<!-- SCREEN 3 MOBILE -->
 <div id="s3" class="screen" style="background:#fff;align-items:center;justify-content:center">
 <div class="card">
-<button class="back" onclick="goBack()">← BACK</button>
-<h3>📱 Mobile Number *</h3>
-<input id="ph" type="tel" maxlength="10" placeholder="10 digit number">
-<button class="btn" onclick="if(document.getElementById('ph').value.length!=10){alert('10 digit number dalo!')}else goNext(4)">Send OTP →</button>
+<button class="back" onclick="goback()">← BACK</button>
+<h3 id="t4">📱 Mobile Number *</h3>
+<input id="ph" maxlength="10" placeholder="10 digit">
+<button class="btn" onclick="next3()" id="b3">Send OTP →</button>
 </div></div>
 
-<!-- SCREEN 4 OTP -->
 <div id="s4" class="screen" style="background:#fff;align-items:center;justify-content:center">
 <div class="card">
-<button class="back" onclick="goBack()">← BACK</button>
-<h3>🔑 OTP Daalo - 1234 *</h3>
+<button class="back" onclick="goback()">← BACK</button>
+<h3 id="t5">🔑 OTP - 1234 *</h3>
 <input id="otp" maxlength="4" placeholder="1234">
-<button class="btn" onclick="if(document.getElementById('otp').value!='1234'){alert('Sahi OTP 1234 dalo!')}else goNext(5)">Verify →</button>
+<button class="btn" onclick="next4()" id="b4">Verify →</button>
 </div></div>
 
-<!-- SCREEN 5 BOOKING -->
 <div id="s5" class="screen" style="background:#f5f5f5;flex-direction:column;display:none">
-<div class="card">
-<button class="back" onclick="goBack()">← BACK</button>
-<h3>1. Gaadi Chuno *</h3>
-<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px">
-<div class="v" onclick="pick(this,'Bike')"><div style="font-size:32px">🏍️</div>Bike<br>₹149</div>
-<div class="v" onclick="pick(this,'Scooty')"><div style="font-size:32px">🛵</div>Scooty<br>₹149</div>
-<div class="v" onclick="pick(this,'Auto')"><div style="font-size:32px">🛺</div>Auto<br>₹199</div>
-<div class="v" onclick="pick(this,'Car')"><div style="font-size:32px">🚗</div>Car<br>₹299</div>
-<div class="v" onclick="pick(this,'Truck')" style="grid-column:span 2"><div style="font-size:32px">🚚</div>Truck - ₹499</div>
-</div>
-</div>
-<div class="card">
-<h3>2. Details
+<div class="card"><button class="back" onclick="goback()">← BACK</button><h3 id="t6">1. Gaadi Chuno *</h3>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+<div class="v" onclick="pick(this,'Bike')"><div style="font-size:28px">🏍️</div><span class="vn">Bike</span><br>₹149</div>
+<div class="v" onclick="pick(this,'Scooty')"><div style="font-size:28px">🛵</div><span class="vn">Scooty</span><br>₹149</div>
+<div class="v" onclick="pick(this,'Auto')"><div style="font-size:28px">🛺</div><span class="vn">Auto</span><br>₹199</div>
+<div class="v" onclick="pick(this,'Car')"><div style="font-size:28px">🚗</div><span class="vn">Car</span><br>₹299</div>
+<div class="v" onclick="pick(this,'Truck')" style="grid-column:span 2"><div style="font-size:28px">🚚</div>Truck - ₹499</div>
+</div></div>
+<div class="card"><h3 id="t7">2. Details *</h3>
+<input id="nm" placeholder="Naam *">
+<input id="lc" placeholder="Location *">
+<button class="btn" onclick="book()" id="b5">📲 Booking Karo</button>
+<p id="msg" style="color:green;text-align:center;font-weight:bold"></p>
+</div></div>
+
+<script>
+let hist=[1];let curLang='hi';let gv='';
+let tr={
+ en:{t1:"MechanicMitra",t2:"Quick Partner - 30 Min",b1:"GET STARTED →",t3:"🌐 Choose Language *",b2:"Continue →",t4:"📱 Mobile Number *",b3:"Send OTP →",t5:"🔑 Enter OTP - 1234 *",b4:"Verify →",t6:"1. Choose Vehicle *",t7:"2. Your Details *",b5:"📲 Book Now",ph:"10 digit number",nm:"Your Name *",lc:"Your Location *"},
+ hi:{t1:"मैकेनिकमित्रा",t2:"तुरंत पार्टनर - 30 मिनट में",b1:"शुरू करो →",t3:"🌐 भाषा चुनो *",b2:"आगे बढ़ो →",t4:"📱 मोबाइल नंबर *",b3:"OTP भेजो →",t5:"🔑 OTP डालो - 1234 *",b4:"जाँच करो →",t6:"1. गाड़ी चुनो *",t7:"2. आपकी जानकारी *",b5:"📲 बुकिंग करो",ph:"10 अंकों का नंबर",nm:"आपका नाम *",lc:"आपका पता *"},
+ mr:{t1:"मेकॅनिकमित्र",t2:"त्वरित पार्टनर - 30 मिनिटांत",b1:"सुरू करा →",t3:"🌐 भाषा निवडा *",b2:"प
