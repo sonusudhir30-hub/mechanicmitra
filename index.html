@@ -1,74 +1,83 @@
-<!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>MechanicMitra</title><link rel="manifest" href="manifest.json">
 <style>
-*{box-sizing:border-box;font-family:Segoe UI}body{margin:0;background:#fff}
-.screen{display:none;min-height:100vh;padding:18px}.screen.on{display:flex;flex-direction:column;justify-content:center}
-.card{background:#fff;padding:22px;border-radius:20px;box-shadow:0 8px 24px #0001;border:1px solid #eee}
-.btn{width:100%;padding:16px;border:none;border-radius:14px;background:#ff6600;color:#fff;font-weight:bold;font-size:16px;margin-top:12px}
-input,select{width:100%;padding:15px;border-radius:12px;border:1.5px solid #ddd;font-size:16px;margin:7px 0}
-.logo-img{width:110px;height:110px;border-radius:50%;object-fit:cover;margin:0 auto 12px;display:block;box-shadow:0 4px 12px #0002}
-.splash{background:#ffcc00;display:flex;align-items:center;justify-content:center;text-align:center}
+*{box-sizing:border-box;font-family:Segoe UI}body{margin:0;background:#fff;overflow:hidden}
+.screen{position:fixed;inset:0;background:#fff;display:flex;flex-direction:column;justify-content:center;padding:20px;transform:translateX(100%);transition:.4s ease;z-index:1}
+.screen.on{transform:translateX(0)}
+.card{padding:22px;border-radius:22px;box-shadow:0 10px 30px #0001;border:1px solid #eee;background:#fff}
+.logo{width:120px;height:120px;border-radius:50%;object-fit:cover;margin:0 auto 14px;display:block;box-shadow:0 6px 18px #0002}
+input,select{width:100%;padding:16px;border-radius:14px;border:2px solid #eee;font-size:16px;margin:8px 0;outline:none;transition:.2s}
+input:focus{border-color:#ff6600}
+.btn{width:100%;padding:16px;border:none;border-radius:14px;background:#ff6600;color:#fff;font-weight:bold;font-size:16px}
+.progress{position:fixed;top:0;left:0;height:4px;background:#ff6600;transition:.4s;z-index:10}
+.splash{background:#ffcc00;align-items:center;text-align:center}
 .vbox{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.v{border:2px solid #eee;border-radius:16px;padding:14px;text-align:center;background:#fff}.v.sel{border-color:#ff6600;background:#fff4e6}
-.terms{height:110px;overflow:auto;background:#fafafa;border:1px solid #ddd;padding:10px;font-size:12px;border-radius:8px}
-.header{background:#111;color:#fff;padding:12px 16px;display:flex;justify-content:space-between;align-items:center}
+.v{border:2px solid #eee;border-radius:16px;padding:14px;text-align:center;cursor:pointer}.v.sel{border-color:#ff6600;background:#fff4e6;transform:scale(1.02)}
+.dot{width:8px;height:8px;background:#ddd;border-radius:50%;display:inline-block;margin:0 3px}.dot.on{background:#ff6600;width:20px;border-radius:10px}
 </style></head><body>
+<div id="bar" class="progress" style="width:0%"></div>
 
+<!-- 1 SPLASH -->
 <div id="s1" class="screen on splash">
-<div>
-<img src="IMG-20260918-WA0802.jpg" class="logo-img" style="width:140px;height:140px">
-<h1 style="margin:5px">MechanicMitra</h1><p>Quick PARTNER - 30 Min Me Mechanic</p>
-<p style="margin-top:30px;font-size:12px;opacity:.6">Loading...</p>
-</div></div>
-
-<div id="s2" class="screen"><div class="card">
-<img src="IMG-20260918-WA0802.jpg" class="logo-img"><h2>🌐 Language / भाषा</h2>
-<select id="lang"><option value="hi">हिन्दी</option><option value="en">English</option><option value="bn">বাংলা</option><option value="mr">मराठी</option><option value="ta">தமிழ்</option><option value="te">తెలుగు</option><option value="gu">ગુજરાતી</option></select>
-<button class="btn" onclick="go('s3')">Continue →</button></div></div>
-
-<div id="s3" class="screen"><div class="card">
-<img src="IMG-20260918-WA0802.jpg" class="logo-img" style="width:80px;height:80px">
-<h2>Login / Sign Up</h2><p style="color:#666;font-size:13px">OTP se login karo</p>
-<input id="ph" placeholder="Mobile Number - 10 Digit"><button class="btn" onclick="send()" id="b1">Send OTP</button>
-<div id="ob" style="display:none"><input id="otp" placeholder="OTP = 1234"><button class="btn" style="background:#111" onclick="ver()">Verify OTP</button><p style="font-size:12px;color:green">Demo OTP: 1234 (Real me WhatsApp pe ayega)</p></div>
-</div></div>
-
-<div id="s4" class="screen"><div class="card">
-<h2>📜 Terms & Conditions</h2>
-<div class="terms">
-<b>1. Visiting Charge:</b> Bike/Scooty ₹149, Auto ₹199, Car ₹299.<br><br>
-<b>2. Service Time:</b> 30-45 min me mechanic aayega. Delay ho sakta hai.<br><br>
-<b>3. Payment:</b> Cash/UPI. Parts alag.<br><br>
-<b>4. Cancellation:</b> Mechanic nikalne ke baad cancel pe visiting charge lagega.<br><br>
-<b>5. Privacy:</b> Aapka number sirf mechanic se share hoga.
+<img src="IMG-20260918-WA0802.jpg" class="logo" style="width:150px;height:150px">
+<h1 style="margin:5px">MechanicMitra</h1><p>Quick PARTNER - 30 Min</p>
+<div style="margin-top:30px"><span class="dot on"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
 </div>
-<label><input type="checkbox" id="ag" style="width:auto"> I Agree to Terms & Privacy Policy</label>
-<button class="btn" onclick="agree()">Agree & Continue</button>
+
+<!-- 2 LANG -->
+<div id="s2" class="screen"><div class="card">
+<img src="IMG-20260918-WA0802.jpg" class="logo" style="width:80px;height:80px">
+<h2>🌐 अपनी भाषा चुनें</h2><p style="color:#666;font-size:13px">Select Language - Auto Next</p>
+<select id="lang" onchange="autoLang()"><option value="">-- Choose --</option><option value="hi">हिन्दी - Hindi</option><option value="en">English</option><option value="bn">বাংলা</option><option value="mr">मराठी</option><option value="ta">தமிழ்</option></select>
 </div></div>
 
-<div id="s5" style="display:none">
-<div class="header"><div style="display:flex;align-items:center;gap:8px"><img src="IMG-20260918-WA0802.jpg" style="width:36px;height:36px;border-radius:50%"><div><b>MechanicMitra</b><br><small id="uinfo" style="font-size:10px"></small></div></div><span onclick="localStorage.clear();location.reload()">👤</span></div>
+<!-- 3 PHONE -->
+<div id="s3" class="screen"><div class="card">
+<h2>📱 Mobile Number</h2><p style="color:#666;font-size:13px">10 digit dalte hi OTP ayega</p>
+<input id="ph" type="tel" maxlength="10" placeholder="10 Digit Number" oninput="autoPhone()">
+<p id="phOk" style="color:green;font-size:12px;display:none">✓ Number sahi hai, OTP bhej rahe hain...</p>
+</div></div>
+
+<!-- 4 OTP -->
+<div id="s4" class="screen"><div class="card">
+<h2>🔑 OTP Daalo</h2><p style="color:#666;font-size:13px">Demo OTP: <b>1234</b> - Daalte hi auto verify</p>
+<input id="otp" type="tel" maxlength="4" placeholder="4 Digit OTP" oninput="autoOTP()">
+<p id="otpOk" style="color:green;font-size:12px;display:none">✓ OTP Verified!</p>
+</div></div>
+
+<!-- 5 NAME -->
+<div id="s5" class="screen"><div class="card">
+<h2>👤 Aapka Naam?</h2>
+<input id="cname" placeholder="Ex: Sonu Kumar" oninput="autoName()">
+<p style="font-size:11px;color:#999">3 akshar likhte hi agla screen khulega</p>
+</div></div>
+
+<!-- 6 TERMS -->
+<div id="s6" class="screen"><div class="card">
+<h2>📜 Terms</h2><div style="height:90px;overflow:auto;background:#fafafa;border:1px solid #ddd;padding:8px;font-size:11px;border-radius:8px">
+Visiting Charge: Bike ₹149, Car ₹299. Mechanic 30 min me ayega. Cancel pe charge lagega. Aapka data safe hai.</div>
+<label style="display:flex;gap:8px;margin-top:12px;font-size:14px"><input type="checkbox" id="ag" style="width:20px" onchange="autoTerms()"> I Agree to Terms & Conditions</label>
+<p id="agOk" style="color:green;font-size:12px;display:none">✓ Accepted! Home khul raha hai...</p>
+</div></div>
+
+<!-- 7 HOME -->
+<div id="s7" class="screen" style="overflow:auto;justify-content:flex-start;padding:0">
+<div style="background:#111;color:#fff;padding:12px;display:flex;align-items:center;gap:10px"><img src="IMG-20260918-WA0802.jpg" style="width:36px;height:36px;border-radius:50%"><div><b>MechanicMitra</b><br><small id="uinfo" style="font-size:10px"></small></div></div>
 <div style="padding:12px;background:#f6f6f6;min-height:100vh">
-<div class="card"><h3 style="margin:0">Gaadi Chuno - Visiting Charge</h3><div class="vbox" style="margin-top:10px">
+<div class="card"><h3 style="margin:0">1. Gaadi Chuno</h3><div class="vbox" style="margin-top:10px">
 <div class="v" onclick="sv(this,'Bike',149)">🏍️<br><b>Bike</b><br><span style="color:#ff6600">₹149</span></div>
 <div class="v" onclick="sv(this,'Scooty',149)">🛵<br><b>Scooty</b><br><span style="color:#ff6600">₹149</span></div>
 <div class="v" onclick="sv(this,'Auto',199)">🛺<br><b>Auto</b><br><span style="color:#ff6600">₹199</span></div>
 <div class="v" onclick="sv(this,'Car',299)">🚗<br><b>Car</b><br><span style="color:#ff6600">₹299</span></div>
 </div></div>
-<div class="card"><h3>Service Kya Hai?</h3><select id="ser"><option>Puncture / Tyre</option><option>Oil Change</option><option>Full Servicing</option><option>Battery Dead</option><option>Brake Problem</option><option>Towing</option></select>
-<input id="loc" placeholder="Location - Ex: Okhla Phase 2"><input id="cname" placeholder="Aapka Naam">
-<button class="btn" onclick="book()">🔧 BOOK NOW</button><p id="res" style="color:green;font-weight:bold;text-align:center"></p></div>
+<div class="card"><h3>2. Service & Location</h3><select id="ser"><option>Puncture</option><option>Oil Change</option><option>Battery Dead</option><option>Towing</option><option>Full Service</option></select>
+<input id="loc" placeholder="Location - Ex: Okhla Phase 2" oninput="checkReady()">
+<button class="btn" id="bookBtn" style="opacity:.5" onclick="book()">🔧 BOOK MECHANIC</button><p id="res" style="text-align:center;color:green;font-weight:bold"></p></div>
 </div></div>
 
 <script>
-let selV='',selC=0;function go(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('on'));document.getElementById(id).classList.add('on')}
-setTimeout(()=>go('s2'),1800);
-function send(){if(document.getElementById('ph').value.length<10){alert('Number daalo');return;}document.getElementById('ob').style.display='block';document.getElementById('b1').innerText='OTP Sent ✓'}
-function ver(){if(document.getElementById('otp').value!='1234'){alert('1234 daalo demo ke liye');return;}localStorage.setItem('mm_user',document.getElementById('ph').value);go('s4')}
-function agree(){if(!document.getElementById('ag').checked){alert('Terms tick karo');return;}localStorage.setItem('mm_terms','yes');document.getElementById('s5').style.display='block';document.querySelectorAll('.screen').forEach(s=>s.classList.remove('on'));document.getElementById('uinfo').innerText=localStorage.getItem('mm_user')}
-function sv(el,v,c){document.querySelectorAll('.v').forEach(x=>x.classList.remove('sel'));el.classList.add('sel');selV=v;selC=c}
-function book(){if(!selV){alert('Gaadi chuno');return;}let s=document.getElementById('ser').value,l=document.getElementById('loc').value,n=document.getElementById('cname').value;if(!l||!n){alert('Naam Location bharo');return;}
-let b=JSON.parse(localStorage.getItem('mm_b')||'[]');b.push({vehicle:selV,charge:selC,service:s,name:n,phone:localStorage.getItem('mm_user'),location:l,time:new Date().toLocaleString()});localStorage.setItem('mm_b',JSON.stringify(b));
-let msg=`*NEW BOOKING*%0A👤${n}%0A📞${localStorage.getItem('mm_user')}%0A🚚${selV} ₹${selC}%0A🔧${s}%0A📍${l}`;window.open(`https://wa.me/918700406006?text=${msg}`,'_blank');document.getElementById('res').innerText='✅ Booking Sent! 30 min me mechanic aayega';}
-if(localStorage.getItem('mm_user')&&localStorage.getItem('mm_terms')){setTimeout(()=>{document.getElementById('s5').style.display='block';document.querySelectorAll('.screen').forEach(s=>s.classList.remove('on'));document.getElementById('uinfo').innerText=localStorage.getItem('mm_user')},1900)}
-</script></body></html>
+let selV='',selC=0, cur=1;
+function go(n){document.getElementById('s'+cur).classList.remove('on');document.getElementById('s'+n).classList.add('on');cur=n;document.getElementById('bar').style.width=(n/7*100)+'%'}
+setTimeout(()=>go(2),1800);
+function autoLang(){if(document.getElementById('lang').value){setTimeout(()=>go(3),400)}}
+function autoPhone(){let v=document.getElementById('ph').value;if(v.length==10){document.getElementById('phOk').style.display='block';localStorage.setItem('mm_user',v);setTimeout(()=>go(4),800
