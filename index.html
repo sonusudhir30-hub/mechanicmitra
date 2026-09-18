@@ -1,14 +1,17 @@
 <!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
 <title>MechanicMitra</title><link rel="manifest" href="manifest.json">
 <style>
-html,body{margin:0;height:100%;overflow:hidden}
+html,body{margin:0;height:100%;overflow:hidden;background:#fff}
 *{box-sizing:border-box;font-family:Segoe UI}
-.screen{position:fixed;top:0;left:0;right:0;bottom:0;background:#fff;display:flex;flex-direction:column;justify-content:center;padding:20px;transform:translateX(100%);transition:transform .35s ease;z-index:5}
-.screen.on{transform:translateX(0)}
-.card{padding:20px;border-radius:20px;box-shadow:0 8px 24px #0001;border:1px solid #eee;background:#fff;width:100%;max-width:360px;margin:0 auto}
-.logo{width:110px;height:110px;border-radius:50%;object-fit:cover;margin:0 auto 12px;display:block}
-input,select{width:100%;padding:16px;border-radius:12px;border:2px solid #eee;margin:8px 0;font-size:16px}
-.btn{width:100%;padding:16px;border:none;border-radius:12px;background:#ff6600;color:#fff;font-weight:bold;margin-top:10px}
+.screen{position:fixed;inset:0;background:#fff;display:none;flex-direction:column;justify-content:center;padding:20px;z-index:5}
+.screen.on{display:flex}
+.card{padding:22px;border-radius:20px;box-shadow:0 8px 24px #0001;border:1px solid #eee;width:100%;max-width:360px;margin:0 auto}
+.logo{width:100px;height:100px;border-radius:50%;object-fit:cover;margin:0 auto 12px;display:block;box-shadow:0 4px 12px #0002}
+input,select{width:100%;padding:16px;border-radius:12px;border:2px solid #eee;margin:8px 0;font-size:16px;outline:none}
+input:focus{border-color:#ff6600}
+input.err{border-color:red;background:#fff0f0}
+.btn{width:100%;padding:16px;border:none;border-radius:12px;background:#ccc;color:#fff;font-weight:bold;margin-top:10px}
+.btn.ok{background:#ff6600}
 .splash{background:#ffcc00!important;align-items:center;text-align:center}
 .progress{position:fixed;top:0;left:0;height:4px;background:#ff6600;z-index:20;transition:.3s}
 </style></head><body>
@@ -16,48 +19,11 @@ input,select{width:100%;padding:16px;border-radius:12px;border:2px solid #eee;ma
 
 <div id="s1" class="screen on splash">
 <img src="IMG-20260918-WA0802.jpg" class="logo" style="width:140px;height:140px">
-<h1 style="margin:5px">MechanicMitra</h1><p>Quick PARTNER - 30 Min</p>
+<h1>MechanicMitra</h1><p>Quick PARTNER - 30 Min</p>
+<button class="btn ok" style="max-width:200px;margin:20px auto" onclick="next(2)">GET STARTED →</button>
 </div>
 
 <div id="s2" class="screen"><div class="card">
-<img src="IMG-20260918-WA0802.jpg" class="logo" style="width:70px;height:70px">
-<h2>🌐 Language / भाषा</h2>
-<select id="lang" onchange="next(3)"><option value="">-- Select --</option><option>हिन्दी</option><option>English</option><option>বাংলা</option><option>मराठी</option><option>தமிழ்</option></select>
-</div></div>
-
-<div id="s3" class="screen"><div class="card">
-<h2>📱 Mobile Number</h2>
-<input id="ph" type="tel" maxlength="10" placeholder="10 Digit Number" oninput="if(this.value.length==10){localStorage.setItem('mm_user',this.value);next(4)}">
-<p style="font-size:11px;color:#999">10 digit dalte hi agla screen</p>
-</div></div>
-
-<div id="s4" class="screen"><div class="card">
-<h2>🔑 OTP - 1234</h2>
-<input id="otp" type="tel" maxlength="4" placeholder="1234 daalo" oninput="if(this.value=='1234'){next(5)}">
-<p style="font-size:11px;color:green">Demo OTP: 1234</p>
-</div></div>
-
-<div id="s5" class="screen"><div class="card">
-<h2>👤 Naam?</h2>
-<input id="cname" placeholder="Aapka Naam" oninput="if(this.value.length>2){localStorage.setItem('mm_name',this.value);setTimeout(()=>next(6),500)}">
-</div></div>
-
-<div id="s6" class="screen"><div class="card">
-<h2>📜 Terms</h2><div style="height:80px;overflow:auto;background:#fafafa;border:1px solid #ddd;padding:8px;font-size:11px">Visiting Charge Bike ₹149, Car ₹299. 30 min me mechanic. Data safe hai.</div>
-<label style="display:flex;gap:8px;margin-top:10px"><input type="checkbox" id="ag" style="width:18px" onchange="if(this.checked){localStorage.setItem('mm_terms','yes');next(7)}"> I Agree</label>
-</div></div>
-
-<div id="s7" class="screen" style="overflow:auto;justify-content:flex-start;padding:0;background:#f5f5f5">
-<div style="background:#111;color:#fff;padding:12px;display:flex;gap:8px;align-items:center"><img src="IMG-20260918-WA0802.jpg" style="width:32px;height:32px;border-radius:50%"><b>MechanicMitra</b></div>
-<div style="padding:12px"><div class="card"><h3>Gaadi Chuno</h3><div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px">
-<div style="border:2px solid #eee;border-radius:12px;padding:10px;text-align:center" onclick="this.style.borderColor='#ff6600';sel='Bike'">🏍️<br>Bike ₹149</div>
-<div style="border:2px solid #eee;border-radius:12px;padding:10px;text-align:center" onclick="this.style.borderColor='#ff6600';sel='Car'">🚗<br>Car ₹299</div>
-</div>
-<input id="loc" placeholder="Location" style="margin-top:12px"><button class="btn" onclick="alert('Booked! '+sel+' - '+document.getElementById('loc').value);let m=`*BOOKING* ${sel} ${document.getElementById('loc').value}`;window.open('https://wa.me/918700406006?text='+m)">BOOK NOW</button></div></div>
-</div>
-
-<script>
-let sel='';function next(n){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('on'));document.getElementById('s'+n).classList.add('on');document.getElementById('bar').style.width=(n/7*100)+'%'}
-setTimeout(()=>next(2),1500);
-if(localStorage.getItem('mm_terms')){setTimeout(()=>next(7),1600)}
-</script></body></html>
+<img src="IMG-20260918-WA0802.jpg" class="logo" style="width:60px;height:60px">
+<h2>🌐 Language / भाषा</h2><p style="font-size:12px;color:#888">Bhasha chuno tabhi aage jaoge</p>
+<select id="lang"><option value="">-- Select Language
