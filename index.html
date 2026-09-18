@@ -10,12 +10,14 @@ body{background:#ffcc00}
 .logo{width:150px;height:150px;background:#fff;border-radius:50%;overflow:hidden;box-shadow:0 8px 20px rgba(0,0,0,.25)}
 .logo img{width:100%;height:100%;object-fit:contain}
 .btn-main{background:#111;color:#fff;border:none;padding:18px 45px;border-radius:50px;font-size:18px;font-weight:800;margin-top:30px;width:85%;max-width:300px}
-.card{background:#fff;border-radius:18px;padding:16px;margin:12px auto;width:95%;max-width:380px;position:relative}
-.back-btn{position:sticky;top:0;left:0;z-index:99;background:#111;color:#fff;border:none;padding:10px 18px;border-radius:25px;font-weight:bold;font-size:14px;display:inline-block;margin-bottom:12px}
+.card{background:#fff;border-radius:18px;padding:16px;margin:12px auto;width:95%;max-width:380px}
+.back-btn{background:#111;color:#fff;border:none;padding:10px 18px;border-radius:25px;font-weight:bold;margin-bottom:12px}
 .v{border:2px solid #eee;border-radius:12px;padding:12px;text-align:center}
 .v.sel{border-color:#ff6600;background:#fff3e0}
 input,select{width:100%;padding:14px;border:2px solid #eee;border-radius:10px;margin:6px 0}
+input.error{border-color:red;background:#ffe6e6}
 .btn{width:100%;padding:14px;background:#ff6600;color:#fff;border:none;border-radius:10px;font-weight:bold}
+.err{color:red;font-size:12px;display:none;margin-top:4px}
 </style></head><body>
 
 <div id="s1" class="screen on">
@@ -29,79 +31,28 @@ input,select{width:100%;padding:14px;border:2px solid #eee;border-radius:10px;ma
 <div class="card">
 <button class="back-btn" onclick="goBack()">← BACK</button>
 <h2>🌐 Language Chuno</h2>
-<select id="lang"><option value="hi">हिन्दी</option><option value="en">English</option><option value="bn">বাংলা</option><option value="mr">मराठी</option><option value="ta">தமிழ்</option><option value="te">తెలుగు</option><option value="gu">ગુજરાતી</option></select>
-<button class="btn" onclick="go(3)">Continue →</button>
+<select id="lang"><option value="">-- Select Karo --</option><option value="hi">हिन्दी</option><option value="en">English</option><option value="bn">বাংলা</option><option value="mr">मराठी</option><option value="ta">தமிழ்</option><option value="te">తెలుగు</option><option value="gu">ગુજરાતી</option></select>
+<p id="err2" class="err">⚠️ Language select karo!</p>
+<button class="btn" onclick="validateAndGo(2,3)">Continue →</button>
 </div></div>
 
 <div id="s3" class="screen" style="background:#fff;flex-direction:column;align-items:center;justify-content:center">
 <div class="card">
 <button class="back-btn" onclick="goBack()">← BACK</button>
 <h2>📱 Mobile Number</h2>
-<input maxlength="10" placeholder="10 digit"><button class="btn" onclick="go(4)">Send OTP</button>
+<input id="ph" type="tel" maxlength="10" placeholder="10 digit number">
+<p id="err3" class="err">⚠️ 10 digit mobile number dalo!</p>
+<button class="btn" onclick="validateAndGo(3,4)">Send OTP →</button>
 </div></div>
 
 <div id="s4" class="screen" style="background:#fff;flex-direction:column;align-items:center;justify-content:center">
 <div class="card">
 <button class="back-btn" onclick="goBack()">← BACK</button>
-<h2>OTP 1234</h2><input placeholder="1234"><button class="btn" onclick="go(5)">Verify</button>
+<h2>🔑 OTP Daalo (1234)</h2>
+<input id="otp" maxlength="4" placeholder="1234">
+<p id="err4" class="err">⚠️ Sahi OTP 1234 dalo!</p>
+<button class="btn" onclick="validateAndGo(4,5)">Verify →</button>
 </div></div>
 
-<div id="s5" class="screen" style="background:#f5f5f5;flex-direction:column;display:none">
-<div class="card"><button class="back-btn" onclick="goBack()">← BACK</button><h3>1. Gaadi Chuno</h3>
-<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px">
-<div class="v" onclick="pick(this,'Bike',149)">🏍️ Bike ₹149</div>
-<div class="v" onclick="pick(this,'Scooty',149)">🛵 Scooty ₹149</div>
-<div class="v" onclick="pick(this,'Auto',199)">🛺 Auto ₹199</div>
-<div class="v" onclick="pick(this,'Car',299)">🚗 Car ₹299</div>
-<div class="v" onclick="pick(this,'Truck',499)" style="grid-column:span 2">🚚 Truck ₹499</div>
-</div></div>
-<div class="card"><h3>2. Service</h3><select id="service"><option>Puncture</option><option>Oil Change</option><option>Full Service</option><option>Battery</option><option>Brake</option><option>Towing</option></select></div>
-<div class="card"><h3>3. Booking</h3><input id="cname" placeholder="Naam"><input id="cloc" placeholder="Location"><button class="btn" onclick="doBook()">📲 WhatsApp Booking</button><p id="res" style="color:green;text-align:center"></p></div>
-</div>
-
-<script>
-let stack=[1];
-function go(n){
- if(stack[stack.length-1]!==n) stack.push(n);
- history.pushState({screen:n}, "", "#s"+n);
- show(n);
-}
-function show(n){
- document.querySelectorAll('.screen').forEach(s=>s.classList.remove('on'));
- let el=document.getElementById('s'+n);
- el.classList.add('on');
- el.style.display='flex';
- if(n==5) el.style.display='block';
-}
-function goBack(){
- if(stack.length>1){
-  stack.pop();
-  let prev=stack[stack.length-1];
-  history.back();
-  // agar history back se kaam na kare to direct show
-  setTimeout(()=>show(prev),100);
- } else {
-  show(1);
- }
-}
-// Phone ke system back button ke liye
-window.onpopstate=function(e){
- if(stack.length>1){
-  stack.pop();
-  let prev=stack[stack.length-1]||1;
-  show(prev);
- } else {
-  show(1);
- }
-};
-let gv='',gc=0;
-function pick(el,name,c){document.querySelectorAll('.v').forEach(v=>v.classList.remove('sel'));el.classList.add('sel');gv=name;gc=c}
-function doBook(){
- let n=document.getElementById('cname').value,l=document.getElementById('cloc').value;
- if(!gv){alert('Gaadi chuno');return}
- if(!n||!l){alert('Naam Location bharo');return}
- window.open('https://wa.me/918700406006?text=BOOKING '+gv+' Rs'+gc+' '+n+' '+l,'_blank');
- document.getElementById('res').innerText='✅ Sent!';
-}
-</script>
-</body></html>
+<div id="s5" class="screen" style="background:#f5f5f5;flex-direction:column">
+<div class="card"><button class="back-btn" onclick="goBack()">← BACK</button><h3>1. Gaadi Chuno *
