@@ -66,4 +66,36 @@ let hist=[1];let curLang='hi';let gv='';
 let tr={
  en:{t1:"MechanicMitra",t2:"Quick Partner - 30 Min",b1:"GET STARTED →",t3:"🌐 Choose Language *",b2:"Continue →",t4:"📱 Mobile Number *",b3:"Send OTP →",t5:"🔑 Enter OTP - 1234 *",b4:"Verify →",t6:"1. Choose Vehicle *",t7:"2. Your Details *",b5:"📲 Book Now",ph:"10 digit number",nm:"Your Name *",lc:"Your Location *"},
  hi:{t1:"मैकेनिकमित्रा",t2:"तुरंत पार्टनर - 30 मिनट में",b1:"शुरू करो →",t3:"🌐 भाषा चुनो *",b2:"आगे बढ़ो →",t4:"📱 मोबाइल नंबर *",b3:"OTP भेजो →",t5:"🔑 OTP डालो - 1234 *",b4:"जाँच करो →",t6:"1. गाड़ी चुनो *",t7:"2. आपकी जानकारी *",b5:"📲 बुकिंग करो",ph:"10 अंकों का नंबर",nm:"आपका नाम *",lc:"आपका पता *"},
- mr:{t1:"मेकॅनिकमित्र",t2:"त्वरित पार्टनर - 30 मिनिटांत",b1:"सुरू करा →",t3:"🌐 भाषा निवडा *",b2:"प
+ mr:{t1:"मेकॅनिकमित्र",t2:"त्वरित पार्टनर - 30 मिनिटांत",b1:"सुरू करा →",t3:"🌐 भाषा निवडा *",b2:"पुढे चला →",t4:"📱 मोबाईल नंबर *",b3:"OTP पाठवा →",t5:"🔑 OTP टाका - 1234 *",b4:"पडताळणी करा →",t6:"1. गाडी निवडा *",t7:"2. तुमची माहिती *",b5:"📲 बुकिंग करा",ph:"10 अंकी नंबर",nm:"तुमचे नाव *",lc:"तुमचे ठिकाण *"},
+ bn:{t1:"মেকানিকমিত্র",t2:"দ্রুত পার্টনার - 30 মিনিটে",b1:"শুরু করুন →",t3:"🌐 ভাষা বেছে নিন *",b2:"এগিয়ে যান →",t4:"📱 মোবাইল নম্বর *",b3:"OTP পাঠান →",t5:"🔑 OTP দিন - 1234 *",b4:"যাচাই করুন →",t6:"1. গাড়ি বেছে নিন *",t7:"2. আপনার তথ্য *",b5:"📲 বুকিং করুন",ph:"10 সংখ্যার নম্বর",nm:"আপনার নাম *",lc:"আপনার অবস্থান *"}
+};
+function changeLang(l){
+ if(!l) return;
+ curLang=l;
+ let d=tr[l]||tr.hi;
+ document.getElementById('t1').innerText=d.t1;
+ document.getElementById('t2').innerText=d.t2;
+ document.getElementById('b1').innerText=d.b1;
+ document.getElementById('t3').innerText=d.t3;
+ document.getElementById('b2').innerText=d.b2;
+ document.getElementById('t4').innerText=d.t4;
+ document.getElementById('b3').innerText=d.b3;
+ document.getElementById('t5').innerText=d.t5;
+ document.getElementById('b4').innerText=d.b4;
+ document.getElementById('t6').innerText=d.t6;
+ document.getElementById('t7').innerText=d.t7;
+ document.getElementById('b5').innerText=d.b5;
+ document.getElementById('ph').placeholder=d.ph;
+ document.getElementById('nm').placeholder=d.nm;
+ document.getElementById('lc').placeholder=d.lc;
+}
+function show(n){document.querySelectorAll('.screen').forEach(s=>{s.classList.remove('on');s.style.display='none'});let e=document.getElementById('s'+n);e.classList.add('on');e.style.display=n==5?'block':'flex';}
+function go(n){hist.push(n);show(n);}
+function goback(){if(hist.length>1){hist.pop();show(hist[hist.length-1]);}else{show(1);}}
+function next2(){if(!lang.value){alert(curLang=='mr'?'भाषा निवडा!':curLang=='en'?'Choose language!':'भाषा चुनो!');return}changeLang(lang.value);go(3);}
+function next3(){if(ph.value.length!=10){alert(curLang=='mr'?'10 अंकी नंबर टाका!':'10 digit dalo!');return}go(4);}
+function next4(){if(otp.value!='1234'){alert('OTP 1234 hai!');return}go(5);}
+function pick(el,v){document.querySelectorAll('.v').forEach(x=>x.classList.remove('sel'));el.classList.add('sel');gv=v;}
+function book(){if(!gv){alert(curLang=='mr'?'गाडी निवडा!':'Gaadi chuno!');return}if(!nm.value.trim()){alert(curLang=='mr'?'नाव टाका!':'Naam bharo!');return}if(!lc.value.trim()){alert(curLang=='mr'?'ठिकाण टाका!':'Location bharo!');return}let m='*BOOKING*%0AGaadi:'+gv+'%0ANaam:'+nm.value+'%0ALocation:'+lc.value;window.open('https://wa.me/918700406006?text='+m,'_blank');msg.innerText=curLang=='mr'?'✅ बुकिंग पाठवले!':'✅ Booking Sent!';}
+</script>
+</body></html>
