@@ -1,113 +1,107 @@
 <!DOCTYPE html>
-<html lang="hi">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
-<title>MechanicMitra - Quick Partner 30 Min</title>
+<html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>MechanicMitra</title>
 <style>
-*{box-sizing:border-box;font-family:system-ui,sans-serif;margin:0;padding:0}
+*{box-sizing:border-box;font-family:sans-serif;margin:0;padding:0}
 body{background:#ffcc00}
 .screen{position:fixed;inset:0;background:#ffcc00;display:none;overflow:auto}
 .screen.on{display:flex}
-#s1{flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:20px}
-.logo{width:160px;height:160px;background:#fff;border-radius:50%;overflow:hidden;box-shadow:0 8px 20px rgba(0,0,0,.25);display:flex;align-items:center;justify-content:center}
+#s1{flex-direction:column;align-items:center;justify-content:center;text-align:center}
+.logo{width:150px;height:150px;background:#fff;border-radius:50%;overflow:hidden;box-shadow:0 8px 20px rgba(0,0,0,.25)}
 .logo img{width:100%;height:100%;object-fit:contain}
 .btn-main{background:#111;color:#fff;border:none;padding:18px 45px;border-radius:50px;font-size:18px;font-weight:800;margin-top:30px;width:85%;max-width:300px}
-.card{background:#fff;border-radius:18px;padding:16px;margin:12px auto;width:95%;max-width:380px;box-shadow:0 4px 12px rgba(0,0,0,.08)}
-.back{background:#f0f0f0;border:none;padding:8px 14px;border-radius:20px;margin-bottom:10px;font-weight:bold;cursor:pointer}
-.v{border:2px solid #eee;border-radius:12px;padding:12px;text-align:center;cursor:pointer}
+.card{background:#fff;border-radius:18px;padding:16px;margin:12px auto;width:95%;max-width:380px;position:relative}
+.back-btn{position:sticky;top:0;left:0;z-index:99;background:#111;color:#fff;border:none;padding:10px 18px;border-radius:25px;font-weight:bold;font-size:14px;display:inline-block;margin-bottom:12px}
+.v{border:2px solid #eee;border-radius:12px;padding:12px;text-align:center}
 .v.sel{border-color:#ff6600;background:#fff3e0}
-input,select{width:100%;padding:14px;border:2px solid #eee;border-radius:10px;margin:6px 0;font-size:15px}
-.btn{width:100%;padding:14px;background:#ff6600;color:#fff;border:none;border-radius:10px;font-weight:bold;margin-top:8px;font-size:16px;cursor:pointer}
-</style>
-</head>
-<body>
+input,select{width:100%;padding:14px;border:2px solid #eee;border-radius:10px;margin:6px 0}
+.btn{width:100%;padding:14px;background:#ff6600;color:#fff;border:none;border-radius:10px;font-weight:bold}
+</style></head><body>
 
-<!-- SCREEN 1 : SPLASH -->
 <div id="s1" class="screen on">
 <div class="logo"><img src="logo.jpg" onerror="this.parentElement.innerHTML='🔧'"></div>
-<h1 style="margin-top:14px;font-weight:900;font-size:30px">MechanicMitra</h1>
-<p style="opacity:.8;margin-top:4px">Quick PARTNER - 30 Min</p>
-<button class="btn-main" onclick="nextScreen(2)">GET STARTED →</button>
+<h1 style="margin-top:14px;font-weight:900">MechanicMitra</h1>
+<p>Quick PARTNER - 30 Min</p>
+<button class="btn-main" onclick="go(2)">GET STARTED →</button>
 </div>
 
-<!-- SCREEN 2 : LANGUAGE -->
-<div id="s2" class="screen" style="background:#fff;align-items:center;justify-content:center">
+<div id="s2" class="screen" style="background:#fff;flex-direction:column;align-items:center;justify-content:center">
 <div class="card">
-<button class="back" onclick="goBack()">← Back</button>
-<h2>🌐 Language / भाषा चुनें</h2>
-<select id="lang" onchange="changeLang(this.value)" style="margin-top:10px">
-<option value="hi">हिन्दी - Hindi</option>
-<option value="en">English</option>
-<option value="bn">বাংলা - Bengali</option>
-<option value="mr">मराठी - Marathi</option>
-<option value="ta">தமிழ் - Tamil</option>
-<option value="te">తెలుగు - Telugu</option>
-<option value="gu">ગુજરાતી - Gujarati</option>
-</select>
-<button class="btn" onclick="nextScreen(3)">Continue →</button>
-</div>
-</div>
+<button class="back-btn" onclick="goBack()">← BACK</button>
+<h2>🌐 Language Chuno</h2>
+<select id="lang"><option value="hi">हिन्दी</option><option value="en">English</option><option value="bn">বাংলা</option><option value="mr">मराठी</option><option value="ta">தமிழ்</option><option value="te">తెలుగు</option><option value="gu">ગુજરાતી</option></select>
+<button class="btn" onclick="go(3)">Continue →</button>
+</div></div>
 
-<!-- SCREEN 3 : MOBILE -->
-<div id="s3" class="screen" style="background:#fff;align-items:center;justify-content:center">
+<div id="s3" class="screen" style="background:#fff;flex-direction:column;align-items:center;justify-content:center">
 <div class="card">
-<button class="back" onclick="goBack()">← Back</button>
-<h2 id="tMob">📱 Mobile Number</h2>
-<input id="ph" type="tel" maxlength="10" placeholder="10 digit number">
-<button class="btn" onclick="nextScreen(4)">Send OTP →</button>
-</div>
-</div>
+<button class="back-btn" onclick="goBack()">← BACK</button>
+<h2>📱 Mobile Number</h2>
+<input maxlength="10" placeholder="10 digit"><button class="btn" onclick="go(4)">Send OTP</button>
+</div></div>
 
-<!-- SCREEN 4 : OTP -->
-<div id="s4" class="screen" style="background:#fff;align-items:center;justify-content:center">
+<div id="s4" class="screen" style="background:#fff;flex-direction:column;align-items:center;justify-content:center">
 <div class="card">
-<button class="back" onclick="goBack()">← Back</button>
-<h2>🔑 OTP Daalo</h2>
-<p style="opacity:.6;font-size:13px">Demo OTP: 1234</p>
-<input id="otp" maxlength="4" placeholder="1234">
-<button class="btn" onclick="if(document.getElementById('otp').value=='1234')nextScreen(5);else alert('1234 dalo')">Verify →</button>
-</div>
-</div>
+<button class="back-btn" onclick="goBack()">← BACK</button>
+<h2>OTP 1234</h2><input placeholder="1234"><button class="btn" onclick="go(5)">Verify</button>
+</div></div>
 
-<!-- SCREEN 5 : BOOKING - MAIN -->
-<div id="s5" class="screen" style="background:#f5f5f5;flex-direction:column;padding:0">
-<div style="background:#fff;padding:10px;text-align:center;position:sticky;top:0;z-index:5">
-<button class="back" onclick="goBack()" style="float:left">← Back</button>
-<b id="headTitle">Booking Karo</b>
-</div>
-
-<div class="card">
-<h3 id="t1">1. Gaadi Chuno - Visiting Charge</h3>
+<div id="s5" class="screen" style="background:#f5f5f5;flex-direction:column;display:none">
+<div class="card"><button class="back-btn" onclick="goBack()">← BACK</button><h3>1. Gaadi Chuno</h3>
 <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px">
-<div class="v" onclick="pick(this,'Bike',149)"><span class="vtxt" data-k="bike">🏍️ Bike</span><br><b>₹149</b></div>
-<div class="v" onclick="pick(this,'Scooty',149)"><span class="vtxt" data-k="scooty">🛵 Scooty</span><br><b>₹149</b></div>
-<div class="v" onclick="pick(this,'Auto',199)"><span class="vtxt" data-k="auto">🛺 Auto</span><br><b>₹199</b></div>
-<div class="v" onclick="pick(this,'Car',299)"><span class="vtxt" data-k="car">🚗 Car</span><br><b>₹299</b></div>
-<div class="v" onclick="pick(this,'Truck/Bus',499)" style="grid-column:span 2"><span class="vtxt" data-k="truck">🚚 Truck/Bus</span> <b>₹499</b></div>
-</div>
-</div>
-
-<div class="card">
-<h3 id="t2">2. Service Rate Card</h3>
-<select id="service">
-<option>Puncture / Tyre</option><option>Oil Change</option><option>Full Servicing</option><option>Battery Problem</option><option>Brake Problem</option><option>Towing / Breakdown</option>
-</select>
-</div>
-
-<div class="card">
-<h3 id="t3">3. Booking Details</h3>
-<input id="cname" placeholder="Aapka Naam / Your Name">
-<input id="cloc" placeholder="Location - Ex: Okhla Phase 2, Delhi">
-<button class="btn" onclick="doBook()" id="btnBook">📲 WhatsApp Pe Booking Bhejo</button>
-<p id="res" style="color:green;text-align:center;margin-top:8px;font-weight:bold"></p>
-</div>
+<div class="v" onclick="pick(this,'Bike',149)">🏍️ Bike ₹149</div>
+<div class="v" onclick="pick(this,'Scooty',149)">🛵 Scooty ₹149</div>
+<div class="v" onclick="pick(this,'Auto',199)">🛺 Auto ₹199</div>
+<div class="v" onclick="pick(this,'Car',299)">🚗 Car ₹299</div>
+<div class="v" onclick="pick(this,'Truck',499)" style="grid-column:span 2">🚚 Truck ₹499</div>
+</div></div>
+<div class="card"><h3>2. Service</h3><select id="service"><option>Puncture</option><option>Oil Change</option><option>Full Service</option><option>Battery</option><option>Brake</option><option>Towing</option></select></div>
+<div class="card"><h3>3. Booking</h3><input id="cname" placeholder="Naam"><input id="cloc" placeholder="Location"><button class="btn" onclick="doBook()">📲 WhatsApp Booking</button><p id="res" style="color:green;text-align:center"></p></div>
 </div>
 
 <script>
-const dict={
-hi:{t1:"1. Gaadi Chuno - Visiting Charge",t2:"2. Service Rate Card",t3:"3. Booking Details",bike:"🏍️ Bike",scooty:"🛵 Scooty",auto:"🛺 Auto",car:"🚗 Car",truck:"🚚 Truck/Bus",btn:"📲 WhatsApp Pe Booking Bhejo",head:"Booking Karo",mob:"📱 Mobile Number"},
-en:{t1:"1. Select Vehicle - Visiting Charge",t2:"2. Service Rate Card",t3:"3. Booking Details",bike:"🏍️ Bike",scooty:"🛵 Scooty",auto:"🛺 Auto",car:"🚗 Car",truck:"🚚 Truck/Bus",btn:"📲 Book on WhatsApp",head:"Book Now",mob:"📱 Mobile Number"},
-bn:{t1:"1. গাড়ি বেছে নিন",t2:"2. সার্ভিস রেট",t3:"3. বুকিং",bike:"🏍️ বাইক",scooty:"🛵 স্কুটি",auto:"🛺 অটো",car:"🚗 গাড়ি",truck:"🚚 ট্রাক",btn:"📲 বুকিং পাঠান",head:"বুকিং করুন",mob:"📱 মোবাইল"},
-mr:{t1:"1. गाडी निवडा",t2:"2. सर्व्हिस दर",t3:"3. बुकिंग",bike:"🏍️ बाईक",scooty:"🛵 स्कुटी",auto:"🛺 ऑटो",car:"🚗 कार",truck:"🚚 ट्रक",btn:"📲 बुकिंग पाठवा",head:"बुक करा",mob:"📱 मोबाईल"},
-ta:{t1:"1. வாகனத்தைத் தேர்வு",t2:"2. சேவை
+let stack=[1];
+function go(n){
+ if(stack[stack.length-1]!==n) stack.push(n);
+ history.pushState({screen:n}, "", "#s"+n);
+ show(n);
+}
+function show(n){
+ document.querySelectorAll('.screen').forEach(s=>s.classList.remove('on'));
+ let el=document.getElementById('s'+n);
+ el.classList.add('on');
+ el.style.display='flex';
+ if(n==5) el.style.display='block';
+}
+function goBack(){
+ if(stack.length>1){
+  stack.pop();
+  let prev=stack[stack.length-1];
+  history.back();
+  // agar history back se kaam na kare to direct show
+  setTimeout(()=>show(prev),100);
+ } else {
+  show(1);
+ }
+}
+// Phone ke system back button ke liye
+window.onpopstate=function(e){
+ if(stack.length>1){
+  stack.pop();
+  let prev=stack[stack.length-1]||1;
+  show(prev);
+ } else {
+  show(1);
+ }
+};
+let gv='',gc=0;
+function pick(el,name,c){document.querySelectorAll('.v').forEach(v=>v.classList.remove('sel'));el.classList.add('sel');gv=name;gc=c}
+function doBook(){
+ let n=document.getElementById('cname').value,l=document.getElementById('cloc').value;
+ if(!gv){alert('Gaadi chuno');return}
+ if(!n||!l){alert('Naam Location bharo');return}
+ window.open('https://wa.me/918700406006?text=BOOKING '+gv+' Rs'+gc+' '+n+' '+l,'_blank');
+ document.getElementById('res').innerText='✅ Sent!';
+}
+</script>
+</body></html>
