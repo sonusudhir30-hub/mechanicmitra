@@ -4,59 +4,71 @@
 <style>
 *{box-sizing:border-box;font-family:sans-serif;margin:0;padding:0}
 body{background:#ffcc00}
-.screen{position:fixed;inset:0;display:none;background:#ffcc00;overflow:auto;padding:15px}
-.screen.on{display:flex;flex-direction:column}
-#s1{align-items:center;justify-content:center;text-align:center}
-.logo{width:150px;height:150px;background:#fff;border-radius:50%;overflow:hidden;box-shadow:0 8px 20px rgba(0,0,0,.25);margin-bottom:15px}
-.logo img{width:100%;height:100%;object-fit:cover}
-.btn-main{position:fixed;bottom:30px;left:50%;transform:translateX(-50%);background:#111;color:#fff;border:none;padding:18px 50px;border-radius:50px;font-size:18px;font-weight:bold;width:85%;max-width:300px;z-index:99}
-.card{background:#fff;border-radius:20px;padding:18px;width:100%;max-width:380px;margin:10px auto;box-shadow:0 5px 15px rgba(0,0,0,.1)}
-.vehicle-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.vehicle{border:2px solid #eee;border-radius:14px;padding:12px;text-align:center;cursor:pointer}
-.vehicle.sel{border-color:#ff6600;background:#fff4e6;font-weight:bold}
-input,select{width:100%;padding:14px;border:2px solid #eee;border-radius:12px;margin:7px 0;font-size:15px}
-.btn{width:100%;padding:14px;background:#ff6600;color:#fff;border:none;border-radius:12px;font-weight:bold;margin-top:10px;font-size:16px}
-.top-lang{background:#fff;padding:10px;text-align:center;position:sticky;top:0;z-index:10;border-radius:0 0 15px 15px}
-.top-lang select{width:auto;padding:6px 12px}
+.screen{position:fixed;inset:0;background:#ffcc00;display:none}
+.screen.on{display:flex}
+#s1{flex-direction:column;align-items:center;justify-content:center;text-align:center}
+.logo{width:160px;height:160px;background:#fff;border-radius:50%;overflow:hidden;box-shadow:0 8px 20px rgba(0,0,0,.25)}
+.logo img{width:100%;height:100%;object-fit:contain}
+.btn-main{background:#111;color:#fff;border:none;padding:18px 45px;border-radius:50px;font-size:18px;font-weight:800;margin-top:30px;width:85%;max-width:300px}
+.card{background:#fff;border-radius:18px;padding:16px;margin:12px auto;width:95%;max-width:380px}
+.v{border:2px solid #eee;border-radius:12px;padding:12px;text-align:center}
+.v.sel{border-color:#ff6600;background:#fff3e0}
+input,select{width:100%;padding:14px;border:2px solid #eee;border-radius:10px;margin:6px 0}
+.btn{width:100%;padding:14px;background:#ff6600;color:#fff;border:none;border-radius:10px;font-weight:bold;margin-top:8px}
 </style></head><body>
 
-<!-- S1 SPLASH - Wahi jo screenshot me hai -->
 <div id="s1" class="screen on">
-<div class="logo"><img src="logo.jpg" onerror="this.src='https://iili.io/B4z2X1f.png'"></div>
-<h1 style="font-weight:900;font-size:28px">MechanicMitra</h1>
+<div class="logo"><img src="logo.jpg"></div>
+<h1 style="margin-top:14px;font-weight:900">MechanicMitra</h1>
 <p>Quick PARTNER - 30 Min</p>
-<button class="btn-main" onclick="go(2)">GET STARTED →</button>
+<button class="btn-main" onclick="nextScreen(2)">GET STARTED →</button>
 </div>
 
-<!-- S2 LANGUAGE -->
-<div id="s2" class="screen" style="background:#fff"><div class="card" style="margin:auto">
-<h2 id="lblLangHead">🌐 Language / भाषा चुनें</h2>
-<select id="langSelect" onchange="changeLang(this.value)" style="margin-top:12px">
-<option value="hi">हिन्दी - Hindi</option>
-<option value="en">English</option>
-<option value="bn">বাংলা - Bengali</option>
-<option value="mr">मराठी - Marathi</option>
-<option value="ta">தமிழ் - Tamil</option>
-<option value="te">తెలుగు - Telugu</option>
-<option value="gu">ગુજરાતી - Gujarati</option>
-</select>
-<button class="btn" onclick="go(3)">Continue →</button>
+<div id="s2" class="screen" style="background:#fff;align-items:center;justify-content:center"><div class="card">
+<h2>🌐 Language Chuno</h2>
+<select id="lang"><option value="hi">हिन्दी</option><option value="en">English</option><option value="bn">বাংলা</option><option value="mr">मराठी</option><option value="ta">தமிழ்</option><option value="te">తెలుగు</option><option value="gu">ગુજરાતી</option></select>
+<button class="btn" onclick="nextScreen(3)">Continue →</button>
 </div></div>
 
-<!-- S3 MOBILE -->
-<div id="s3" class="screen" style="background:#fff"><div class="card" style="margin:auto">
-<h2 id="tMob">📱 Mobile Number</h2>
-<input id="ph" type="tel" maxlength="10" placeholder="10 digit number">
-<button class="btn" onclick="go(4)">Send OTP →</button>
+<div id="s3" class="screen" style="background:#fff;align-items:center;justify-content:center"><div class="card">
+<h2>📱 Mobile</h2><input id="ph" maxlength="10" placeholder="10 digit"><button class="btn" onclick="nextScreen(4)">Send OTP</button>
 </div></div>
 
-<!-- S4 OTP -->
-<div id="s4" class="screen" style="background:#fff"><div class="card" style="margin:auto">
-<h2>🔑 OTP Daalo</h2><p style="opacity:.6">Demo OTP: 1234</p>
-<input id="otp" maxlength="4" placeholder="1234">
-<button class="btn" onclick="if(otp.value=='1234')go(5);else alert('1234 dalo')">Verify →</button>
+<div id="s4" class="screen" style="background:#fff;align-items:center;justify-content:center"><div class="card">
+<h2>OTP 1234</h2><input placeholder="1234"><button class="btn" onclick="nextScreen(5)">Verify</button>
 </div></div>
 
-<!-- S5 MAIN BOOKING - YEHI AAPKA BOLA HUA SAB KUCH -->
-<div id="s5" class="screen" style="background:#f5f5f5;display:none">
-<div class="top
+<div id="s5" class="screen" style="background:#f5f5f5;flex-direction:column"><div class="card"><h3>1. Gaadi Chuno</h3>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px">
+<div class="v" onclick="pick(this,'Bike',149)">🏍️ Bike ₹149</div>
+<div class="v" onclick="pick(this,'Scooty',149)">🛵 Scooty ₹149</div>
+<div class="v" onclick="pick(this,'Auto',199)">🛺 Auto ₹199</div>
+<div class="v" onclick="pick(this,'Car',299)">🚗 Car ₹299</div>
+<div class="v" onclick="pick(this,'Truck',499)" style="grid-column:span 2">🚚 Truck ₹499</div>
+</div></div>
+<div class="card"><h3>2. Service</h3><select id="service"><option>Puncture</option><option>Oil Change</option><option>Full Service</option><option>Battery</option><option>Brake</option><option>Towing</option></select></div>
+<div class="card"><h3>3. Booking</h3><input id="cname" placeholder="Naam"><input id="cloc" placeholder="Location"><button class="btn" onclick="doBook()">📲 WhatsApp Booking</button><p id="res" style="color:green;text-align:center"></p></div>
+</div>
+
+<script>
+function nextScreen(n){
+document.querySelectorAll('.screen').forEach(s=>s.classList.remove('on'));
+let el=document.getElementById('s'+n);
+el.classList.add('on');
+el.style.display='flex';
+if(n==5) el.style.display='block';
+}
+let gv='',gc=0;
+function pick(el,name,c){document.querySelectorAll('.v').forEach(v=>v.classList.remove('sel'));el.classList.add('sel');gv=name;gc=c}
+function doBook(){
+let s=document.getElementById('service').value;
+let n=document.getElementById('cname').value;
+let l=document.getElementById('cloc').value;
+let lang=document.getElementById('lang').value;
+if(!gv){alert('Gaadi chuno');return}
+if(!n||!l){alert('Naam Location bharo');return}
+window.open('https://wa.me/918700406006?text=*BOOKING*%20'+gv+'%20Rs'+gc+'%20'+s+'%20'+n+'%20'+l+'%20Lang:'+lang,'_blank');
+document.getElementById('res').innerText='✅ Sent!';
+}
+</script>
+</body></html>
