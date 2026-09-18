@@ -1,83 +1,12 @@
 <!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>MechanicMitra</title>
-<style>
-*{box-sizing:border-box;font-family:sans-serif;margin:0;padding:0}
-body{margin:0;background:#ffcc00}
-.screen{position:fixed;inset:0;display:none;padding:20px;background:#ffcc00}
-.screen.on{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
-.logo-box{width:150px;height:150px;background:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 8px 20px rgba(0,0,0,0.2);margin-bottom:20px}
-.logo-box img{width:120px;height:120px;object-fit:contain;border-radius:50%}
-.btn-main{position:fixed;bottom:40px;left:50%;transform:translateX(-50%);background:#111;color:#fff;border:none;padding:18px 50px;border-radius:50px;font-size:18px;font-weight:bold;z-index:9999;box-shadow:0 5px 15px rgba(0,0,0,0.3);width:80%;max-width:280px}
-.card{width:100%;max-width:350px;margin:auto;background:#fff;border-radius:20px;padding:20px}
-input,select{width:100%;padding:14px;border:2px solid #eee;border-radius:10px;margin:8px 0;font-size:16px}
-.btn{width:100%;padding:14px;background:#ff6600;color:#fff;border:none;border-radius:10px;font-weight:bold}
-.v{border:2px solid #eee;border-radius:12px;padding:12px;text-align:center}
-.v.sel{border-color:#ff6600;background:#fff3e0}
-</style>
-</head>
-<body>
-
-<div id="s1" class="screen on" style="background:#ffcc00">
-<div class="logo-box">
-<img src="IMG-20260918-WA0802.jpg" onerror="this.src='https://cdn-icons-png.flaticon.com/512/3774/3774083.png'">
-</div>
-<h1 style="font-size:32px;font-weight:900">MechanicMitra</h1>
-<p style="margin-top:8px;font-size:16px">Quick PARTNER - 30 Min</p>
-
-<!-- YE BUTTON AB KABHI GAYAB NAHI HOGA -->
-<button class="btn-main" onclick="go(2)">GET STARTED →</button>
-</div>
-
-<div id="s2" class="screen" style="background:#fff;justify-content:center"><div class="card">
-<h2>Language Chuno</h2>
-<select id="lang"><option value="">-- Select --</option><option>Hindi</option><option>English</option></select>
-<button class="btn" onclick="if(!lang.value){alert('Language chuno')}else{go(3)}">Continue</button>
-</div></div>
-
-<div id="s3" class="screen" style="background:#fff;justify-content:center"><div class="card">
-<h2>Mobile Number</h2>
-<input id="ph" type="tel" maxlength="10" placeholder="10 digit">
-<button class="btn" onclick="if(ph.value.length!=10){alert('10 digit dalo')}else{go(4)}">Send OTP</button>
-</div></div>
-
-<div id="s4" class="screen" style="background:#fff;justify-content:center"><div class="card">
-<h2>OTP 1234 dalo</h2>
-<input id="otp" maxlength="4" placeholder="1234">
-<button class="btn" onclick="if(otp.value!='1234'){alert('1234 dalo')}else{go(5)}">Verify</button>
-</div></div>
-
-<div id="s5" class="screen" style="background:#fff;justify-content:center"><div class="card">
-<h2>Naam Likho</h2>
-<input id="cname" placeholder="Naam">
-<button class="btn" onclick="if(cname.value.length<3){alert('Naam likho')}else{go(6)}">Next</button>
-</div></div>
-
-<div id="s6" class="screen" style="background:#fff;justify-content:center"><div class="card">
-<h2>Terms</h2>
-<label><input type="checkbox" id="ag"> I Agree</label>
-<button class="btn" onclick="if(!ag.checked){alert('Tick karo')}else{go(7)}">Home Jao</button>
-</div></div>
-
-<div id="s7" class="screen" style="background:#f5f5f5"><div class="card">
-<h2>Gaadi Chuno</h2>
-<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px">
-<div class="v" onclick="pick(this,'Bike')">🏍️<br>Bike<br>₹149</div>
-<div class="v" onclick="pick(this,'Car')">🚗<br>Car<br>₹299</div>
-</div>
-<input id="loc" placeholder="Location">
-<button class="btn" onclick="book()">BOOK</button>
-<p id="res" style="color:green;text-align:center"></p>
-</div></div>
-
-<script>
-let gv='';
-function go(n){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('on'));document.getElementById('s'+n).classList.add('on')}
-function pick(el,name){document.querySelectorAll('.v').forEach(x=>x.classList.remove('sel'));el.classList.add('sel');gv=name}
-function book(){if(!gv){alert('Gaadi chuno');return}if(!loc.value){alert('Location');return}window.open('https://wa.me/918700406006?text=Booking '+gv+' '+loc.value);res.innerText='✅ Sent!'}
-</script>
-</body>
-</html>
+<html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>MechanicMitra</title>
+<style>*{box-sizing:border-box;font-family:sans-serif;margin:0;padding:0}body{background:#ffcc00}.screen{position:fixed;inset:0;display:none;padding:20px;background:#ffcc00}.screen.on{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}.logo-wrap{width:150px;height:150px;background:#fff;border-radius:50%;padding:10px;box-shadow:0 8px 20px rgba(0,0,0,.25);margin-bottom:18px}.logo-wrap img{width:100%;height:100%;object-fit:contain;border-radius:50%}h1{font-size:30px;font-weight:900}.btn-main{position:fixed;bottom:35px;left:50%;transform:translateX(-50%);background:#111;color:#fff;border:none;padding:18px 44px;border-radius:50px;font-size:18px;font-weight:800;z-index:99;width:85%;max-width:300px}.card{width:100%;max-width:360px;margin:auto;background:#fff;border-radius:20px;padding:22px}input,select{width:100%;padding:14px;border:2px solid #eee;border-radius:12px;margin:8px 0;font-size:16px}.btn{width:100%;padding:14px;background:#ff6600;color:#fff;border:none;border-radius:12px;font-weight:700;margin-top:10px}.v{border:2px solid #eee;border-radius:14px;padding:14px;text-align:center}.v.sel{border-color:#ff6600;background:#fff2e0}</style>
+</head><body>
+<div id="s1" class="screen on"><div class="logo-wrap"><img src="logo.jpg"></div><h1>MechanicMitra</h1><p>Quick PARTNER - 30 Min</p><button class="btn-main" onclick="go(2)">GET STARTED →</button></div>
+<div id="s2" class="screen" style="background:#fff"><div class="card"><h2>Language</h2><select><option>Hindi</option><option>English</option></select><button class="btn" onclick="go(3)">Continue</button></div></div>
+<div id="s3" class="screen" style="background:#fff"><div class="card"><h2>Mobile</h2><input maxlength="10" placeholder="10 digit"><button class="btn" onclick="go(4)">Send OTP</button></div></div>
+<div id="s4" class="screen" style="background:#fff"><div class="card"><h2>OTP 1234</h2><input placeholder="1234"><button class="btn" onclick="go(5)">Verify</button></div></div>
+<div id="s5" class="screen" style="background:#fff"><div class="card"><h2>Naam</h2><input placeholder="Naam"><button class="btn" onclick="go(7)">Next</button></div></div>
+<div id="s7" class="screen" style="background:#f5f5f5"><div class="card"><h2>✅ App Ready Hai!</h2><p>GET STARTED button ab fixed hai, kabhi gayab nahi hoga</p><div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px"><div class="v" onclick="this.classList.add('sel')">Bike ₹149</div><div class="v" onclick="this.classList.add('sel')">Car ₹299</div></div><input placeholder="Location"><button class="btn">BOOK</button></div></div>
+<script>function go(n){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('on'));document.getElementById('s'+n).classList.add('on')}</script>
+</body></html>
