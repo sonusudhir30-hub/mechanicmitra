@@ -1,29 +1,35 @@
-<!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-<title>MechanicMitra</title><link rel="manifest" href="manifest.json">
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>MechanicMitra</title>
+<link rel="manifest" href="manifest.json">
 <style>
-html,body{margin:0;height:100%;overflow:hidden;background:#fff}
-*{box-sizing:border-box;font-family:Segoe UI}
-.screen{position:fixed;inset:0;background:#fff;display:none;flex-direction:column;justify-content:center;padding:20px;z-index:5}
+html,body{margin:0;padding:0;height:100%;width:100%;overflow:hidden;background:#fff}
+*{box-sizing:border-box;font-family:Segoe UI, sans-serif}
+.screen{position:fixed;inset:0;background:#fff;display:none;flex-direction:column;justify-content:center;padding:20px;z-index:10}
 .screen.on{display:flex}
-.card{padding:22px;border-radius:20px;box-shadow:0 8px 24px #0001;border:1px solid #eee;width:100%;max-width:360px;margin:0 auto}
-.logo{width:100px;height:100px;border-radius:50%;object-fit:cover;margin:0 auto 12px;display:block;box-shadow:0 4px 12px #0002}
-input,select{width:100%;padding:16px;border-radius:12px;border:2px solid #eee;margin:8px 0;font-size:16px;outline:none}
-input:focus{border-color:#ff6600}
-input.err{border-color:red;background:#fff0f0}
-.btn{width:100%;padding:16px;border:none;border-radius:12px;background:#ccc;color:#fff;font-weight:bold;margin-top:10px}
+.card{padding:22px;border-radius:20px;box-shadow:0 8px 24px rgba(0,0,0,0.08);border:1px solid #eee;width:100%;max-width:360px;margin:0 auto;background:#fff}
+.logo{width:110px;height:110px;border-radius:50%;object-fit:cover;margin:0 auto 12px;display:block;box-shadow:0 4px 12px rgba(0,0,0,0.15);background:#fff}
+input,select{width:100%;padding:16px;border-radius:12px;border:2px solid #eee;margin:8px 0;font-size:16px;outline:none;-webkit-appearance:none}
+input:focus,select:focus{border-color:#ff6600}
+input.err,select.err{border-color:red;background:#fff0f0}
+.btn{width:100%;padding:16px;border:none;border-radius:12px;background:#ccc;color:#fff;font-weight:bold;margin-top:10px;font-size:16px;cursor:pointer;position:relative;z-index:50}
 .btn.ok{background:#ff6600}
+.btn:active{transform:scale(0.98)}
 .splash{background:#ffcc00!important;align-items:center;text-align:center}
-.progress{position:fixed;top:0;left:0;height:4px;background:#ff6600;z-index:20;transition:.3s}
-</style></head><body>
+.progress{position:fixed;top:0;left:0;height:4px;background:#ff6600;z-index:100;transition:width .3s;pointer-events:none}
+.v{border:2px solid #eee;border-radius:12px;padding:12px;text-align:center;cursor:pointer}
+.v.sel{border-color:#ff6600;background:#fff4e6}
+</style>
+</head>
+<body>
 <div id="bar" class="progress" style="width:14%"></div>
 
+<!-- S1 SPLASH -->
 <div id="s1" class="screen on splash">
 <img src="IMG-20260918-WA0802.jpg" class="logo" style="width:140px;height:140px">
-<h1>MechanicMitra</h1><p>Quick PARTNER - 30 Min</p>
-<button class="btn ok" style="max-width:200px;margin:20px auto" onclick="next(2)">GET STARTED →</button>
-</div>
-
-<div id="s2" class="screen"><div class="card">
-<img src="IMG-20260918-WA0802.jpg" class="logo" style="width:60px;height:60px">
-<h2>🌐 Language / भाषा</h2><p style="font-size:12px;color:#888">Bhasha chuno tabhi aage jaoge</p>
-<select id="lang"><option value="">-- Select Language
+<h1 style="margin:5px">MechanicMitra</h1>
+<p>Quick PARTNER - 30 Min</p>
+<button type="button" class="btn ok" id="start
