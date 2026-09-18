@@ -1,83 +1,101 @@
 <!DOCTYPE html>
-<html lang="hi">
-<head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="manifest" href="manifest.json">
-<title>MechanicMitra - Sahi Rate, Sahi Service</title>
+<title>MechanicMitra</title>
 <style>
 body{font-family:Arial;background:#f2f2f2;margin:0}
-.header{background:#ff6600;color:white;padding:12px;display:flex;align-items:center;gap:10px;position:sticky;top:0;z-index:10}
-.header img{width:50px;height:50px;border-radius:50%;background:white;object-fit:cover}
-.container{padding:12px}
-.card{background:white;padding:14px;border-radius:12px;margin-bottom:12px;box-shadow:0 2px 6px #ccc}
+.header{background:#ff6600;color:white;padding:12px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:10}
+.card{background:white;padding:14px;border-radius:12px;margin:12px;box-shadow:0 2px 6px #ccc}
 .vehicle-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .vehicle{border:2px solid #ddd;padding:12px;text-align:center;border-radius:10px;cursor:pointer}
 .vehicle.selected{border-color:#ff6600;background:#fff2e6;font-weight:bold}
-.charges{display:flex;justify-content:space-between;background:#fff8e1;padding:10px;border-radius:8px;margin:6px 0;font-size:14px}
-.charges b{color:#ff6600}
 input,select,button{width:100%;padding:13px;margin:7px 0;border-radius:8px;border:1px solid #ccc;font-size:16px;box-sizing:border-box}
-button{background:#ff6600;color:white;border:none;font-weight:bold;font-size:17px}
-.tag{font-size:11px;background:green;color:white;padding:2px 6px;border-radius:10px}
-</style>
-</head>
+button{background:#ff6600;color:white;border:none;font-weight:bold}
+.lang-bar{background:white;padding:8px;text-align:center;border-bottom:1px solid #ddd}
+.lang-bar select{width:auto;padding:5px 10px}
+</style></head>
 <body>
+
+<div class="lang-bar">
+🌐 <span id="lblLang">Language / भाषा चुनें:</span>
+<select id="langSelect" onchange="changeLang(this.value)">
+<option value="hi">हिन्दी</option>
+<option value="en">English</option>
+<option value="bn">বাংলা</option>
+<option value="mr">मराठी</option>
+<option value="ta">தமிழ்</option>
+<option value="te">తెలుగు</option>
+<option value="gu">ગુજરાતી</option>
+</select>
+</div>
+
 <div class="header">
-<img src="logo.png" onerror="this.src='https://cdn-icons-png.flaticon.com/512/2962/2962303.png'">
-<div>MechanicMitra<br><small style="font-size:12px">Okhla - 30 Min Me Mechanic</small></div>
+<div><b>MechanicMitra</b><br><small id="subHead">30 Min Me Mechanic</small></div>
+<div style="font-size:12px">Okhla Delhi</div>
 </div>
 
-<div class="container">
 <div class="card">
-<h3>1. Gaadi Chuno - Visiting Charge</h3>
+<h3 id="t1">1. Gaadi Chuno - Visiting Charge</h3>
 <div class="vehicle-grid">
-<div class="vehicle" onclick="selectV(this,'Bike',149)">🏍️ Bike<br><b>₹149</b></div>
-<div class="vehicle" onclick="selectV(this,'Scooty',149)">🛵 Scooty<br><b>₹149</b></div>
-<div class="vehicle" onclick="selectV(this,'Auto',199)">🛺 Auto<br><b>₹199</b></div>
-<div class="vehicle" onclick="selectV(this,'E-Rickshaw',199)">🔋 E-Rick<br><b>₹199</b></div>
-<div class="vehicle" onclick="selectV(this,'Car',299)">🚗 Car<br><b>₹299</b></div>
-<div class="vehicle" onclick="selectV(this,'Truck/Bus',499)">🚚 Truck/Bus<br><b>₹499</b></div>
+<div class="vehicle" onclick="selectV(this,'Bike',149)">🏍️ <span class="v" data-k="bike">Bike</span><br><b>₹149</b></div>
+<div class="vehicle" onclick="selectV(this,'Scooty',149)">🛵 <span class="v" data-k="scooty">Scooty</span><br><b>₹149</b></div>
+<div class="vehicle" onclick="selectV(this,'Auto',199)">🛺 <span class="v" data-k="auto">Auto</span><br><b>₹199</b></div>
+<div class="vehicle" onclick="selectV(this,'Car',299)">🚗 <span class="v" data-k="car">Car</span><br><b>₹299</b></div>
+<div class="vehicle" onclick="selectV(this,'Truck/Bus',499)">🚚 <span class="v" data-k="truck">Truck</span><br><b>₹499</b></div>
 </div>
-<small style="color:gray">Visiting charge mechanic aane ka hai, kaam me adjust hoga.</small>
 </div>
 
 <div class="card">
-<h3>2. Service Rate Card 2026 <span class="tag">FIX RATE</span></h3>
-<div class="charges"><span>Puncture - Bike</span><b>₹150-250</b></div>
-<div class="charges"><span>Puncture - Car/Truck</span><b>₹300-800</b></div>
-<div class="charges"><span>Oil + Filter Change</span><b>Bike ₹400+ | Car ₹800+</b></div>
-<div class="charges"><span>Full Servicing</span><b>Bike ₹699 | Car ₹2499</b></div>
-<div class="charges"><span>Battery / Self / Brake</span><b>₹300-1500</b></div>
-<div class="charges"><span>Towing (5km)</span><b>Bike ₹600 | Car ₹1200 | Truck ₹3000</b></div>
-<select id="service"><option>Puncture / Tyre</option><option>Oil Change</option><option>Full Servicing</option><option>Battery / Self Start</option><option>Brake Problem</option><option>Towing / Breakdown</option><option>Engine Problem</option></select>
+<h3 id="t2">2. Service Rate Card</h3>
+<select id="service">
+<option id="o1">Puncture / Tyre</option><option id="o2">Oil Change</option>
+<option id="o3">Full Servicing</option><option id="o4">Battery Problem</option>
+<option id="o5">Brake Problem</option><option id="o6">Towing / Breakdown</option>
+</select>
 </div>
 
 <div class="card">
-<h3>3. Booking Karo</h3>
+<h3 id="t3">3. Booking Karo</h3>
 <input id="name" placeholder="Aapka Naam">
 <input id="phone" placeholder="Mobile Number" type="tel">
 <input id="location" placeholder="Location - Ex: Okhla Phase 2">
-<button onclick="book()">📲 WhatsApp Pe Booking Bhejo</button>
+<button onclick="book()" id="btnBook">📲 Booking Bhejo</button>
 <p id="result" style="color:green;font-weight:bold"></p>
-</div>
 </div>
 
 <script>
-let selV=""; let selCharge=0;
-function selectV(el,type,charge){
- document.querySelectorAll('.vehicle').forEach(v=>v.classList.remove('selected'));
- el.classList.add('selected'); selV=type; selCharge=charge;
+const dict={
+ hi:{subHead:"30 Min Me Mechanic",t1:"1. Gaadi Chuno - Visiting Charge",t2:"2. Service Rate Card",t3:"3. Booking Karo",bike:"Bike",scooty:"Scooty",auto:"Auto",car:"Car",truck:"Truck/Bus",o1:"Puncture / Tyre",o2:"Oil Change",o3:"Full Servicing",o4:"Battery Problem",o5:"Brake Problem",o6:"Towing / Breakdown",namePh:"Aapka Naam",phonePh:"Mobile Number",locPh:"Location - Ex: Okhla Phase 2",btn:"📲 WhatsApp Pe Booking Bhejo",lblLang:"Language / भाषा चुनें:"},
+ en:{subHead:"Mechanic in 30 Min",t1:"1. Select Vehicle - Visiting Charge",t2:"2. Service Rate Card",t3:"3. Book Now",bike:"Bike",scooty:"Scooty",auto:"Auto",car:"Car",truck:"Truck/Bus",o1:"Puncture / Tyre",o2:"Oil Change",o3:"Full Servicing",o4:"Battery Problem",o5:"Brake Problem",o6:"Towing / Breakdown",namePh:"Your Name",phonePh:"Mobile Number",locPh:"Location - Ex: Okhla Phase 2",btn:"📲 Book on WhatsApp",lblLang:"Choose Language:"},
+ bn:{subHead:"30 মিনিটে মেকানিক",t1:"1. গাড়ি বেছে নিন",t2:"2. সার্ভিস রেট কার্ড",t3:"3. বুকিং করুন",bike:"বাইক",scooty:"স্কুটি",auto:"অটো",car:"গাড়ি",truck:"ট্রাক/বাস",o1:"পাংচার",o2:"তেল পরিবর্তন",o3:"ফুল সার্ভিসিং",o4:"ব্যাটারি সমস্যা",o5:"ব্রেক সমস্যা",o6:"টোয়িং",namePh:"আপনার নাম",phonePh:"মোবাইল নম্বর",locPh:"লোকেশন",btn:"📲 বুকিং পাঠান",lblLang:"ভাষা নির্বাচন করুন:"},
+ mr:{subHead:"30 मिनिटात मेकॅनिक",t1:"1. गाडी निवडा",t2:"2. सर्व्हिस दर",t3:"3. बुकिंग करा",bike:"बाईक",scooty:"स्कुटी",auto:"ऑटो",car:"कार",truck:"ट्रक",o1:"पंक्चर",o2:"ऑइल बदलणे",o3:"फुल सर्व्हिसिंग",o4:"बॅटरी समस्या",o5:"ब्रेक समस्या",o6:"टोइंग",namePh:"तुमचे नाव",phonePh:"मोबाइल नंबर",locPh:"ठिकाण",btn:"📲 बुकिंग पाठवा",lblLang:"भाषा निवडा:"},
+ ta:{subHead:"30 நிமிடத்தில் மெக்கானிக்",t1:"1. வாகனத்தைத் தேர்வுசெய்க",t2:"2. சேவை கட்டணம்",t3:"3. முன்பதிவு செய்யுங்கள்",bike:"பைக்",scooty:"ஸ்கூட்டி",auto:"ஆட்டோ",car:"கார்",truck:"டிரக்",o1:"பஞ்சர்",o2:"ஆயில் மாற்றம்",o3:"முழு சர்வீஸ்",o4:"பேட்டரி பிரச்சனை",o5:"பிரேக் பிரச்சனை",o6:"டோவிங்",namePh:"உங்கள் பெயர்",phonePh:"மொபைல் எண்",locPh:"இடம்",btn:"📲 முன்பதிவு செய்யுங்கள்",lblLang:"மொழியைத் தேர்ந்தெடுக்கவும்:"},
+ te:{subHead:"30 నిమిషాల్లో మెకానిక్",t1:"1. వాహనాన్ని ఎంచుకోండి",t2:"2. సర్వీస్ రేట్లు",t3:"3. బుక్ చేయండి",bike:"బైక్",scooty:"స్కూటీ",auto:"ఆటో",car:"కారు",truck:"ట్రక్",o1:"పంక్చర్",o2:"ఆయిల్ చేంజ్",o3:"ఫుల్ సర్వీసింగ్",o4:"బ్యాటరీ సమస్య",o5:"బ్రేక్ సమస్య",o6:"టోయింగ్",namePh:"మీ పేరు",phonePh:"మొబైల్ నంబర్",locPh:"లొకేషన్",btn:"📲 బుక్ చేయండి",lblLang:"భాషను ఎంచుకోండి:"},
+ gu:{subHead:"30 મિનિટમાં મિકેનિક",t1:"1. ગાડી પસંદ કરો",t2:"2. સર્વિસ રેટ કાર્ડ",t3:"3. બુકિંગ કરો",bike:"બાઇક",scooty:"સ્કૂટી",auto:"ઓટો",car:"કાર",truck:"ટ્રક",o1:"પંક્ચર",o2:"ઓઇલ ચેન્જ",o3:"ફુલ સર્વિસિંગ",o4:"બેટરી પ્રોબ્લેમ",o5:"બ્રેક પ્રોબ્લેમ",o6:"ટોઇંગ",namePh:"તમારું નામ",phonePh:"મોબાઇલ નંબર",locPh:"લોકેશન",btn:"📲 બુકિંગ મોકલો",lblLang:"ભાષા પસંદ કરો:"}
+};
+let selV="", selCharge=0, curLang=localStorage.getItem('mm_lang')||'hi';
+function changeLang(l){curLang=l; localStorage.setItem('mm_lang',l); applyLang();}
+function applyLang(){
+ let d=dict[curLang]; document.getElementById('subHead').innerText=d.subHead;
+ document.getElementById('t1').innerText=d.t1; document.getElementById('t2').innerText=d.t2;
+ document.getElementById('t3').innerText=d.t3; document.getElementById('lblLang').innerText=d.lblLang;
+ document.getElementById('name').placeholder=d.namePh; document.getElementById('phone').placeholder=d.phonePh;
+ document.getElementById('location').placeholder=d.locPh; document.getElementById('btnBook').innerText=d.btn;
+ document.getElementById('o1').innerText=d.o1; document.getElementById('o2').innerText=d.o2; document.getElementById('o3').innerText=d.o3;
+ document.getElementById('o4').innerText=d.o4; document.getElementById('o5').innerText=d.o5; document.getElementById('o6').innerText=d.o6;
+ document.querySelectorAll('.v').forEach(el=>{let k=el.dataset.k; el.innerText=d[k];});
+ document.getElementById('langSelect').value=curLang;
 }
+function selectV(el,type,charge){document.querySelectorAll('.vehicle').forEach(v=>v.classList.remove('selected')); el.classList.add('selected'); selV=type; selCharge=charge;}
 function book(){
- const s=document.getElementById('service').value;
- const n=document.getElementById('name').value;
- const p=document.getElementById('phone').value;
- const l=document.getElementById('location').value;
- if(!selV){alert('Gaadi Chuno');return;}
- if(!n||!p||!l){alert('Details bharo');return;}
- const msg=`*NEW BOOKING - MechanicMitra*%0A%0A👤 ${n}%0A📞 ${p}%0A🚚 ${selV} - Visit ₹${selCharge}%0A🔧 ${s}%0A📍 ${l}`;
+ let s=document.getElementById('service').value, n=document.getElementById('name').value, p=document.getElementById('phone').value, l=document.getElementById('location').value;
+ if(!selV||!n||!p||!l){alert('Details bharo / Fill details');return;}
+ let bookings=JSON.parse(localStorage.getItem('mm_bookings')||'[]');
+ bookings.push({vehicle:selV,charge:selCharge,service:s,name:n,phone:p,location:l,time:new Date().toLocaleString(),lang:curLang});
+ localStorage.setItem('mm_bookings',JSON.stringify(bookings));
+ let msg=`*NEW BOOKING*%0A👤 ${n}%0A📞 ${p}%0A🚚 ${selV} ₹${selCharge}%0A🔧 ${s}%0A📍 ${l}%0A🌐 Lang: ${curLang}`;
  window.open(`https://wa.me/918700406006?text=${msg}`,'_blank');
- document.getElementById('result').innerText=`✅ ${selV} Booking Done! Visiting ₹${selCharge} lagega.`;
+ document.getElementById('result').innerText=`✅ Booking Sent!`;
 }
-</script>
-</body>
-</html>
+applyLang();
+</script></body></html>
