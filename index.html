@@ -1,12 +1,62 @@
 <!DOCTYPE html>
-<html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>MechanicMitra</title>
-<style>*{box-sizing:border-box;font-family:sans-serif;margin:0;padding:0}body{background:#ffcc00}.screen{position:fixed;inset:0;display:none;padding:20px;background:#ffcc00}.screen.on{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}.logo-wrap{width:150px;height:150px;background:#fff;border-radius:50%;padding:10px;box-shadow:0 8px 20px rgba(0,0,0,.25);margin-bottom:18px}.logo-wrap img{width:100%;height:100%;object-fit:contain;border-radius:50%}h1{font-size:30px;font-weight:900}.btn-main{position:fixed;bottom:35px;left:50%;transform:translateX(-50%);background:#111;color:#fff;border:none;padding:18px 44px;border-radius:50px;font-size:18px;font-weight:800;z-index:99;width:85%;max-width:300px}.card{width:100%;max-width:360px;margin:auto;background:#fff;border-radius:20px;padding:22px}input,select{width:100%;padding:14px;border:2px solid #eee;border-radius:12px;margin:8px 0;font-size:16px}.btn{width:100%;padding:14px;background:#ff6600;color:#fff;border:none;border-radius:12px;font-weight:700;margin-top:10px}.v{border:2px solid #eee;border-radius:14px;padding:14px;text-align:center}.v.sel{border-color:#ff6600;background:#fff2e0}</style>
-</head><body>
-<div id="s1" class="screen on"><div class="logo-wrap"><img src="logo.jpg"></div><h1>MechanicMitra</h1><p>Quick PARTNER - 30 Min</p><button class="btn-main" onclick="go(2)">GET STARTED →</button></div>
-<div id="s2" class="screen" style="background:#fff"><div class="card"><h2>Language</h2><select><option>Hindi</option><option>English</option></select><button class="btn" onclick="go(3)">Continue</button></div></div>
-<div id="s3" class="screen" style="background:#fff"><div class="card"><h2>Mobile</h2><input maxlength="10" placeholder="10 digit"><button class="btn" onclick="go(4)">Send OTP</button></div></div>
-<div id="s4" class="screen" style="background:#fff"><div class="card"><h2>OTP 1234</h2><input placeholder="1234"><button class="btn" onclick="go(5)">Verify</button></div></div>
-<div id="s5" class="screen" style="background:#fff"><div class="card"><h2>Naam</h2><input placeholder="Naam"><button class="btn" onclick="go(7)">Next</button></div></div>
-<div id="s7" class="screen" style="background:#f5f5f5"><div class="card"><h2>✅ App Ready Hai!</h2><p>GET STARTED button ab fixed hai, kabhi gayab nahi hoga</p><div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px"><div class="v" onclick="this.classList.add('sel')">Bike ₹149</div><div class="v" onclick="this.classList.add('sel')">Car ₹299</div></div><input placeholder="Location"><button class="btn">BOOK</button></div></div>
-<script>function go(n){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('on'));document.getElementById('s'+n).classList.add('on')}</script>
-</body></html>
+<html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>MechanicMitra</title>
+<style>
+*{box-sizing:border-box;font-family:sans-serif;margin:0;padding:0}
+body{background:#ffcc00}
+.screen{position:fixed;inset:0;display:none;background:#ffcc00;overflow:auto;padding:15px}
+.screen.on{display:flex;flex-direction:column}
+#s1{align-items:center;justify-content:center;text-align:center}
+.logo{width:150px;height:150px;background:#fff;border-radius:50%;overflow:hidden;box-shadow:0 8px 20px rgba(0,0,0,.25);margin-bottom:15px}
+.logo img{width:100%;height:100%;object-fit:cover}
+.btn-main{position:fixed;bottom:30px;left:50%;transform:translateX(-50%);background:#111;color:#fff;border:none;padding:18px 50px;border-radius:50px;font-size:18px;font-weight:bold;width:85%;max-width:300px;z-index:99}
+.card{background:#fff;border-radius:20px;padding:18px;width:100%;max-width:380px;margin:10px auto;box-shadow:0 5px 15px rgba(0,0,0,.1)}
+.vehicle-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.vehicle{border:2px solid #eee;border-radius:14px;padding:12px;text-align:center;cursor:pointer}
+.vehicle.sel{border-color:#ff6600;background:#fff4e6;font-weight:bold}
+input,select{width:100%;padding:14px;border:2px solid #eee;border-radius:12px;margin:7px 0;font-size:15px}
+.btn{width:100%;padding:14px;background:#ff6600;color:#fff;border:none;border-radius:12px;font-weight:bold;margin-top:10px;font-size:16px}
+.top-lang{background:#fff;padding:10px;text-align:center;position:sticky;top:0;z-index:10;border-radius:0 0 15px 15px}
+.top-lang select{width:auto;padding:6px 12px}
+</style></head><body>
+
+<!-- S1 SPLASH - Wahi jo screenshot me hai -->
+<div id="s1" class="screen on">
+<div class="logo"><img src="logo.jpg" onerror="this.src='https://iili.io/B4z2X1f.png'"></div>
+<h1 style="font-weight:900;font-size:28px">MechanicMitra</h1>
+<p>Quick PARTNER - 30 Min</p>
+<button class="btn-main" onclick="go(2)">GET STARTED →</button>
+</div>
+
+<!-- S2 LANGUAGE -->
+<div id="s2" class="screen" style="background:#fff"><div class="card" style="margin:auto">
+<h2 id="lblLangHead">🌐 Language / भाषा चुनें</h2>
+<select id="langSelect" onchange="changeLang(this.value)" style="margin-top:12px">
+<option value="hi">हिन्दी - Hindi</option>
+<option value="en">English</option>
+<option value="bn">বাংলা - Bengali</option>
+<option value="mr">मराठी - Marathi</option>
+<option value="ta">தமிழ் - Tamil</option>
+<option value="te">తెలుగు - Telugu</option>
+<option value="gu">ગુજરાતી - Gujarati</option>
+</select>
+<button class="btn" onclick="go(3)">Continue →</button>
+</div></div>
+
+<!-- S3 MOBILE -->
+<div id="s3" class="screen" style="background:#fff"><div class="card" style="margin:auto">
+<h2 id="tMob">📱 Mobile Number</h2>
+<input id="ph" type="tel" maxlength="10" placeholder="10 digit number">
+<button class="btn" onclick="go(4)">Send OTP →</button>
+</div></div>
+
+<!-- S4 OTP -->
+<div id="s4" class="screen" style="background:#fff"><div class="card" style="margin:auto">
+<h2>🔑 OTP Daalo</h2><p style="opacity:.6">Demo OTP: 1234</p>
+<input id="otp" maxlength="4" placeholder="1234">
+<button class="btn" onclick="if(otp.value=='1234')go(5);else alert('1234 dalo')">Verify →</button>
+</div></div>
+
+<!-- S5 MAIN BOOKING - YEHI AAPKA BOLA HUA SAB KUCH -->
+<div id="s5" class="screen" style="background:#f5f5f5;display:none">
+<div class="top
