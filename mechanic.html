@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MechanicMitra - Admin / Mechanic App</title>
+<style>
+body{font-family:Arial;background:#111;color:white;margin:0}
+.header{background:#ff6600;padding:15px;text-align:center;font-weight:bold;font-size:20px;position:sticky;top:0}
+.card{background:#222;padding:15px;border-radius:12px;margin:12px}
+input{width:100%;padding:12px;border-radius:8px;border:none;margin:6px 0;box-sizing:border-box}
+button{width:100%;padding:14px;border-radius:10px;border:none;font-weight:bold;font-size:16px;cursor:pointer}
+.on{background:#00c853;color:white} .off{background:#555;color:white}
+.booking{background:white;color:black;padding:12px;border-radius:10px;margin:10px 0;border-left:6px solid #ff6600;}
+</style></head>
+<body>
+<div class="header">🔧 MechanicMitra - MECHANIC APP (Admin - English Only)</div>
+
+<div class="card" id="regCard">
+<h3>Mechanic Login - Admin Panel</h3>
+<input id="mName" placeholder="Your Name - ex: Raju">
+<input id="mPhone" placeholder="Mobile Number">
+<input id="mArea" placeholder="Area - ex: Okhla Phase 2">
+<button class="on" onclick="saveMechanic()">Login</button>
+</div>
+
+<div class="card" id="dash" style="display:none">
+<h3 id="welcome"></h3>
+<p>Status: <b id="statusTxt">OFFLINE</b></p>
+<button id="toggleBtn" class="off" onclick="toggle()">🟢 GO ONLINE</button>
+<p style="font-size:12px;color:#aaa">You will get bookings only when ONLINE - Like Porter Driver App</p>
+<hr>
+<h3>📥 New Bookings - Live</h3>
+<div id="bookingList"><p style="color:gray">No bookings. Stay Online...</p></div>
+<audio id="ding" src="https://cdn.pixabay.com/audio/2022/03/10/audio_2a1c0cfa24.mp3"></audio>
+</div>
+
+<script>
+let isOnline=false;
+function saveMechanic(){
+ let n=document.getElementById('mName').value, p=document.getElementById('mPhone').value, a=document.getElementById('mArea').value;
+ if(!n||!p){alert('Fill Name & Number');return;}
+ localStorage.setItem('mechName',n); localStorage.setItem('mechPhone',p); localStorage.setItem('mechArea',a);
+ showDash();
+}
+function showDash(){
+ document.getElementById('regCard').style.display='none';
+ document.getElementById('dash').style.display='block';
+ document.getElementById('welcome').innerText='Welcome, '+localStorage.getItem('mechName')+' ('+localStorage.getItem('mechArea')+')';
+ loadBookings();
+}
+function toggle(){
+ isOnline=!isOnline;
+ document.getElementById('statusTxt').innerText=isOnline?'ONLINE 🟢':'OFFLINE 🔴';
+ document.getElementById('toggleBtn').className=isOnline?'on':'off';
+ document.getElementById('toggleBtn').innerText=isOnline?'🔴 GO OFFLINE':'🟢 GO ONLINE';
+ if(isOnline){ checkNew(); setInterval(checkNew,5000); }
+}
+function loadBookings(){
+ let bookings=JSON.parse(localStorage.getItem('mm_bookings')||'[]');
+ let list=document.getElementById('bookingList');
+ if(bookings.length==0){list.innerHTML='<p style="color:gray">No bookings yet</p>';return;}
+ list.innerHTML='';
+ bookings.slice().reverse().forEach((b,i)=>{
+   list.innerHTML+=`<div class="booking">
+   <b>🚨 NEW - ${b.vehicle} - ${b.service}</b><br>
+   👤 ${b.name} - 📞 ${b.phone}<br>📍 ${b.location}<br>💰 Visit: ₹${b.charge} | Lang: ${b.lang||'hi'}<br><br>
+   <button style="background:green;color:white" onclick="accept('${b.phone}','${b.name}')">✅ ACCEPT & CALL</button>
+   <button style="background:#ddd;margin-top:5px" onclick="reject(${bookings.length-1-i})">❌ Reject</button>
+   </div>`;
+ });
+}
+function checkNew(){
+ let bookings=JSON.parse(localStorage.getItem('mm_bookings')||'[]');
+ if(bookings.length>0 && isOnline){
+   document.getElementById('ding').play().catch(()=>{});
+   loadBookings();
+   if(navigator.vibrate) navigator.vibrate(500);
+ }
+}
+function accept(phone,name){ alert('Accepted! Call Customer: '+name+' - '+phone); window.open('tel:'+phone); }
+function reject(idx){ let b=JSON.parse(localStorage.getItem('mm_bookings')||'[]'); b.splice(idx,1); localStorage.setItem('mm_bookings',JSON.stringify(b)); loadBookings(); }
+if(localStorage.getItem('mechName')) showDash();
+</script>
+</body></html>
