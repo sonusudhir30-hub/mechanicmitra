@@ -1,82 +1,10 @@
-<!DOCTYPE html>
-<html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MechanicMitra - Admin / Mechanic App</title>
-<style>
-body{font-family:Arial;background:#111;color:white;margin:0}
-.header{background:#ff6600;padding:15px;text-align:center;font-weight:bold;font-size:20px;position:sticky;top:0}
-.card{background:#222;padding:15px;border-radius:12px;margin:12px}
-input{width:100%;padding:12px;border-radius:8px;border:none;margin:6px 0;box-sizing:border-box}
-button{width:100%;padding:14px;border-radius:10px;border:none;font-weight:bold;font-size:16px;cursor:pointer}
-.on{background:#00c853;color:white} .off{background:#555;color:white}
-.booking{background:white;color:black;padding:12px;border-radius:10px;margin:10px 0;border-left:6px solid #ff6600;}
-</style></head>
-<body>
-<div class="header">🔧 MechanicMitra - MECHANIC APP (Admin - English Only)</div>
-
-<div class="card" id="regCard">
-<h3>Mechanic Login - Admin Panel</h3>
-<input id="mName" placeholder="Your Name - ex: Raju">
-<input id="mPhone" placeholder="Mobile Number">
-<input id="mArea" placeholder="Area - ex: Okhla Phase 2">
-<button class="on" onclick="saveMechanic()">Login</button>
-</div>
-
-<div class="card" id="dash" style="display:none">
-<h3 id="welcome"></h3>
-<p>Status: <b id="statusTxt">OFFLINE</b></p>
-<button id="toggleBtn" class="off" onclick="toggle()">🟢 GO ONLINE</button>
-<p style="font-size:12px;color:#aaa">You will get bookings only when ONLINE - Like Porter Driver App</p>
-<hr>
-<h3>📥 New Bookings - Live</h3>
-<div id="bookingList"><p style="color:gray">No bookings. Stay Online...</p></div>
-<audio id="ding" src="https://cdn.pixabay.com/audio/2022/03/10/audio_2a1c0cfa24.mp3"></audio>
-</div>
-
+<!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Mechanic - MechanicMitra</title><style>*{box-sizing:border-box;font-family:Arial}body{margin:0;background:#111;color:#fff}.head{background:#ffcc00;color:#000;padding:14px;text-align:center;font-weight:bold;position:sticky;top:0}.card{background:#222;border:1px solid #333;border-radius:14px;padding:14px;margin:12px auto;max-width:450px}.btn{width:100%;padding:13px;border:0;border-radius:10px;font-weight:bold;margin-top:8px;cursor:pointer}.btnG{background:#00c853;color:#fff}.btnR{background:#ff3d00;color:#fff}.btnB{background:#2962ff;color:#fff}input{width:100%;padding:12px;border-radius:10px;border:1px solid #444;background:#222;color:#fff;margin:6px 0}.badge{padding:3px 10px;border-radius:20px;font-size:12px;font-weight:bold}.new{background:#ffeb3b;color:#000}.accepted{background:#00e676;color:#000}.done{background:#555}</style></head><body>
+<div class="head">🔧 MechanicMitra - Partner App</div>
+<div id="login" style="max-width:450px;margin:auto;padding:20px"><div class="card"><h3>Mechanic Login</h3><input id="mname" placeholder="Naam - Raju" value="Raju Mechanic"><input id="mphone" placeholder="Mobile" value="8700406006"><button class="btn btnG" onclick="login()">Login → Dashboard</button></div></div>
+<div id="dash" style="display:none;max-width:450px;margin:auto"><div class="card" style="display:flex;justify-content:space-between"><div><small>Earnings</small><h2 id="earn">₹0</h2></div><div><small>Jobs</small><h2 id="jobs">0</h2></div><div><small>Rating</small><h2>4.8★</h2></div></div><div id="list"></div><div class="card" style="text-align:center"><button class="btn" style="background:#333;color:#fff" onclick="localStorage.removeItem('mechanic_bookings');location.reload()">🗑️ Clear Test Data</button></div></div>
 <script>
-let isOnline=false;
-function saveMechanic(){
- let n=document.getElementById('mName').value, p=document.getElementById('mPhone').value, a=document.getElementById('mArea').value;
- if(!n||!p){alert('Fill Name & Number');return;}
- localStorage.setItem('mechName',n); localStorage.setItem('mechPhone',p); localStorage.setItem('mechArea',a);
- showDash();
-}
-function showDash(){
- document.getElementById('regCard').style.display='none';
- document.getElementById('dash').style.display='block';
- document.getElementById('welcome').innerText='Welcome, '+localStorage.getItem('mechName')+' ('+localStorage.getItem('mechArea')+')';
- loadBookings();
-}
-function toggle(){
- isOnline=!isOnline;
- document.getElementById('statusTxt').innerText=isOnline?'ONLINE 🟢':'OFFLINE 🔴';
- document.getElementById('toggleBtn').className=isOnline?'on':'off';
- document.getElementById('toggleBtn').innerText=isOnline?'🔴 GO OFFLINE':'🟢 GO ONLINE';
- if(isOnline){ checkNew(); setInterval(checkNew,5000); }
-}
-function loadBookings(){
- let bookings=JSON.parse(localStorage.getItem('mm_bookings')||'[]');
- let list=document.getElementById('bookingList');
- if(bookings.length==0){list.innerHTML='<p style="color:gray">No bookings yet</p>';return;}
- list.innerHTML='';
- bookings.slice().reverse().forEach((b,i)=>{
-   list.innerHTML+=`<div class="booking">
-   <b>🚨 NEW - ${b.vehicle} - ${b.service}</b><br>
-   👤 ${b.name} - 📞 ${b.phone}<br>📍 ${b.location}<br>💰 Visit: ₹${b.charge} | Lang: ${b.lang||'hi'}<br><br>
-   <button style="background:green;color:white" onclick="accept('${b.phone}','${b.name}')">✅ ACCEPT & CALL</button>
-   <button style="background:#ddd;margin-top:5px" onclick="reject(${bookings.length-1-i})">❌ Reject</button>
-   </div>`;
- });
-}
-function checkNew(){
- let bookings=JSON.parse(localStorage.getItem('mm_bookings')||'[]');
- if(bookings.length>0 && isOnline){
-   document.getElementById('ding').play().catch(()=>{});
-   loadBookings();
-   if(navigator.vibrate) navigator.vibrate(500);
- }
-}
-function accept(phone,name){ alert('Accepted! Call Customer: '+name+' - '+phone); window.open('tel:'+phone); }
-function reject(idx){ let b=JSON.parse(localStorage.getItem('mm_bookings')||'[]'); b.splice(idx,1); localStorage.setItem('mm_bookings',JSON.stringify(b)); loadBookings(); }
-if(localStorage.getItem('mechName')) showDash();
-</script>
-</body></html>
+let bookings=[];function login(){document.getElementById('login').style.display='none';document.getElementById('dash').style.display='block';load();setInterval(load,3000)}
+function load(){let r=localStorage.getItem('mechanic_bookings');bookings=r?JSON.parse(r):[];if(bookings.length==0){bookings=[{id:1,name:'Sudhir Rai',phone:'8700406006',vehicle:'Bike - Puncture - ₹199',price:199,location:'https://maps.google.com/?q=28.53,77.27',address:'Okhla Phase-2',status:'new',time:new Date().toLocaleString()}]}render()}
+function render(){let h='';if(bookings.length==0)h='<div class="card" style="text-align:center;color:#777">Koi booking nahi</div>';bookings.slice().reverse().forEach(b=>{h+=`<div class="card"><div style="display:flex;justify-content:space-between"><b>${b.vehicle}</b><span class="badge ${b.status}">${b.status}</span></div><p style="margin:8px 0">👤 ${b.name} - <a href="tel:${b.phone}" style="color:#ffcc00">${b.phone}</a><br>📍 ${b.address}<br><small>${b.time}</small></p><a href="${b.location}" target="_blank" style="color:#2962ff">🗺️ Location</a><div style="display:flex;gap:8px;margin-top:10px">${b.status=='new'?`<button class="btn btnG" onclick="upd(${b.id},'accepted')">✅ Accept</button><button class="btn btnR" onclick="upd(${b.id},'rejected')">❌ Reject</button>`:''}${b.status=='accepted'?`<button class="btn btnB" onclick="window.open('tel:${b.phone}')">📞 Call</button><button class="btn btnG" onclick="upd(${b.id},'done')">✔️ Done</button>`:''}</div></div>`});document.getElementById('list').innerHTML=h;let d=bookings.filter(b=>b.status=='done');document.getElementById('earn').innerText='₹'+d.reduce((s,b)=>s+b.price,0);document.getElementById('jobs').innerText=bookings.length}
+function upd(id,st){bookings=bookings.map(b=>b.id==id?{...b,status:st}:b);localStorage.setItem('mechanic_bookings',JSON.stringify(bookings));render()}
+</script></body></html>
