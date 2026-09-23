@@ -1,58 +1,19 @@
-<!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Mechanic - LOUD Ghanti</title>
+<!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Mechanic App - Dynamic Name</title>
 <style>*{box-sizing:border-box;font-family:Arial}body{margin:0;background:#111;color:#fff}.head{background:#ffcc00;color:#000;padding:15px;text-align:center;font-weight:bold;position:sticky;top:0;z-index:20}.card{background:#222;border:1px solid #333;border-radius:14px;padding:14px;margin:12px auto;max-width:450px}.btn{width:100%;padding:14px;border:0;border-radius:10px;font-weight:bold;margin-top:8px;cursor:pointer;font-size:16px}.btnG{background:#00c853;color:#fff}.btnR{background:#ff3d00;color:#fff}.btnB{background:#2962ff;color:#fff}.new{background:#ffeb3b;color:#000;animation:blink .5s infinite}.accepted{background:#00e676;color:#000}.on_the_way{background:#00bcd4;color:#000}.done{background:#555}@keyframes blink{0%,100%{background:#ffeb3b}50%{background:#ff6f00}}input{width:100%;padding:12px;border-radius:10px;border:1px solid #444;background:#222;color:#fff;margin:6px 0}.badge{padding:4px 10px;border-radius:20px;font-size:12px;font-weight:bold;float:right}</style></head><body>
-<div class="head">🔧 Mechanic - LOUD MODE <button onclick="enableLoud()" id="sBtn" style="float:right;background:#ff3d00;color:#fff;border:0;padding:8px 14px;border-radius:20px;font-weight:bold">🔔 TEZ GHANTI ON KARO</button></div>
-<div id="login" style="max-width:450px;margin:auto;padding:20px"><div class="card" style="text-align:center"><h2>🔊 TAXI GHANTI MODE</h2><p style="color:#ffcc00">Booking ayegi to Taxi jaise tez bajegi!</p><input id="mname" value="Raju Mechanic"><input id="mphone" value="8700406006"><button class="btn" style="background:#ffcc00;color:#000" onclick="login()">Login + Ghanti ON</button><p style="font-size:12px;color:#777;margin-top:10px">⚠️ Login dabate hi phone ka volume FULL karo</p></div></div>
-<div id="dash" style="display:none;max-width:450px;margin:auto"><div class="card" style="display:flex;justify-content:space-between;text-align:center;background:#000;border:2px solid #ffcc00"><div><small>Earning</small><h2 id="earn">₹0</h2></div><div><small>Jobs</small><h2 id="jobs">0</h2></div><div><small>GHANTI</small><h3 id="sSt" style="color:#ff3d00">OFF</h3></div></div><div id="list"></div></div>
-
-<!-- TEZ GHANTI SOUNDS - 2 Alarms ek saath -->
+<div class="head">🔧 <span id="headName">Mechanic</span> <button onclick="enableLoud()" id="sBtn" style="float:right;background:#ff3d00;color:#fff;border:0;padding:6px 12px;border-radius:20px;font-size:12px">🔔 GHANTI ON</button></div>
+<div id="login" style="max-width:450px;margin:auto;padding:20px"><div class="card" style="text-align:center"><h2>Mechanic Login</h2><p style="color:#ffcc00">Jo naam likhoge wahi customer ko dikhega</p><input id="mname" placeholder="Aapka Naam - Jaise: Amit Sharma" value=""><input id="mphone" placeholder="Aapka Mobile Number" value=""><input id="mvehicle" placeholder="Aapki Gaadi - Bike/Car" value="Bike Mechanic"><button class="btn" style="background:#ffcc00;color:#000" onclick="login()">Login + Ghanti ON 🔊</button></div></div>
+<div id="dash" style="display:none;max-width:450px;margin:auto"><div class="card" style="display:flex;justify-content:space-between;text-align:center;background:#000;border:2px solid #ffcc00"><div><small>Naam</small><h3 id="dName" style="margin:0;font-size:14px">-</h3></div><div><small>Earning</small><h2 id="earn">₹0</h2></div><div><small>Jobs</small><h2 id="jobs">0</h2></div></div><div id="list"></div><button class="btn" style="background:#333;color:#fff" onclick="logout()">Logout</button></div>
 <audio id="taxi1" src="https://actions.google.com/sounds/v1/alarms/alarm_clock.ogg" preload="auto" loop></audio>
 <audio id="taxi2" src="https://actions.google.com/sounds/v1/alarms/beep_short.ogg" preload="auto" loop></audio>
-
 <script>
-let books=[],last=0,sOn=false,audioCtx;
-function enableLoud(){
- sOn=true;
- // Web Audio API se extra tez beep bhi bajayenge
- try{audioCtx=new (window.AudioContext||window.webkitAudioContext)();}catch(e){}
- let a1=document.getElementById('taxi1'),a2=document.getElementById('taxi2');
- a1.volume=1.0; a2.volume=1.0;
- a1.play().then(()=>{a1.pause();a2.play().then(()=>a2.pause());document.getElementById('sSt').innerText='🔊 ON';document.getElementById('sSt').style.color='#00e676';document.getElementById('sBtn').innerText='🔊 TEZ ON HAI';document.getElementById('sBtn').style.background='#00c853';}).catch(()=>{});
- if(Notification&&Notification.permission!="granted")Notification.requestPermission();
-}
-function login(){document.getElementById('login').style.display='none';document.getElementById('dash').style.display='block';load();setInterval(load,2000);enableLoud();setTimeout(enableLoud,500)}
-
+let books=[],last=0,sOn=false,currentMechanic=null,audioCtx;
+function enableLoud(){sOn=true;try{audioCtx=new (window.AudioContext||window.webkitAudioContext)();}catch(e){}let a1=document.getElementById('taxi1'),a2=document.getElementById('taxi2');a1.volume=1;a2.volume=1;a1.play().then(()=>{a1.pause();a2.play().then(()=>a2.pause());}).catch(()=>{});if(Notification&&Notification.permission!="granted")Notification.requestPermission();}
+function login(){let n=document.getElementById('mname').value,ph=document.getElementById('mphone').value,vh=document.getElementById('mvehicle').value;if(!n||ph.length<10){alert('Sahi naam aur mobile likho');return}currentMechanic={name:n,phone:ph,vehicle:vh};localStorage.setItem('current_mechanic',JSON.stringify(currentMechanic));document.getElementById('headName').innerText=n;document.getElementById('dName').innerText=n;document.getElementById('login').style.display='none';document.getElementById('dash').style.display='block';load();setInterval(load,2000);enableLoud();setTimeout(enableLoud,500)}
+function logout(){localStorage.removeItem('current_mechanic');location.reload()}
 function load(){let d=localStorage.getItem('mechanic_bookings');let nb=d?JSON.parse(d):[];if(nb.length>last&&last!=0)ringTaxi(nb[nb.length-1]);last=nb.length;books=nb;render()}
-
-function ringTaxi(b){
- if(!sOn)enableLoud();
- let a1=document.getElementById('taxi1'),a2=document.getElementById('taxi2');
- a1.currentTime=0;a2.currentTime=0;a1.volume=1.0;a2.volume=1.0;
- a1.play(); a2.play();
- // Extra WebAudio Siren
- playSiren();
- // Vibrate tez
- if(navigator.vibrate) navigator.vibrate([800,200,800,200,800,200,800,200,800]);
- // Notification
- if(Notification&&Notification.permission=="granted"){new Notification("🔔🔔 TAXI BOOKING AYI!",{body:`${b.name} - ${b.vehicle} - Jaldi Accept karo!`,requireInteraction:true})}
- // Popup
- alert(`🚨🚨 TAXI GHANTI BAJ RAHI HAI 🚨🚨\n\n👤 ${b.name}\n📞 ${b.phone}\n🏍️ ${b.vehicle}\n📍 ${b.address}\n\nJALDI ACCEPT KARO!`);
- // 15 second tak bajegi
- setTimeout(()=>{a1.pause();a2.pause();},15000);
-}
-
-function playSiren(){
- if(!audioCtx)return;
- let o=audioCtx.createOscillator(),g=audioCtx.createGain();
- o.type='square';o.frequency.setValueAtTime(800,audioCtx.currentTime);
- o.frequency.linearRampToValueAtTime(1200,audioCtx.currentTime+0.3);
- o.frequency.linearRampToValueAtTime(800,audioCtx.currentTime+0.6);
- g.gain.setValueAtTime(0.5,audioCtx.currentTime);
- o.connect(g);g.connect(audioCtx.destination);o.start();
- o.stop(audioCtx.currentTime+3);
- // Loop siren 5 baar
- let c=0;let iv=setInterval(()=>{if(c++>4){clearInterval(iv);return}let o2=audioCtx.createOscillator(),g2=audioCtx.createGain();o2.type='square';o2.frequency.setValueAtTime(800,audioCtx.currentTime);o2.frequency.linearRampToValueAtTime(1200,audioCtx.currentTime+0.3);g2.gain.setValueAtTime(0.5,audioCtx.currentTime);o2.connect(g2);g2.connect(audioCtx.destination);o2.start();o2.stop(audioCtx.currentTime+0.6)},700);
-}
-
-function render(){let h='';if(books.length==0)h='<div class="card" style="text-align:center;color:#777">Koi booking nahi...<br>Customer book karega to TAXI GHANTI bajegi 🔊</div>';books.slice().reverse().forEach(b=>{h+=`<div class="card" style="${b.status=='new'?'border:3px solid #ff3d00;background:#2a1a00':''}"><span class="badge ${b.status}">${b.status.toUpperCase()}</span><b style="${b.status=='new'?'color:#ffcc00;font-size:18px':''}">${b.vehicle} - ₹${b.price}</b><p style="font-size:14px;margin:8px 0">👤 ${b.name} - <a href="tel:${b.phone}" style="color:#ffcc00">${b.phone}</a><br>📍 ${b.address}<br>🕒 ${b.time}</p><div style="display:flex;gap:8px;flex-wrap:wrap">${b.status=='new'?`<button class="btn btnG" style="font-size:18px;padding:16px;background:#00c853;animation:blink .5s infinite" onclick="upd(${b.id},'accepted')">✅ ACCEPT KARO - GHANTI BAND</button><button class="btn btnR" onclick="upd(${b.id},'rejected')">❌ Reject</button>`:''}${b.status=='accepted'?`<button class="btn btnB" onclick="window.open('tel:${b.phone}')">📞 Call</button><button class="btn btnG" style="background:#00bcd4" onclick="upd(${b.id},'on_the_way')">🛵 Raste Me Hu</button>`:''}${b.status=='on_the_way'?`<button class="btn btnG" onclick="upd(${b.id},'done')">✔️ Done</button>`:''}${b.status=='done'?`<p style="color:#00e676;width:100%;text-align:center">✅ Done - ₹${b.price}</p>`:''}</div></div>`});document.getElementById('list').innerHTML=h;let d=books.filter(x=>x.status=='done');document.getElementById('earn').innerText='₹'+d.reduce((s,x)=>s+x.price,0);document.getElementById('jobs').innerText=books.length}
-function upd(id,st){document.getElementById('taxi1').pause();document.getElementById('taxi2').pause();books=books.map(b=>b.id==id?{...b,status:st}:b);localStorage.setItem('mechanic_bookings',JSON.stringify(books));render()}
+function ringTaxi(b){if(!sOn)enableLoud();let a1=document.getElementById('taxi1'),a2=document.getElementById('taxi2');a1.currentTime=0;a2.currentTime=0;a1.play();a2.play();if(navigator.vibrate)navigator.vibrate([800,200,800,200,800]);if(Notification&&Notification.permission=="granted")new Notification("🔔 Nayi Booking!",{body:b.name+" - "+b.vehicle});alert(`🚨 BOOKING AYI!\n${b.name} - ${b.vehicle}\n${b.address}`);setTimeout(()=>{a1.pause();a2.pause();},15000)}
+function render(){let h='';if(books.length==0)h='<div class="card" style="text-align:center;color:#777">Koi booking nahi...</div>';books.slice().reverse().forEach(b=>{h+=`<div class="card" style="${b.status=='new'?'border:3px solid #ff3d00':''}"><span class="badge ${b.status}">${b.status}</span><b>${b.vehicle} - ₹${b.price}</b><p style="font-size:13px">👤 ${b.name} - <a href="tel:${b.phone}" style="color:#ffcc00">${b.phone}</a><br>📍 ${b.address}<br>🕒 ${b.time}<br>${b.assigned?`🔧 Assigned: <b style="color:#00e676">${b.assigned}</b>`:''}</p><div style="display:flex;gap:8px;flex-wrap:wrap">${b.status=='new'?`<button class="btn btnG" style="font-size:18px;animation:blink .5s infinite" onclick="upd(${b.id},'accepted')">✅ ACCEPT - ${currentMechanic.name} ke naam se</button>`:''}${b.status=='accepted'&&b.assigned==currentMechanic.name?`<button class="btn btnB" onclick="window.open('tel:${b.phone}')">📞 Call Customer</button><button class="btn btnG" style="background:#00bcd4" onclick="upd(${b.id},'on_the_way')">🛵 Raste Me Hu</button>`:''}${b.status=='on_the_way'&&b.assigned==currentMechanic.name?`<button class="btn btnG" onclick="upd(${b.id},'done')">✔️ Done</button>`:''}${b.assigned&&b.assigned!=currentMechanic.name?`<p style="color:#ff9800;width:100%;text-align:center">⚠️ Ye booking ${b.assigned} ne utha li hai</p>`:''}</div></div>`});document.getElementById('list').innerHTML=h;let d=books.filter(x=>x.status=='done'&&x.assigned==currentMechanic.name);document.getElementById('earn').innerText='₹'+d.reduce((s,x)=>s+x.price,0);document.getElementById('jobs').innerText=books.filter(x=>x.assigned==currentMechanic.name).length}
+function upd(id,st){document.getElementById('taxi1').pause();document.getElementById('taxi2').pause();books=books.map(b=>{if(b.id==id){if(st=='accepted'){return{...b,status:st,assigned:currentMechanic.name,assignedPhone:currentMechanic.phone,assignedVehicle:currentMechanic.vehicle}}else{return{...b,status:st}}}return b});localStorage.setItem('mechanic_bookings',JSON.stringify(books));render()}
+// Auto login agar pehle se login hai
+let saved=localStorage.getItem('current_mechanic');if(saved){let m=JSON.parse(saved);document.getElementById('mname').value=m.name;document.getElementById('mphone').value=m.phone;document.getElementById('mvehicle').value=m.vehicle||'Bike Mechanic'}
 </script></body></html>
