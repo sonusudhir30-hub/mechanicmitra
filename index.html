@@ -1,89 +1,25 @@
 <!DOCTYPE html>
-<html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>MechanicMitra - Customer</title>
-<style>
-*{box-sizing:border-box;font-family:Arial}body{margin:0;background:#f5f5f5;color:#000}
-.header{background:#ffcc00;padding:15px;text-align:center;font-weight:bold;font-size:20px;position:sticky;top:0;z-index:10}
-.card{background:#fff;border-radius:14px;padding:15px;margin:12px auto;max-width:450px;box-shadow:0 2px 8px #0001}
-.btn{width:100%;padding:14px;border:0;border-radius:12px;font-weight:bold;font-size:16px;cursor:pointer;margin-top:10px}
-.btnY{background:#ffcc00;color:#000}.btnG{background:#00c853;color:#fff}
-.vGrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.vCard{border:2px solid #ddd;border-radius:12px;padding:12px;text-align:center;cursor:pointer}.vCard.active{border-color:#000;background:#ffcc00}
-input,select,textarea{width:100%;padding:12px;border-radius:10px;border:1px solid #ccc;margin:6px 0;font-size:15px}
-.badge{padding:4px 10px;border-radius:20px;font-size:12px;font-weight:bold}
-.trackStep{padding:10px;border-left:4px solid #ddd;margin:8px 0;background:#f9f9f9;border-radius:0 10px 10px 0}.trackStep.done{border-color:#00c853;background:#e8f5e9;color:#000}.trackStep.active{border-color:#ffcc00;background:#fffde7;animation:blink 1s infinite}
-@keyframes blink{50%{opacity:.7}}
-</style></head><body>
-<div class="header">🔧 MechanicMitra - Customer</div>
-
-<div id="bookingForm" style="max-width:450px;margin:auto;padding:10px">
-<div class="card"><h3>Gaadi Chuno</h3>
-<div class="vGrid">
-<div class="vCard active" onclick="selectV('Bike',199,this)">🏍️<br><b>Bike</b><br>₹199 se</div>
-<div class="vCard" onclick="selectV('Scooty',199,this)">🛵<br><b>Scooty</b><br>₹199 se</div>
-<div class="vCard" onclick="selectV('Car',499,this)">🚗<br><b>Car</b><br>₹499 se</div>
-<div class="vCard" onclick="selectV('Auto',299,this)">🛺<br><b>Auto</b><br>₹299 se</div>
+<html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>MechanicMitra Customer</title><style>*{box-sizing:border-box;font-family:Arial}body{margin:0;background:#f5f5f5}.header{background:#ffcc00;padding:15px;text-align:center;font-weight:bold;font-size:20px;position:sticky;top:0}.card{background:#fff;border-radius:14px;padding:15px;margin:12px auto;max-width:450px;box-shadow:0 2px 8px #0001}.btn{width:100%;padding:14px;border:0;border-radius:12px;font-weight:bold;font-size:16px;cursor:pointer;margin-top:10px}.btnY{background:#ffcc00}.vGrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.vCard{border:2px solid #ddd;border-radius:12px;padding:12px;text-align:center;cursor:pointer}.vCard.active{border-color:#000;background:#ffcc00}input,select,textarea{width:100%;padding:12px;border-radius:10px;border:1px solid #ccc;margin:6px 0}.trackStep{padding:10px;border-left:4px solid #ddd;margin:8px 0;background:#f9f9f9;border-radius:0 10px 10px 0}.trackStep.done{border-color:#00c853;background:#e8f5e9}.trackStep.active{border-color:#ffcc00;background:#fffde7}</style></head><body>
+<div class="header">🔧 MechanicMitra</div>
+<div id="form" style="max-width:450px;margin:auto;padding:10px">
+<div class="card"><h3>Gaadi Chuno</h3><div class="vGrid">
+<div class="vCard active" onclick="selV('Bike',199,this)">🏍️<br><b>Bike</b><br>₹199</div>
+<div class="vCard" onclick="selV('Car',499,this)">🚗<br><b>Car</b><br>₹499</div>
+<div class="vCard" onclick="selV('Scooty',199,this)">🛵<br><b>Scooty</b><br>₹199</div>
+<div class="vCard" onclick="selV('Auto',299,this)">🛺<br><b>Auto</b><br>₹299</div>
 </div></div>
-
-<div class="card">
-<h3>Problem Kya Hai?</h3>
-<select id="prob"><option>Puncture</option><option>Engine Start Nahi</option><option>Battery Dead</option><option>Brake Fail</option><option>Chain Tut Gayi</option><option>Tow Service</option><option>Other</option></select>
-<textarea id="addr" placeholder="Apna Address likho - Okhla Phase 2, Delhi"></textarea>
-<input id="mapLink" placeholder="Google Map Link paste karo (optional)" value="https://maps.google.com/?q=28.5355,77.2710">
-<input id="cname" placeholder="Aapka Naam">
-<input id="cphone" placeholder="Mobile Number - 10 digit">
-<button class="btn btnY" onclick="bookNow()">🔧 Abhi Mechanic Bulao - ₹<span id="priceShow">199</span></button>
-<p style="font-size:12px;color:#777;text-align:center">Book karte hi mechanic ke paas ghanti bajegi 🔔</p>
-</div>
-</div>
-
-<div id="trackingBox" style="display:none;max-width:450px;margin:auto;padding:10px">
-<div class="card" style="border:2px solid #00c853">
-<h2 style="text-align:center;color:#00c853">📍 Live Tracking</h2>
-<div id="trackId" style="text-align:center;color:#777;font-size:13px"></div>
-<div id="trackStatus" style="margin-top:12px"></div>
-<div style="margin-top:15px">
-<a id="callBtn" href="#" class="btn btnG" style="display:block;text-align:center;text-decoration:none">📞 Mechanic ko Call Karo</a>
-<a id="locBtn" href="#" target="_blank" class="btn" style="display:block;text-align:center;text-decoration:none;background:#2962ff;color:#fff;margin-top:8px">🗺️ Live Location Dekho</a>
-<button class="btn" style="background:#333;color:#fff" onclick="location.reload()">🔄 Nayi Booking Karo</button>
-</div>
-</div>
-</div>
-
+<div class="card"><h3>Booking Details</h3>
+<select id="prob"><option>Puncture</option><option>Engine Start Nahi</option><option>Battery Dead</option><option>Tow Service</option><option>Other</option></select>
+<textarea id="addr" placeholder="Address likho - Okhla Phase 2"></textarea>
+<input id="cname" placeholder="Aapka Naam"><input id="cphone" placeholder="Mobile Number">
+<button class="btn btnY" onclick="bookNow()">🔧 Mechanic Bulao - ₹<span id="pShow">199</span></button>
+</div></div>
+<div id="trackBox" style="display:none;max-width:450px;margin:auto;padding:10px"><div class="card" style="border:2px solid #00c853"><h2 style="text-align:center;color:#00c853">📍 Live Tracking</h2><div id="tId" style="text-align:center;color:#777;font-size:12px"></div><div id="tStatus" style="margin-top:10px"></div><a id="callBtn" href="#" class="btn" style="background:#00c853;color:#fff;display:block;text-align:center;text-decoration:none;margin-top:10px">📞 Call Mechanic</a><a id="locBtn" href="#" target="_blank" class="btn" style="background:#2962ff;color:#fff;display:block;text-align:center;text-decoration:none;margin-top:8px">🗺️ Live Location</a><button class="btn" style="background:#333;color:#fff" onclick="localStorage.removeItem('last_booking_id');location.reload()">Nayi Booking</button></div></div>
 <script>
-let selV='Bike', selP=199;
-function selectV(v,p,el){selV=v;selP=p;document.getElementById('priceShow').innerText=p;document.querySelectorAll('.vCard').forEach(c=>c.classList.remove('active'));el.classList.add('active')}
-function bookNow(){
- let n=document.getElementById('cname').value, ph=document.getElementById('cphone').value, pr=document.getElementById('prob').value, ad=document.getElementById('addr').value;
- if(!n||ph.length<10){alert('Naam aur sahi mobile number likho');return}
- let booking={id:Date.now(),name:n,phone:ph,vehicle:selV+' - '+pr,price:selP,location:document.getElementById('mapLink').value,address:ad||'Location se',time:new Date().toLocaleString(),status:'new',assigned:'Raju Mechanic'};
- let all=JSON.parse(localStorage.getItem('mechanic_bookings')||'[]');all.push(booking);localStorage.setItem('mechanic_bookings',JSON.stringify(all));localStorage.setItem('last_booking_id',booking.id);
- let msg=`🔧 *NEW BOOKING*%0A👤 ${n}%0A📞 ${ph}%0A${selV} - ${pr}%0A💰 ₹${selP}%0A📍 ${ad}%0A${booking.location}`;
- window.open(`https://wa.me/918700406006?text=${msg}`,'_blank');
- showTracking(booking.id);
-}
-function showTracking(id){
- document.getElementById('bookingForm').style.display='none';
- document.getElementById('trackingBox').style.display='block';
- document.getElementById('trackId').innerText='Booking ID: #'+id;
- trackLoop(id);setInterval(()=>trackLoop(id),2000);
-}
-function trackLoop(id){
- let all=JSON.parse(localStorage.getItem('mechanic_bookings')||'[]');let b=all.find(x=>x.id==id);if(!b)return;
- document.getElementById('callBtn').href='tel:'+b.phone;document.getElementById('locBtn').href=b.location;
- let steps=[
-  {k:'new',t:'Booking Bheji Gayi',d:'Mechanic dhoondh rahe hain...'},
-  {k:'accepted',t:'Mechanic ne Accept Kiya',d:(b.assigned||'Mechanic')+' aa raha hai - 10 min me pahuchega'},
-  {k:'on_the_way',t:'Mechanic Raste Me Hai',d:'Live location dekho - Call karo'},
-  {k:'done',t:'Kaam Ho Gaya! 🎉',d:`Payment karo ₹${b.price} - Dhanyavaad!`}
- ];
- let order=['new','accepted','on_the_way','done'];let cur=order.indexOf(b.status);let html='';
- steps.forEach((s,i)=>{
-  let cls=i<cur?'done':i==cur?'active':'';let icon=i<cur?'✅':i==cur?'🔄':'⏳';
-  html+=`<div class="trackStep ${cls}"><b>${icon} ${s.t}</b><br><small>${i<=cur?s.d:'Intezaar...'}</small></div>`;
- });
- document.getElementById('trackStatus').innerHTML=html;
- if(b.status=='accepted' && !window.notified){window.notified=true;if(navigator.vibrate) navigator.vibrate(300); alert('✅ Mechanic ne booking accept kar li! Wo aa raha hai');}
-}
-let last=localStorage.getItem('last_booking_id');if(last){showTracking(parseInt(last))}
+let sV='Bike',sP=199;
+function selV(v,p,el){sV=v;sP=p;document.getElementById('pShow').innerText=p;document.querySelectorAll('.vCard').forEach(c=>c.classList.remove('active'));el.classList.add('active')}
+function bookNow(){let n=document.getElementById('cname').value,ph=document.getElementById('cphone').value,pr=document.getElementById('prob').value,ad=document.getElementById('addr').value;if(!n||ph.length<10){alert('Naam aur Mobile sahi likho');return}let b={id:Date.now(),name:n,phone:ph,vehicle:sV+' - '+pr,price:sP,location:'https://maps.google.com/?q=28.5355,77.2710',address:ad||'Delhi',time:new Date().toLocaleString(),status:'new',assigned:'Raju Mechanic'};let all=JSON.parse(localStorage.getItem('mechanic_bookings')||'[]');all.push(b);localStorage.setItem('mechanic_bookings',JSON.stringify(all));localStorage.setItem('last_booking_id',b.id);let msg=`NEW BOOKING%0A${n} - ${ph}%0A${sV} - ${pr} - ₹${sP}%0A${ad}`;window.open(`https://wa.me/918700406006?text=${msg}`,'_blank');showTrack(b.id)}
+function showTrack(id){document.getElementById('form').style.display='none';document.getElementById('trackBox').style.display='block';document.getElementById('tId').innerText='ID: #'+id;loop(id);setInterval(()=>loop(id),2000)}
+function loop(id){let all=JSON.parse(localStorage.getItem('mechanic_bookings')||'[]');let b=all.find(x=>x.id==id);if(!b)return;document.getElementById('callBtn').href='tel:8700406006';document.getElementById('locBtn').href=b.location;let order=['new','accepted','on_the_way','done'];let cur=order.indexOf(b.status);let steps=[{k:'new',t:'Booking Bheji Gayi'},{k:'accepted',t:'Mechanic ne Accept Kiya'},{k:'on_the_way',t:'Raste Me Hai'},{k:'done',t:'Kaam Ho Gaya'}];let h='';steps.forEach((s,i)=>{let cls=i<cur?'done':i==cur?'active':'';let ic=i<cur?'✅':i==cur?'🔄':'⏳';h+=`<div class="trackStep ${cls}"><b>${ic} ${s.t}</b><br><small>${i<=cur?b.status==s.k?'Abhi...':s.t:''}</small></div>`});document.getElementById('tStatus').innerHTML=h}
+let last=localStorage.getItem('last_booking_id');if(last)showTrack(parseInt(last));
 </script></body></html>
