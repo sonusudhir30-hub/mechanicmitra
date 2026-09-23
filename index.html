@@ -27,7 +27,7 @@ input,select{width:100%;padding:13px;border:2px solid #ddd;border-radius:10px;ma
 
 <!-- SCREEN 1 -->
 <div id="s1" class="screen on">
-<div class="logo">🔧</div>
+<div class="logo">🛠️</div>
 <h2 style="margin-top:15px">MechanicMitra</h2>
 <p style="font-weight:bold;margin-top:5px">Porter jaisa - 30 Min me Mechanic</p>
 <button class="btnM" onclick="go(2)">GET STARTED →</button>
@@ -102,4 +102,128 @@ input,select{width:100%;padding:13px;border:2px solid #ddd;border-radius:10px;ma
 <p id="locStatus" style="font-size:12px;color:green;text-align:center;margin:6px 0"></p>
 <input id="lc" placeholder="Location link / Address - Okhla Phase-2">
 <input id="nm" placeholder="Aapka naam - Sudhir Rai" value="Sudhir Rai">
-<button class="btn" onclick="book()">📦 Book Mechan
+<button class="btn" onclick="book()">📦 Book Mechanic - ₹199</button>
+<p id="msg" style="color:green;font-weight:bold;text-align:center;margin-top:8px"></p>
+</div>
+</div>
+
+<!-- SCREEN 6 - TRACKING -->
+<div id="s6" class="screen">
+<div class="card" style="text-align:center;border:2px solid #2962ff">
+<h3 style="color:#2962ff">✅ Booking Confirmed!</h3>
+<p style="font-size:45px;margin:10px 0">🛵💨</p>
+<h4 id="trackVehicle">Bike - Puncture</h4>
+<p style="margin:8px 0">Mechanic <b>Raju - 4.8★</b> assigned</p>
+<p style="background:#e3f2fd;padding:10px;border-radius:10px">⏱️ ETA: <b>12 Minutes</b><br>📍 1.2 km away</p>
+<p id="trackLoc" style="font-size:12px;margin:8px 0;word-break:break-all"></p>
+<a id="callBtn" href="tel:8700406006" style="display:block;background:#111;color:#fff;padding:12px;border-radius:10px;text-decoration:none;margin:8px 0">📞 Mechanic ko Call करो</a>
+<a id="mapBtn" href="#" target="_blank" style="display:block;background:#2962ff;color:#fff;padding:12px;border-radius:10px;text-decoration:none">🗺️ Live Location Dekho</a>
+<button class="btn" onclick="location.reload()" style="background:#eee;color:#111">🏠 Home</button>
+</div>
+</div>
+
+<script>
+let hist=[1], gv='', gPrice=0, gLat='', gLon='', realOTP='', basePrice=0;
+
+const mechanicsData = [
+  {name:'Raju Mechanic', rating:'4.8', eta:'10 min', dist:'0.8 km'},
+  {name:'Amit Auto Care', rating:'4.7', eta:'12 min', dist:'1.2 km'},
+  {name:'Okhla Tyre & Service', rating:'4.9', eta:'8 min', dist:'0.5 km'},
+  {name:'Ibrahim Garage', rating:'4.6', eta:'15 min', dist:'1.5 km'}
+];
+
+function show(n){
+  document.querySelectorAll('.screen').forEach(s=>{s.classList.remove('on'); s.style.display='none'});
+  let e=document.getElementById('s'+n);
+  e.classList.add('on');
+  e.style.display = (n>=5)?'block':'flex';
+  if(n==5) loadMechanics();
+}
+function go(n){ hist.push(n); show(n); }
+function goback(){ if(hist.length>1){ hist.pop(); show(hist[hist.length-1]); } }
+
+function next3(){
+  let ph=document.getElementById('ph').value;
+  if(ph.length!=10){ alert('10 digit mobile number dalo!'); return; }
+  realOTP = Math.floor(1000+Math.random()*9000)+"";
+  document.getElementById('genOtp').innerText=realOTP;
+  document.getElementById('autoTxt').innerText='Auto Detect ho raha hai...';
+  go(4);
+  setTimeout(()=>{
+    document.getElementById('otp').value=realOTP;
+    document.getElementById('autoTxt').innerText='✅ Auto Detected!';
+    setTimeout(()=>next4(), 600);
+  }, 1500);
+}
+function next4(){
+  let otpVal=document.getElementById('otp').value;
+  if(otpVal!=realOTP && otpVal!='1234'){ alert('OTP galat! OTP hai: '+realOTP); return; }
+  go(5);
+}
+function loadMechanics(){
+  let h='';
+  mechanicsData.forEach(m=>{
+    h+=`<div style="padding:12px 0;border-bottom:1px solid #eee"><span class="online">Online</span><b>${m.name}</b><br>⭐ ${m.rating} | ${m.eta} | ${m.dist}</div>`;
+  });
+  document.getElementById('mechanics').innerHTML=h;
+}
+function pickV(el,v,p){
+  document.querySelectorAll('.v').forEach(x=>x.classList.remove('sel'));
+  el.classList.add('sel'); gv=v; basePrice=p; calcPrice();
+}
+function calcPrice(){
+  let extra=0; let probVal=document.getElementById('prob').value;
+  if(probVal.includes('Puncture')) extra=50;
+  if(probVal.includes('Battery')) extra=100;
+  if(probVal.includes('Engine')) extra=150;
+  if(probVal.includes('Towing')) extra=200;
+  if(probVal.includes('Full')) extra=300;
+  gPrice=basePrice+extra;
+  if(basePrice>0){
+    document.getElementById('priceBox').style.display='block';
+    document.getElementById('price').innerText='₹'+gPrice;
+  }
+}
+function getLoc(){
+  let s=document.getElementById('locStatus');
+  s.innerText='📡 Location le raha hai... Allow karo';
+  if(!navigator.geolocation){ s.innerText='❌ Location support nahi hai'; return; }
+  navigator.geolocation.getCurrentPosition(p=>{
+    gLat=p.coords.latitude; gLon=p.coords.longitude;
+    let link=`https://www.google.com/maps?q=${gLat},${gLon}`;
+    document.getElementById('lc').value=link;
+    s.innerHTML=`✅ Location OK - <a href="${link}" target="_blank">Map Dekho</a>`;
+  }, e=>{
+    s.innerText='❌ Location Allow karo! Setting se allow karo';
+  }, {enableHighAccuracy:true});
+}
+function book(){
+  let prob=document.getElementById('prob').value;
+  let name=document.getElementById('nm').value;
+  let loc=document.getElementById('lc').value;
+  let ph=document.getElementById('ph').value;
+  if(!gv){ alert('Pehle gaadi chuno!'); return; }
+  if(!prob){ alert('Problem chuno!'); return; }
+  if(!name){ alert('Naam bharo!'); return; }
+  if(!loc){ alert('Location bharo ya Current Location button dabao!'); return; }
+
+  document.getElementById('msg').innerText='Booking ho rahi hai...';
+  let mapLink = (gLat)?`https://www.google.com/maps?q=${gLat},${gLon}`:loc;
+
+  document.getElementById('trackVehicle').innerText=gv+' - '+prob+' - ₹'+gPrice;
+  document.getElementById('trackLoc').innerHTML=mapLink;
+  document.getElementById('mapBtn').href=mapLink;
+  document.getElementById('callBtn').href='tel:'+ph;
+
+  // Save locally
+  localStorage.setItem('lastBooking', JSON.stringify({gv,prob,gPrice,name,ph,loc:mapLink,time:new Date().toLocaleString()}));
+
+  // WhatsApp
+  let m=`*MechanicMitra Booking*%0AGaadi:${gv}%0AProblem:${prob}%0APrice:₹${gPrice}%0ANaam:${name}%0AMob:${ph}%0ALoc:${mapLink}`;
+  window.open('https://wa.me/918700406006?text='+m,'_blank');
+
+  setTimeout(()=>{ go(6); }, 800);
+}
+</script>
+</body>
+</html>
