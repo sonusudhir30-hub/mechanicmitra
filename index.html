@@ -1,98 +1,105 @@
 <!DOCTYPE html>
-<html>
+<html lang="hi">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>MechanicMitra</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MechanicMitra - 30 Min me Mechanic</title>
 <style>
-body{font-family: sans-serif; background:#fff; margin:0; padding:20px;}
-.top{display:flex; justify-content:space-between; align-items:center;}
-.back{background:#000; color:#fff; border:none; border-radius:20px; padding:8px 18px; font-weight:bold;}
-.lang{border:2px solid #000; padding:6px 10px; border-radius:8px; font-weight:bold;}
-.center{text-align:center; margin-top:10px;}
-.logo{width:160px; height:auto;}
-.input{width:100%; padding:15px; border-radius:12px; border:1px solid #ddd; background:#eef3ff; margin-top:6px; box-sizing:border-box; font-size:16px;}
-.captcha{border:1px solid #ddd; padding:14px; border-radius:10px; margin-top:15px; display:flex; justify-content:space-between; align-items:center;}
-.btn{width:100%; background:#e65100; color:#fff; padding:16px; border:none; border-radius:12px; margin-top:20px; font-size:18px; font-weight:bold;}
-#otpBox{display:none; margin-top:20px; background:#fff8f0; padding:15px; border-radius:12px; border:1px dashed #ff6a00;}
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
+body{background:#ffcc00}
+.screen{position:fixed;inset:0;background:#ffcc00;display:none;align-items:center;justify-content:center;flex-direction:column;padding:16px;overflow-y:auto;z-index:10}
+.screen.on{display:flex}
+.screen.scroll{justify-content:flex-start;padding-top:20px}
+.card{background:#fff;width:95%;max-width:430px;border-radius:16px;padding:16px;margin:10px auto;text-align:left;box-shadow:0 4px 15px rgba(0,0,0,.15)}
+.btn{width:100%;padding:14px;background:#2962ff;color:#fff;border:0;border-radius:12px;font-weight:bold;margin-top:8px;font-size:16px;cursor:pointer}
+.btn:active{transform:scale(0.98)}
+.btnM{background:#111;color:#fff;border:0;padding:14px 32px;border-radius:50px;font-weight:800;margin-top:18px;font-size:16px;cursor:pointer}
+.back{background:#111;color:#fff;border:0;padding:8px 14px;border-radius:20px;font-weight:bold;margin-bottom:10px;cursor:pointer}
+input,select{width:100%;padding:13px;border:2px solid #ddd;border-radius:10px;margin:6px 0;font-size:15px}
+.v{border:2px solid #eee;border-radius:14px;padding:14px;text-align:center;font-weight:bold;cursor:pointer;background:#fff;transition:0.2s}
+.v.sel{border-color:#2962ff;background:#e3f2fd;color:#2962ff}
+.priceBox{background:#f1f8e9;border:2px solid #8bc34a;border-radius:12px;padding:12px;margin:12px 0;text-align:center;font-size:16px}
+.online{float:right;background:#e6ffea;color:green;padding:2px 8px;border-radius:10px;font-size:12px}
+.logo{width:130px;height:130px;background:#fff;border-radius:50%;overflow:hidden;box-shadow:0 8px 20px rgba(0,0,0,.3);display:flex;align-items:center;justify-content:center;font-size:60px}
 </style>
 </head>
 <body>
 
-<div class="top">
-  <button class="back">← BACK</button>
-  <select class="lang" id="langSelect" onchange="changeLang()">
-    <option value="en">English</option>
-    <option value="hi">हिन्दी</option>
-    <option value="bn">বাংলা</option>
-    <option value="mr">मराठी</option>
-    <option value="ta">தமிழ்</option>
-    <option value="te">తెలుగు</option>
-    <option value="gu">ગુજરાતી</option>
-  </select>
+<!-- SCREEN 1 -->
+<div id="s1" class="screen on">
+<div class="logo">🔧</div>
+<h2 style="margin-top:15px">MechanicMitra</h2>
+<p style="font-weight:bold;margin-top:5px">Porter jaisa - 30 Min me Mechanic</p>
+<button class="btnM" onclick="go(2)">GET STARTED →</button>
 </div>
 
-<div class="center">
-  <img src="logo.png" class="logo" alt="MechanicMitra Logo">
-  <h2 id="t_register" style="margin:10px 0 5px 0; letter-spacing:2px;">REGISTER</h2>
-  <p id="t_sub" style="color:gray; margin:0;">Create your account</p>
+<!-- SCREEN 2 - LANGUAGE -->
+<div id="s2" class="screen">
+<div class="card">
+<button class="back" onclick="goback()">← BACK</button>
+<h3>🌐 भाषा चुनो</h3>
+<select id="lang"><option value="hi">हिन्दी</option><option value="en">English</option></select>
+<button class="btn" onclick="go(3)">Continue →</button>
+</div>
 </div>
 
-<div style="margin-top:25px;">
-  <label id="t_mob"><b>Mobile Number *</b></label>
-  <input id="mobile" class="input" type="number" placeholder="Enter 10 digit number" value="8700406006">
+<!-- SCREEN 3 - MOBILE -->
+<div id="s3" class="screen">
+<div class="card">
+<button class="back" onclick="goback()">← BACK</button>
+<h3>📱 Mobile Number</h3>
+<input id="ph" maxlength="10" type="tel" placeholder="10 digit number - jaise 8700406006" value="8700406006">
+<button class="btn" onclick="next3()">OTP भेजो →</button>
+</div>
 </div>
 
-<div class="captcha">
-  <label><input type="checkbox" id="captchaCheck"> <span id="t_captcha">I'm not a robot</span></label>
-  <span style="color:gray; font-size:12px;">reCAPTCHA</span>
+<!-- SCREEN 4 - OTP -->
+<div id="s4" class="screen">
+<div class="card">
+<button class="back" onclick="goback()">← BACK</button>
+<h3>🔑 OTP Verification</h3>
+<div style="background:#fff3e0;padding:12px;border-radius:10px;text-align:center;margin:8px 0">OTP: <b id="genOtp" style="color:#ff6600;font-size:22px">----</b><br><small id="autoTxt">Generating...</small></div>
+<input id="otp" placeholder="OTP auto fill hoga...">
+<button class="btn" onclick="next4()">Verify →</button>
+</div>
 </div>
 
-<button class="btn" onclick="sendOTP()" id="t_btn">Send OTP →</button>
-
-<div id="otpBox">
-  <label><b id="t_otp">Enter OTP *</b> <span style="color:green;" id="t_autoread">(Auto-reading...)</span></label>
-  <input id="otp_input" class="input" style="background:#fff; border-color:orange;" type="number" placeholder="123456">
-  <button class="btn" style="background:green;" onclick="verifyOTP()" id="t_verify">Verify & Login</button>
+<!-- SCREEN 5 - MAIN BOOKING (PORTER STYLE) -->
+<div id="s5" class="screen scroll">
+<div class="card" style="margin-top:0">
+<div style="background:#2962ff;color:#fff;padding:10px;border-radius:10px;text-align:center;font-weight:bold">🚚 Service चुनो - Porter Style</div>
+<button class="back" onclick="goback()" style="margin-top:10px">← BACK</button>
+<h3 style="margin-top:10px">1. गाड़ी चुनो</h3>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:8px">
+<div class="v" onclick="pickV(this,'Bike',149)"><div style="font-size:28px">🏍️</div>Bike<br><small>₹149</small></div>
+<div class="v" onclick="pickV(this,'Auto / EKA 6S',199)"><div style="font-size:28px">🛺</div>Auto / EKA<br><small>₹199</small></div>
+<div class="v" onclick="pickV(this,'Car',299)"><div style="font-size:28px">🚗</div>Car<br><small>₹299</small></div>
+<div class="v" onclick="pickV(this,'Truck',499)"><div style="font-size:28px">🚚</div>Truck<br><small>₹499</small></div>
+</div>
 </div>
 
-<div id="success" style="display:none; text-align:center; margin-top:60px;">
-  <img src="logo.png" style="width:100px;">
-  <h1 style="color:green;">Login Successful!</h1>
+<div class="card">
+<h3>📍 Nearby Mechanics (Live)</h3>
+<div id="mechanics" style="margin-top:8px">Loading...</div>
 </div>
 
-<script>
-const L = {
-en:{register:"REGISTER", sub:"Create your account", mob:"Mobile Number *", captcha:"I'm not a robot", btn:"Send OTP →", otp:"Enter OTP *", autoread:"(Auto-reading...)", verify:"Verify & Login"},
-hi:{register:"रजिस्टर", sub:"अपना अकाउंट बनाएं", mob:"मोबाइल नंबर *", captcha:"मैं रोबोट नहीं हूँ", btn:"OTP भेजें →", otp:"OTP दर्ज करें *", autoread:"(ऑटो पढ़ रहा है...)", verify:"सत्यापित करें"},
-bn:{register:"রেজিস্টার", sub:"আপনার অ্যাকাউন্ট তৈরি করুন", mob:"মোবাইল নম্বর *", captcha:"আমি রোবট নই", btn:"OTP পাঠান →", otp:"OTP লিখুন *", autoread:"(অটো পড়ছে...)", verify:"যাচাই করুন"},
-mr:{register:"नोंदणी", sub:"तुमचे खाते तयार करा", mob:"मोबाइल नंबर *", captcha:"मी रोबोट नाही", btn:"OTP पाठवा →", otp:"OTP टाका *", autoread:"(ऑटो वाचत आहे...)", verify:"पडताळणी करा"},
-ta:{register:"பதிவு", sub:"உங்கள் கணக்கை உருவாக்கவும்", mob:"மொபைல் எண் *", captcha:"நான் ரோபோட் இல்லை", btn:"OTP அனுப்பு →", otp:"OTP உள்ளிடவும் *", autoread:"(தானாக படிக்கிறது...)", verify:"சரிபார்க்கவும்"},
-te:{register:"నమోదు", sub:"మీ ఖాతాను సృష్టించండి", mob:"మొబైల్ నంబర్ *", captcha:"నేను రోబోట్ కాదు", btn:"OTP పంపండి →", otp:"OTP నమోదు చేయండి *", autoread:"(ఆటో రీడింగ్...)", verify:"ధృవీకరించండి"},
-gu:{register:"રજિસ્ટર", sub:"તમારું એકાઉન્ટ બનાવો", mob:"મોબાઇલ નંબર *", captcha:"હું રોબોટ નથી", btn:"OTP મોકલો →", otp:"OTP દાખલ કરો *", autoread:"(ઓટો વાંચી રહ્યું છે...)", verify:"ચકાસો"}
-};
-function changeLang(){
-  let l=document.getElementById('langSelect').value;
-  document.getElementById('t_register').innerText=L[l].register;
-  document.getElementById('t_sub').innerText=L[l].sub;
-  document.getElementById('t_mob').innerText=L[l].mob;
-  document.getElementById('t_captcha').innerText=L[l].captcha;
-  document.getElementById('t_btn').innerText=L[l].btn;
-  document.getElementById('t_otp').innerText=L[l].otp;
-  document.getElementById('t_autoread').innerText=L[l].autoread;
-  document.getElementById('t_verify').innerText=L[l].verify;
-}
-function sendOTP(){
-  if(!document.getElementById('captchaCheck').checked){ alert("Pehle captcha tick karo"); return; }
-  if(document.getElementById('mobile').value.length<10){ alert("Number sahi dalo"); return; }
-  document.getElementById('otpBox').style.display="block";
-  setTimeout(()=>{ document.getElementById('otp_input').value="123456"; verifyOTP(); }, 1500);
-}
-function verifyOTP(){
-  if(document.getElementById('otp_input').value=="123456"){
-    document.getElementById('success').style.display="block";
-  } else { alert("123456 dalo"); }
-}
-</script>
-</body>
-</html>
+<div class="card">
+<h3>2. Problem क्या है?</h3>
+<select id="prob" onchange="calcPrice()">
+<option value="">-- चुनो --</option>
+<option value="Puncture">Puncture - ₹50 extra</option>
+<option value="Battery Dead">Battery Dead - ₹100 extra</option>
+<option value="Engine Issue">Engine Issue - ₹150 extra</option>
+<option value="Towing Needed">Towing - ₹200 extra</option>
+<option value="Full Service">Full Service - ₹300 extra</option>
+</select>
+<div class="priceBox" id="priceBox" style="display:none">Estimated Price: <b id="price">₹0</b><br><small>30 Min me mechanic pahuchega</small></div>
+</div>
+
+<div class="card">
+<h3>3. Location & Name</h3>
+<button class="btn" style="background:#e8f5e9;color:#2e7d32;border:2px dashed #2e7d32" onclick="getLoc()">📍 Current Location लो</button>
+<p id="locStatus" style="font-size:12px;color:green;text-align:center;margin:6px 0"></p>
+<input id="lc" placeholder="Location link / Address - Okhla Phase-2">
+<input id="nm" placeholder="Aapka naam - Sudhir Rai" value="Sudhir Rai">
+<button class="btn" onclick="book()">📦 Book Mechan
