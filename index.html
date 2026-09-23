@@ -1,94 +1,12 @@
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>MechanicMitra</title>
-<style>
-*{box-sizing:border-box;font-family:Arial}body{margin:0;background:#fff}
-.screen{display:none;min-height:100vh;padding:16px}.screen.on{display:block}
-.top{position:sticky;top:0;background:#ff6f00;height:38px;display:flex;align-items:center;justify-content:space-between;padding:0 10px;color:#fff;font-size:12px;z-index:99}
-.card{background:#fff;border-radius:14px;padding:14px;margin:10px auto;max-width:430px;box-shadow:0 2px 10px #0001;border:1px solid #eee}
-.back{background:#000;color:#fff;border:0;padding:8px 16px;border-radius:20px;font-weight:bold}
-input,select{width:100%;padding:13px;border:2px solid #ddd;border-radius:10px;margin:6px 0}
-.btn{width:100%;padding:14px;border:0;border-radius:12px;font-weight:bold;font-size:16px;cursor:pointer}
-.btnO{background:#ff4d00;color:#fff}.btnG{background:#0a8a00;color:#fff}
-.v{border:2px solid #eee;border-radius:14px;padding:14px;text-align:center;font-weight:bold;cursor:pointer;background:#fff}.v.sel{border-color:#2962ff;background:#e3f2fd}
-</style>
-</head>
-<body>
-<div class="top"><span>13:05</span><span>5G 90%</span></div>
-
-<!-- REGISTER SCREEN - AAPKA SCREENSHOT WALA -->
-<div id="s1" class="screen on">
-<div style="max-width:430px;margin:auto">
-<button class="back">← BACK</button>
-<div style="text-align:center;margin:10px 0"><div style="font-size:60px">🔧</div><h2 style="letter-spacing:2px">REGISTER</h2><small style="color:#777">Create your account</small></div>
-<p>Mobile Number *</p>
-<input id="ph" value="8700406006" maxlength="10" type="tel">
-<div style="border:1px solid #ddd;border-radius:8px;padding:10px;display:flex;justify-content:space-between;align-items:center;margin:8px 0"><span><input type="checkbox" checked> I'm not a robot</span><small style="color:#777">reCAPTCHA</small></div>
-<button class="btn btnO" onclick="sendOtp()">Send OTP →</button>
-<div style="border:1px dashed #ffb84d;background:#fff8ec;border-radius:12px;padding:12px;margin-top:14px">
-<b>Enter OTP * <span style="color:green">(Auto-reading...)</span></b>
-<input id="otp" value="123456" placeholder="123456">
-<button class="btn btnG" onclick="verify()">Verify & Login</button>
-</div>
-<h2 id="loginOk" style="color:green;text-align:center;margin-top:30px;display:none">Login Successful!</h2>
-</div>
-</div>
-
-<!-- MAIN PORTER SCREEN -->
-<div id="s2" class="screen" style="background:#ffcc00">
-<div class="card" style="margin-top:0"><div style="background:#2962ff;color:#fff;padding:10px;border-radius:10px;text-align:center;font-weight:bold">🚚 Porter Style - Service चुनो</div>
-<h3 style="margin-top:12px">1. गाड़ी चुनो</h3>
-<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:8px">
-<div class="v" onclick="pick(this,'Bike',149)">🏍️<br>Bike<br><small>₹149</small></div>
-<div class="v" onclick="pick(this,'Auto/EKA 6S',199)">🛺<br>Auto / EKA<br><small>₹199</small></div>
-<div class="v" onclick="pick(this,'Car',299)">🚗<br>Car<br><small>₹299</small></div>
-<div class="v" onclick="pick(this,'Truck',499)">🚚<br>Truck<br><small>₹499</small></div>
-</div>
-</div>
-<div class="card"><h3>📍 Nearby Mechanics</h3><div id="mech"></div></div>
-<div class="card">
-<h3>2. Problem</h3><select id="prob" onchange="calc()"><option value="">-- चुनो --</option><option>Puncture +50</option><option>Battery +100</option><option>Engine +150</option><option>Towing +200</option></select>
-<div id="pbox" style="display:none;background:#e8f5e9;border:2px solid green;border-radius:10px;padding:10px;text-align:center;margin-top:8px">Price: <b id="price">₹0</b></div>
-</div>
-<div class="card">
-<h3>3. Location</h3><button class="btn" style="background:#e8f5e9;color:green;border:2px dashed green" onclick="getLoc()">📍 Current Location</button><p id="locS" style="font-size:12px;color:green;text-align:center"></p>
-<input id="lc" placeholder="Okhla Phase-2"><input id="nm" value="Sudhir Rai" placeholder="Name"><button class="btn btnO" onclick="book()">Book Now - Porter Style</button><p id="msg" style="text-align:center;color:green;font-weight:bold"></p>
-</div>
-</div>
-
-<!-- SUCCESS -->
-<div id="s3" class="screen"><div class="card" style="text-align:center;border:2px solid #2962ff"><h2 style="color:#2962ff">✅ Booking Confirmed!</h2><p style="font-size:40px">🛵💨</p><h4 id="tV"></h4><p>Mechanic Raju - 4.8★ - 12 Min me ayega</p><a id="map" href="#" target="_blank" style="display:block;background:#2962ff;color:#fff;padding:12px;border-radius:10px;text-decoration:none;margin:8px 0">🗺️ Live Location</a><button class="btn" style="background:#eee;color:#000" onclick="location.reload()">Home</button></div></div>
-
+<!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>MechanicMitra</title><style>*{box-sizing:border-box;font-family:Arial}body{margin:0;background:#fff}.screen{display:none;min-height:100vh;padding:16px}.screen.on{display:block}.card{background:#fff;border-radius:14px;padding:14px;margin:10px auto;max-width:430px;box-shadow:0 2px 10px #0001;border:1px solid #eee}input{width:100%;padding:13px;border:2px solid #ddd;border-radius:10px;margin:6px 0}.btn{width:100%;padding:14px;border:0;border-radius:12px;font-weight:bold;font-size:16px;cursor:pointer}.btnO{background:#ff4d00;color:#fff}.btnG{background:#0a8a00;color:#fff}.v{border:2px solid #eee;border-radius:14px;padding:14px;text-align:center;font-weight:bold;cursor:pointer}.v.sel{border-color:#2962ff;background:#e3f2fd}</style></head><body>
+<div id="s1" class="screen on"><div style="max-width:430px;margin:auto"><div style="text-align:center"><div style="font-size:60px">🔧</div><h2>REGISTER</h2><small>Create your account</small></div><p>Mobile Number *</p><input id="ph" value="8700406006"><div style="border:1px solid #ddd;border-radius:8px;padding:10px;margin:8px 0"><input type="checkbox" checked> I'm not a robot</div><button class="btn btnO" onclick="document.getElementById('otp').value='123456';alert('OTP: 123456')">Send OTP →</button><div style="border:1px dashed #ffb84d;background:#fff8ec;padding:12px;margin-top:12px;border-radius:12px"><b>Enter OTP *</b><input id="otp" value="123456"><button class="btn btnG" onclick="verify()">Verify & Login</button></div><h2 id="ok" style="color:green;text-align:center;display:none;margin-top:15px">Login Successful! Redirecting...</h2></div></div>
+<div id="s2" class="screen" style="background:#ffcc00"><div class="card"><div style="background:#2962ff;color:#fff;padding:10px;border-radius:10px;text-align:center;font-weight:bold">🚚 Service चुनो - Porter Style</div><h3>1. गाड़ी चुनो</h3><div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:8px"><div class="v" onclick="pick(this,'Bike',149)">🏍️<br>Bike<br>₹149</div><div class="v" onclick="pick(this,'Auto',199)">🛺<br>Auto<br>₹199</div><div class="v" onclick="pick(this,'Car',299)">🚗<br>Car<br>₹299</div><div class="v" onclick="pick(this,'Truck',499)">🚚<br>Truck<br>₹499</div></div></div><div class="card"><h3>📍 Nearby Mechanics</h3><div id="mech">Raju - 4.8★ - 10 min - Online<br>Amit - 4.7★ - 12 min - Online<br>Okhla Service - 4.9★ - 8 min - Online</div></div><div class="card"><h3>2. Problem & Price</h3><select id="prob" onchange="calc()"><option value="">-- चुनो --</option><option>Puncture +50</option><option>Battery +100</option><option>Engine +150</option></select><div id="pbox" style="display:none;background:#e8f5e9;padding:10px;text-align:center;margin-top:8px;border-radius:10px">Price: <b id="price">₹0</b></div><input id="lc" placeholder="Okhla Phase-2" style="margin-top:10px"><input id="nm" value="Sudhir Rai"><button class="btn btnO" onclick="book()">Book Now</button></div></div>
+<div id="s3" class="screen"><div class="card" style="text-align:center;border:2px solid #2962ff"><h2 style="color:#2962ff">✅ Booking Confirmed!</h2><p style="font-size:40px">🛵💨</p><h4 id="tV"></h4><p>Mechanic Raju 12 Min me ayega</p><button class="btn" style="background:#eee" onclick="location.reload()">Home</button></div></div>
 <script>
-let gv='', base=0, gPrice=0, gLat='', gLon='';
-function show(n){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('on'));document.getElementById('s'+n).classList.add('on'); if(n==2) loadM();}
-function sendOtp(){document.getElementById('otp').value='123456';alert('OTP: 123456 (Auto-filled)');}
-function verify(){
- let o=document.getElementById('otp').value; if(!o){alert('OTP dalo');return}
- document.getElementById('loginOk').style.display='block';
- setTimeout(()=>{show(2);},800);
-}
-function loadM(){
- let d=[{n:'Raju Mechanic',r:'4.8',e:'10 min'},{n:'Amit Auto',r:'4.7',e:'12 min'},{n:'Okhla Service',r:'4.9',e:'8 min'}];
- let h=''; d.forEach(m=>{h+=`<div style="padding:10px 0;border-bottom:1px solid #eee"><b>${m.n}</b> ⭐${m.r} - ${m.e} <span style="float:right;background:#e6ffea;color:green;padding:2px 8px;border-radius:10px;font-size:12px">Online</span></div>`});
- document.getElementById('mech').innerHTML=h;
-}
-function pick(el,v,p){document.querySelectorAll('.v').forEach(x=>x.classList.remove('sel'));el.classList.add('sel');gv=v;base=p;calc();}
-function calc(){let ex=0;let pr=document.getElementById('prob').value;if(pr.includes('50'))ex=50;if(pr.includes('100'))ex=100;if(pr.includes('150'))ex=150;if(pr.includes('200'))ex=200;gPrice=base+ex;if(base>0){document.getElementById('pbox').style.display='block';document.getElementById('price').innerText='₹'+gPrice;}}
-function getLoc(){let s=document.getElementById('locS');s.innerText='Location le raha...';navigator.geolocation.getCurrentPosition(p=>{gLat=p.coords.latitude;gLon=p.coords.longitude;let l=`https://www.google.com/maps?q=${gLat},${gLon}`;document.getElementById('lc').value=l;s.innerHTML=`✅ OK - <a href="${l}" target="_blank">Map</a>`;},()=>{s.innerText='Allow karo!'});}
-function book(){
- if(!gv){alert('Gaadi chuno');return}
- let prob=document.getElementById('prob').value; let nm=document.getElementById('nm').value; let lc=document.getElementById('lc').value;
- if(!prob||!nm||!lc){alert('Sab bharo');return}
- let map=gLat?`https://www.google.com/maps?q=${gLat},${gLon}`:lc;
- document.getElementById('tV').innerText=gv+' - '+prob+' - ₹'+gPrice;
- document.getElementById('map').href=map;
- let m=`*Booking*%0AGaadi:${gv}%0AProblem:${prob}%0APrice:₹${gPrice}%0ANaam:${nm}%0ALoc:${map}`;
- window.open('https://wa.me/918700406006?text='+m,'_blank');
- show(3);
-}
-</script>
-</body>
-</html>
+let gv='',base=0,gPrice=0;
+function show(n){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('on'));document.getElementById('s'+n).classList.add('on')}
+function verify(){document.getElementById('ok').style.display='block';setTimeout(()=>show(2),900)}
+function pick(el,v,p){document.querySelectorAll('.v').forEach(x=>x.classList.remove('sel'));el.classList.add('sel');gv=v;base=p;calc()}
+function calc(){let ex=0;let pr=document.getElementById('prob').value;if(pr.includes('50'))ex=50;if(pr.includes('100'))ex=100;if(pr.includes('150'))ex=150;gPrice=base+ex;if(base>0){document.getElementById('pbox').style.display='block';document.getElementById('price').innerText='₹'+gPrice}}
+function book(){if(!gv){alert('Gaadi chuno');return}document.getElementById('tV').innerText=gv+' - ₹'+gPrice;window.open('https://wa.me/918700406006?text=Booking:'+gv+' Price:'+gPrice,'_blank');show(3)}
+</script></body></html>
