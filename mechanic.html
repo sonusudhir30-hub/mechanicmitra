@@ -1,85 +1,15 @@
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>MechanicMitra - Mechanic</title>
-<style>
-*{box-sizing:border-box;font-family:Arial}body{margin:0;background:#111;color:#fff}
-.header{background:#ffcc00;color:#000;padding:15px;text-align:center;font-weight:bold;font-size:18px;position:sticky;top:0}
-.card{background:#222;border:1px solid #333;border-radius:14px;padding:14px;margin:12px auto;max-width:450px}
-.btn{width:100%;padding:13px;border:0;border-radius:10px;font-weight:bold;margin-top:8px;cursor:pointer;font-size:15px}
-.btnG{background:#00c853;color:#fff}.btnR{background:#ff3d00;color:#fff}.btnB{background:#2962ff;color:#fff}.btnY{background:#ffcc00;color:#000}
-.badge{padding:4px 10px;border-radius:20px;font-size:12px;font-weight:bold}
-.new{background:#ffeb3b;color:#000}.accepted{background:#00e676;color:#000}.done{background:#555;color:#fff}
-input{width:100%;padding:12px;border-radius:10px;border:1px solid #444;background:#222;color:#fff;margin:6px 0}
-</style>
-</head>
-<body>
-<div class="header">🔧 Mechanic Partner App</div>
-
-<div id="loginBox" style="max-width:450px;margin:auto;padding:20px">
-<div class="card"><h3>Mechanic Login</h3>
-<input id="mname" value="Raju Mechanic" placeholder="Aapka Naam">
-<input id="mphone" value="8700406006" placeholder="Mobile Number">
-<button class="btn btnY" onclick="login()">Login →</button>
-<p style="color:#777;font-size:12px;margin-top:10px">Login ke baad booking yahin ayegi</p>
-</div>
-</div>
-
-<div id="dash" style="display:none;max-width:450px;margin:auto">
-<div class="card" style="display:flex;justify-content:space-between;text-align:center">
-<div><small>Today Earning</small><h2 id="earn">₹0</h2></div>
-<div><small>Total Jobs</small><h2 id="jobs">0</h2></div>
-<div><small>Status</small><h3 style="color:#00e676">● Online</h3></div>
-</div>
-<h3 style="margin-left:12px">🔔 New Bookings</h3>
-<div id="list"></div>
-</div>
-
+<!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Mechanic Partner</title>
+<style>*{box-sizing:border-box;font-family:Arial}body{margin:0;background:#111;color:#fff}.head{background:#ffcc00;color:#000;padding:15px;text-align:center;font-weight:bold;position:sticky;top:0;z-index:20}.card{background:#222;border:1px solid #333;border-radius:14px;padding:14px;margin:12px auto;max-width:450px}.btn{width:100%;padding:13px;border:0;border-radius:10px;font-weight:bold;margin-top:8px;cursor:pointer}.btnG{background:#00c853;color:#fff}.btnR{background:#ff3d00;color:#fff}.btnB{background:#2962ff;color:#fff}.badge{padding:4px 10px;border-radius:20px;font-size:12px;font-weight:bold}.new{background:#ffeb3b;color:#000;animation:blink 1s infinite}.accepted{background:#00e676;color:#000}.done{background:#555}@keyframes blink{50%{opacity:0.5}}</style></head><body>
+<div class="head">🔧 Mechanic App - <span id="mNameHead">Online</span> <button onclick="enableSound()" style="float:right;background:#000;color:#ffcc00;border:0;padding:5px 10px;border-radius:20px">🔔 Sound ON</button></div>
+<div id="loginBox" style="max-width:450px;margin:auto;padding:20px"><div class="card"><h3>Mechanic Login</h3><input id="mname" value="Raju Mechanic"><input id="mphone" value="8700406006"><button class="btn" style="background:#ffcc00;color:#000" onclick="login()">Login → Dashboard</button></div></div>
+<div id="dash" style="display:none;max-width:450px;margin:auto"><div class="card" style="display:flex;justify-content:space-between;text-align:center"><div><small>Earning</small><h2 id="earn">₹0</h2></div><div><small>Jobs</small><h2 id="jobs">0</h2></div><div><small>Status</small><h3 style="color:#00e676">● Online</h3></div></div><div id="list"></div></div>
+<audio id="ghanti" src="https://actions.google.com/sounds/v1/alarms/beep_short.ogg" preload="auto" loop></audio>
 <script>
-let bookings=[];
-function login(){
- if(!document.getElementById('mname').value){alert('Naam likho');return}
- document.getElementById('loginBox').style.display='none';
- document.getElementById('dash').style.display='block';
- loadBookings();
- setInterval(loadBookings, 2000); // har 2 sec me check karega
-}
-function loadBookings(){
- let data = localStorage.getItem('mechanic_bookings');
- bookings = data ? JSON.parse(data) : [];
- // Agar ekdum khali hai to demo ke liye ek booking dikhao
- if(bookings.length==0){
-  bookings=[{id:101,name:'Sudhir Rai',phone:'8700406006',vehicle:'Bike - Puncture - ₹199',price:199,location:'https://maps.google.com/?q=28.5355,77.2710',address:'Okhla Phase-2, Delhi',status:'new',time:new Date().toLocaleString()}];
- }
- render();
-}
-function render(){
- let html='';
- bookings.slice().reverse().forEach(b=>{
-  html+=`<div class="card">
-  <div style="display:flex;justify-content:space-between"><b>${b.vehicle}</b><span class="badge ${b.status}">${b.status.toUpperCase()}</span></div>
-  <p style="font-size:14px;margin:8px 0">👤 ${b.name} - <a href="tel:${b.phone}" style="color:#ffcc00">${b.phone}</a><br>📍 ${b.address}<br>🕒 ${b.time}</p>
-  <a href="${b.location}" target="_blank" style="color:#4fc3f7;font-size:13px">🗺️ Live Location Dekho</a>
-  <div style="display:flex;gap:8px;margin-top:10px">
-  ${b.status=='new'?`<button class="btn btnG" onclick="updateStatus(${b.id},'accepted')">✅ Accept Karo</button><button class="btn btnR" onclick="updateStatus(${b.id},'rejected')">❌ Reject</button>`:''}
-  ${b.status=='accepted'?`<button class="btn btnB" onclick="window.open('tel:${b.phone}')">📞 Customer ko Call</button><button class="btn btnG" onclick="updateStatus(${b.id},'done')">✔️ Kaam Ho Gaya</button>`:''}
-  ${b.status=='done'?`<p style="color:#00e676;text-align:center">✅ Done - ₹${b.price} mil gaya</p>`:''}
-  </div></div>`;
- });
- document.getElementById('list').innerHTML=html;
- let done=bookings.filter(x=>x.status=='done');
- document.getElementById('earn').innerText='₹'+done.reduce((s,x)=>s+x.price,0);
- document.getElementById('jobs').innerText=bookings.length;
-}
-function updateStatus(id,status){
- bookings = bookings.map(b=> b.id==id ? {...b,status} : b);
- localStorage.setItem('mechanic_bookings', JSON.stringify(bookings));
- render();
- if(status=='accepted'){alert('Booking Accept ki! Customer ko call karo');}
- if(status=='done'){alert('Shabash! Earning add ho gayi');}
-}
-</script>
-</body>
-</html>
+let bookings=[], lastCount=0, soundEnabled=false;
+function enableSound(){soundEnabled=true;document.getElementById('ghanti').play().then(()=>{document.getElementById('ghanti').pause();alert('🔔 Ghanti ON ho gayi! Ab booking ayegi to bajegi')}); if(Notification && Notification.permission!="granted") Notification.requestPermission()}
+function login(){document.getElementById('loginBox').style.display='none';document.getElementById('dash').style.display='block';document.getElementById('mNameHead').innerText=document.getElementById('mname').value;loadBookings();setInterval(loadBookings,2000);enableSound()}
+function loadBookings(){let d=localStorage.getItem('mechanic_bookings');let newBookings=d?JSON.parse(d):[];if(newBookings.length>lastCount && lastCount!=0 && soundEnabled){ringGhanti(newBookings[newBookings.length-1])}lastCount=newBookings.length;bookings=newBookings;if(bookings.length==0)return;render()}
+function ringGhanti(b){let a=document.getElementById('ghanti');a.play();if(navigator.vibrate) navigator.vibrate([500,200,500]);if(Notification && Notification.permission=="granted"){new Notification("🔔 New Booking!",{body:`${b.name} - ${b.vehicle} - ${b.address}`})}alert(`🔔 NAYI BOOKING AYI!\n${b.name} - ${b.vehicle}\n${b.address}`);setTimeout(()=>a.pause(),5000)}
+function render(){let h='';bookings.slice().reverse().forEach(b=>{h+=`<div class="card" style="${b.status=='new'?'border:2px solid #ffeb3b':''}"><div style="display:flex;justify-content:space-between"><b>${b.vehicle} - ₹${b.price}</b><span class="badge ${b.status}">${b.status}</span></div><p style="font-size:14px">👤 ${b.name} - <a href="tel:${b.phone}" style="color:#ffcc00">${b.phone}</a><br>📍 ${b.address}<br>🕒 ${b.time}</p><a href="${b.location}" target="_blank" style="color:#4fc3f7">🗺️ Location Dekho</a><div style="display:flex;gap:8px;margin-top:10px">${b.status=='new'?`<button class="btn btnG" onclick="updateStatus(${b.id},'accepted')">✅ ACCEPT - Ghanti Band</button>`:''}${b.status=='accepted'?`<button class="btn btnB" onclick="window.open('tel:${b.phone}')">📞 Call</button><button class="btn btnG" onclick="updateStatus(${b.id},'on_the_way')">🛵 On The Way</button><button class="btn btnG" style="background:#00bfa5" onclick="updateStatus(${b.id},'done')">✔️ Done</button>`:''}${b.status=='on_the_way'?`<button class="btn btnG" onclick="updateStatus(${b.id},'done')">✔️ Work Done</button>`:''}</div></div>`});document.getElementById('list').innerHTML=h||'<div class="card" style="text-align:center;color:#777">Koi booking nahi, intezaar karo...</div>';let d=bookings.filter(x=>x.status=='done');document.getElementById('earn').innerText='₹'+d.reduce((s,x)=>s+x.price,0);document.getElementById('jobs').innerText=bookings.length}
+function updateStatus(id,st){document.getElementById('ghanti').pause();bookings=bookings.map(b=>b.id==id?{...b,status:st}:b);localStorage.setItem('mechanic_bookings',JSON.stringify(bookings));render()}
+</script></body></html>
